@@ -20,14 +20,17 @@ El proyecto está desarrollado bajo arquitectura MVC utilizando CodeIgniter.
 
 ### Gestión de Modalidades
 - Registro automático de modalidades mediante carga de acuerdos en PDF.
+  <img width="1920" height="958" alt="image" src="https://github.com/user-attachments/assets/6618a8e2-7aa9-45be-a7f6-1fefecb7be0b" />
 - Procesamiento del documento utilizando modelo de IA.
 - Extracción estructurada de información relevante.
 - Inserción automática de datos en la base de datos.
+<img width="1918" height="956" alt="image" src="https://github.com/user-attachments/assets/c13cdc23-acc7-44d1-8f3e-ecec754da1ce" />
 
 
 ### Gestión de Docentes
 - Visualización de docentes registrados.
 - Relación con modalidades asociadas.
+<img width="1920" height="966" alt="Sin título" src="https://github.com/user-attachments/assets/3fe0e3e4-c098-48f1-aa0e-6a70cfa8c202" />
 
 
 ### Gestión de Estudiantes
