@@ -44,7 +44,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- <?php if (!empty($modalities)): ?>
+                    <?php if (!empty($modalities)): ?>
                         <?php foreach ($modalities as $modality): ?>
                             <tr>
                                 <td><?= esc($modality['modality_ID']) ?></td>
@@ -70,7 +70,7 @@
                                 </td>
                             </tr>
                         <?php endforeach; ?>
-                    <?php endif; ?> -->
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>

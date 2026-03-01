@@ -8,6 +8,8 @@ class modalitieController extends BaseController {
     public function modalities(): string {
         $data = ['tittle' => 'Modalidades',
                  'icon' => '<i class="bi bi-mortarboard"></i> Modalidades'];
+        $modalityModel = new \App\Models\modalitieModel();
+        $data['modalities'] = $modalityModel->getModalities();
         return view('dashboard/modalities',$data);
     }
 
