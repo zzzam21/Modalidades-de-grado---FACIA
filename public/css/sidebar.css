@@ -1,0 +1,124 @@
+.sidebar {
+    position: fixed;
+    top:0;
+    left: 0;
+    height: 100%;
+    width: 200px;
+    padding-top: 20px;
+    background:  linear-gradient(90deg,#4caf50,#3a903d);
+    z-index: 1000;   
+}
+
+.sidebar, .page-wrapper {
+    transition:none;
+}
+
+.sidebar.with-transition  {
+    transition: width 0.3s ease;
+}
+
+.page-wrapper.with-transition {
+    transition: margin-left 0.3s ease;
+}
+
+.page-wrapper {
+    margin-left: 200px;
+    
+    min-height: 100vh;
+}
+
+.sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px 20px;
+    color: white;
+}
+
+.sidebar .description {
+    font-size: 14px;
+    color: white;
+}
+
+.sidebar-header {
+    text-align: center;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #d9a602;
+    border-radius: 20px 0px 20px 0px;
+    border-color: white;
+}
+
+.sidebar .sub-menu {
+    background-color: #3a903d;
+    padding-left: 3%;
+}
+
+.no-display {
+    display: none !important;
+}
+.no-transition {
+    transition: none !important;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        width: 60px;
+    }
+    .page-wrapper {
+        margin-left: 60px;
+        width: calc(100% - 60px);
+    }
+    .sidebar .description {
+        display: none;
+    }
+    .sidebar .nav-link {
+        justify-content: center;
+    }
+
+    .main-content {
+        flex: 1;
+    }
+    .sidebar-header {
+        text-emphasis: none;
+    }
+}
+
+/* Para Menu desplegable */
+/* Sidebar colapsado manualmente */
+.sidebar.collapsed {
+    width: 60px !important;
+}
+
+/* Cuando sidebar está colapsado, ajustar page-wrapper */
+.sidebar.collapsed + .page-wrapper {
+    margin-left: 60px;
+}
+
+/* Ocultar texto cuando el sidebar está colapsado */
+.sidebar.collapsed .description {
+    display: none !important;
+}
+
+/* Asegurar que el ícono quede centrado */
+.sidebar.collapsed .nav-link {
+    justify-content: center !important;
+    gap: 0 !important;
+    padding: 10px 0; 
+}
+
+/* Centrar iconos cuando colapsa */
+.sidebar.collapsed .nav-link {
+    justify-content: center;
+    gap: 0;
+}
+.inner {
+    text-align: left;
+}
