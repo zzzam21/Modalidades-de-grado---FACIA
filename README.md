@@ -1,68 +1,134 @@
-# CodeIgniter 4 Application Starter
+# Sistema de Gestión de Modalidades de Grado
 
-## What is CodeIgniter?
+## Descripción
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+Sistema web desarrollado para la gestión y administración de modalidades de grado en la Facultad de Ciencias Agrícolas. Permite el registro, visualización y organización de docentes, estudiantes y modalidades académicas.
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+El sistema incluye autenticación de usuarios y un módulo de procesamiento automatizado de acuerdos en formato PDF, utilizando un modelo de IA (Copilot) para extraer información estructurada y almacenarla automáticamente en la base de datos.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+El proyecto está desarrollado bajo arquitectura MVC utilizando CodeIgniter.
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+---
 
-## Installation & updates
+## Funcionalidades Principales
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+### Autenticación
+- Inicio de sesión mediante credenciales.
+- Protección de rutas internas del sistema.
+- Acceso restringido a usuarios autorizados.
+<img width="1920" height="944" alt="image" src="https://github.com/user-attachments/assets/4b0b3fb4-4ebc-4def-82d6-686d7b048d3e" />
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+### Gestión de Modalidades
+- Registro automático de modalidades mediante carga de acuerdos en PDF.
+  <img width="1920" height="958" alt="image" src="https://github.com/user-attachments/assets/6618a8e2-7aa9-45be-a7f6-1fefecb7be0b" />
+- Procesamiento del documento utilizando modelo de IA.
+- Extracción estructurada de información relevante.
+- Inserción automática de datos en la base de datos.
+<img width="1918" height="956" alt="image" src="https://github.com/user-attachments/assets/c13cdc23-acc7-44d1-8f3e-ecec754da1ce" />
 
-## Setup
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+### Gestión de Docentes
+- Visualización de docentes registrados.
+- Relación con modalidades asociadas.
+<img width="1920" height="966" alt="Sin título" src="https://github.com/user-attachments/assets/3fe0e3e4-c098-48f1-aa0e-6a70cfa8c202" />
 
-## Important Change with index.php
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+### Gestión de Estudiantes
+- Visualización de estudiantes registrados.
+- Asociación con modalidad correspondiente.
+<img width="1920" height="966" alt="Sin título" src="https://github.com/user-attachments/assets/b8c26502-ab69-4f66-a04d-ba0b128dcf42" />
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
 
-**Please** read the user guide for a better explanation of how CI4 works!
+### Panel de Inicio
+- Vista general del sistema.
+- Acceso rápido a los módulos principales.
+<img width="1920" height="953" alt="image" src="https://github.com/user-attachments/assets/082bee98-af02-4a41-9759-d1bd6fdb831e" />
 
-## Repository Management
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+---
 
-## Server Requirements
+## Procesamiento Automatizado de Acuerdos
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+El sistema permite la carga de archivos PDF correspondientes a acuerdos oficiales.
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+Flujo del proceso:
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+1. Usuario carga el archivo PDF del acuerdo.
+2. El sistema envía el contenido a un modelo de IA (Copilot).
+3. El modelo extrae información estructurada (modalidad, docentes, estudiantes, fechas, etc.).
+4. Los datos procesados son validados.
+5. Se realiza la inserción automática en la base de datos relacional.
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+Este módulo reduce el ingreso manual de información y minimiza errores administrativos.
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+---
+
+## Tecnologías Utilizadas
+
+### Backend
+- PHP
+- CodeIgniter
+- Arquitectura MVC
+
+### Frontend
+- HTML5
+- CSS3
+- Bootstrap
+- JavaScript
+- AJAX
+- DataTables
+
+### Base de Datos
+- MySQL / PostgreSQL
+
+### Integración
+- Procesamiento de documentos mediante modelo de IA (Copilot)
+
+### Control de Versiones
+- Git
+
+---
+
+## Arquitectura del Sistema
+
+El proyecto está estructurado bajo el patrón Modelo-Vista-Controlador:
+
+- Models: Gestión de consultas y lógica de acceso a datos.
+- Views: Interfaces de usuario (Login, Inicio, Docentes, Estudiantes, Modalidades).
+- Controllers: Lógica de negocio, autenticación y procesamiento de archivos.
+
+---
+
+## Estructura del Proyecto
+
+```
+app/
+ ├── Controllers/
+ ├── Models/
+ ├── Views/
+public/
+ ├── assets/
+```
+
+---
+
+## Seguridad
+
+- Autenticación de usuarios.
+- Protección de rutas internas.
+- Validación de archivos antes del procesamiento.
+- Separación de responsabilidades por capas.
+
+## Estado del Proyecto
+
+Actualmente en fase de desarrollo activo. 
+Las funcionalidades principales se encuentran implementadas y en proceso de optimización y ampliación.
+
+---
+
+## Autor
+
+Jonás Samuel Salazar Torres  
+Estudiante de Ingeniería de Sistemas – Noveno semestre  
+GitHub: https://github.com/zzzam21
