@@ -130,4 +130,4 @@ Las funcionalidades principales se encuentran implementadas y en proceso de opti
 
 Jonás Samuel Salazar Torres  
 Estudiante de Ingeniería de Sistemas – Noveno semestre  
-GitHub: https://github.com/tuusuario
+GitHub: https://github.com/zzzam21
