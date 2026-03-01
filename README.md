@@ -42,7 +42,8 @@ El proyecto está desarrollado bajo arquitectura MVC utilizando CodeIgniter.
 ### Panel de Inicio
 - Vista general del sistema.
 - Acceso rápido a los módulos principales.
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/6652298f-400f-4e2b-8c43-f0720f93d8e0" />
+<img width="1920" height="953" alt="image" src="https://github.com/user-attachments/assets/082bee98-af02-4a41-9759-d1bd6fdb831e" />
+
 
 
 ---
