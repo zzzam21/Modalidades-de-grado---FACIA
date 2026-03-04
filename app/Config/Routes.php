@@ -33,7 +33,7 @@ $routes->post('/modalities/add','importPdfController::importPdf',['filter' => 'a
 $routes->get('/modalities/process','ModalitieController::processModalitie',['filter' => 'auth']);
 
     // Listar Modalidades en formato JSON
-$routes->get('/modalities/list','ModalitieController::listmodalities',['filter' => 'auth']);
+$routes->get('/modalities/getmodalities','ModalitieController::getmodalities',['filter' => 'auth']);
 
 // Configuration Routes
 $routes->get('/configuration','Config::config',['filter' => 'auth']);

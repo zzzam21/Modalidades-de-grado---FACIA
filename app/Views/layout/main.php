@@ -43,13 +43,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/2.3.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.3.7/js/dataTables.bootstrap5.js"></script>
+
     <!-- AdminLte -->
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
     <!-- Own Scripts -->
-    <script src="<?= base_url("js/tables.js") ?>"></script>
+    <!-- Sidebar -->
     <script src="<?= base_url("js/sidebar.js") ?>"></script>
+    <!-- popovers -->
     <script src="<?= base_url("js/popovers.js") ?>"></script>
-    <script src="<?= base_url("js/tooltips.js") ?>"></script>
-    <script src="<?= base_url("js/modalities/list.js") ?>"></script>
+    <!-- tooltip -->
+    <script src="<?= base_url("js/tooltip.js") ?>"></script>
+    <!-- DataTables -->
+        <!-- common -->
+    <script src="<?= base_url('js/tables/common.js') ?>"></script>
+        <!-- modalitiesDataTables -->
+    <script src="<?= base_url("js/tables/modalitiesDataTable.js") ?>"></script>
+
 </body>
 </html>

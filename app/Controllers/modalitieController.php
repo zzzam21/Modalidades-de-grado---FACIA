@@ -13,10 +13,10 @@ class modalitieController extends BaseController {
         return view('dashboard/modalities',$data);
     }
 
-    public function listmodalities(){
+    public function getmodalities(){
         $modalityModel = new \App\Models\modalitieModel();
-        $modalities = $modalityModel->getModalities();
-        return $this->response->setJSON($modalities);
+        $data = $modalityModel->findAll();
+        return $this->response->setJSON($data);
     }
 
     public function processModalitie(){

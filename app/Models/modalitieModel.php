@@ -21,6 +21,7 @@ class modalitieModel extends Model{
                                 'duration',
                                 'type_modality'];
 
+
     public function addModality($data){
         return $this->insert($data);
     }
