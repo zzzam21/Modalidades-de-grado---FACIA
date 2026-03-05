@@ -3,7 +3,6 @@ $(document).ready(function () {
     
     $('#modalityTable').DataTable( {
         ...dataTableConfig,
-        'pagingType': 'full_numbers', 
         columnDefs: [
             {
                 targets: 1,
@@ -15,10 +14,9 @@ $(document).ready(function () {
             url: 'modalities/getmodalities',
             dataSrc: ''
         },
-        
         columns: [
             { data: "modality_ID" },
-            { 
+            {
                 data: "name_modalitie",
                 render: function(data) {
                     return `
@@ -51,16 +49,5 @@ $(document).ready(function () {
         }
     });
 
-    $('#otherTables').DataTable( {
-        scrollX: true,
-        language: {
-            "paginate": {
-                "first": "<<",
-                "last": ">>",
-                "next": ">",
-                "previous": "<"
-            },
-            url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
-        }
-    });
+    $('#otherTables').DataTable();
 })

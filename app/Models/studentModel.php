@@ -40,10 +40,11 @@ class studentModel extends Model{
 
         $user_programModel = new user_programModel();
         $program = $user_programModel->userProgram($userId);
-        $data["Program"] = $program;
-        $data["Students"] = $this->select('students.*, m.type_modality as type_modalitie')
+        
+        $data = $this->select('students.*, m.type_modality as type_modalitie, p.program_name, p.sede')
                                 ->join('modalitie_student mo', 'mo.student_ID = students.student_ID')
                                 ->join('modalities m', 'm.modality_ID = mo.modality_ID')
+                                ->join('programs p', 'students.program_ID = p.program_ID')
                                 ->where('students.program_ID', $program['program_ID'])->findAll();
         return $data;
     }

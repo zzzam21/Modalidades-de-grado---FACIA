@@ -8,8 +8,6 @@ class modalitieController extends BaseController {
     public function modalities(): string {
         $data = ['tittle' => 'Modalidades',
                  'icon' => '<i class="bi bi-mortarboard"></i> Modalidades'];
-        $modalityModel = new \App\Models\modalitieModel();
-        $data['modalities'] = $modalityModel->getModalities();
         return view('dashboard/modalities',$data);
     }
 
@@ -17,6 +15,10 @@ class modalitieController extends BaseController {
         $modalityModel = new \App\Models\modalitieModel();
         $data = $modalityModel->findAll();
         return $this->response->setJSON($data);
+    }
+
+    public function addModality(){
+        return '';
     }
 
     public function processModalitie(){
@@ -110,7 +112,6 @@ class modalitieController extends BaseController {
                 $studentModalityModel->addModalitieStudent($studentModalityData);
             }
 
-
             // ASESORES
             if ($data["asesores"] && !empty($data["asesores"])){
                 foreach ($data["asesores"] as $advisor) {
@@ -129,7 +130,7 @@ class modalitieController extends BaseController {
                     }
                 }    
             }
-            
+
             // COASESORES
             if ($data["coasesores"] && !empty($data["coasesores"])){
                 foreach ($data["coasesores"] as $coadvisor) {
@@ -167,7 +168,6 @@ class modalitieController extends BaseController {
                     }
                 }
             }
-
             // Confirmar transacción
             $db->transCommit();
             session()->remove('modalityData');

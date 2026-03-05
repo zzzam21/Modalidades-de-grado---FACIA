@@ -43,10 +43,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/2.3.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.3.7/js/dataTables.bootstrap5.js"></script>
-
+    
     <!-- AdminLte -->
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-
     <!-- Own Scripts -->
     <!-- Sidebar -->
     <script src="<?= base_url("js/sidebar.js") ?>"></script>
@@ -59,6 +58,9 @@
     <script src="<?= base_url('js/tables/common.js') ?>"></script>
         <!-- modalitiesDataTables -->
     <script src="<?= base_url("js/tables/modalitiesDataTable.js") ?>"></script>
-
+        <!-- studentDataTables -->
+    <script src="<?= base_url("js/tables/studentDataTable.js") ?>"></script>
+        <!-- teachersDataTables -->
+    <script src="<?= base_url("js/tables/teachersDataTables.js") ?>"></script>
 </body>
 </html>

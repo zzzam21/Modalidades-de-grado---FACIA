@@ -15,4 +15,5 @@ class modalitie_studentModel extends Model{
     public function addModalitieStudent($data) {
         $this->insert($data);
     }
+    
 }
