@@ -3,6 +3,7 @@
 
     <div class="container text-center pt-0">
         <div class="row justify-content-between pt-4">
+
             <div class="col-auto me-auto">
                 <div class="row g-2 align-items-center">
                     <div class="col-auto">
@@ -28,6 +29,7 @@
                     <i class="bi bi-plus-lg"></i> Agregar
                 </button>
             </div>
+
         </div>
 
         <div class="mt-4">
@@ -57,18 +59,18 @@
                     <h1 class="modal-title fs-5" id="addmodalitie">Agregar Modalidad</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" enctype="multipart/form-data" action="<?= base_url("modalities/add") ?>">
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="formFile" class="form-label">Agregar acuerdo</label>
-                            <input type="file" required class="form-control" name="formFile" id="formFile">
-                        </div>
+                
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Agregar acuerdo</label>
+                        <input type="file" required class="form-control" name="formFile" id="formFile">
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button class="btn btn-success" type="submit">Guardar</button>
-                    </div>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button class="btn btn-success" id="saveModality" type="button" >Guardar</button>
+                </div>
+                
             </div>
         </div>
     </div>

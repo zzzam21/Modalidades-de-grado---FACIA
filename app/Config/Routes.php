@@ -31,19 +31,19 @@ $routes->get('/teachers/getteacher','TeachersController::getTeachers',['filter' 
 
 // $routes->post('/teachers/add','TeachersController::addTeacher',['filter' => 'auth']);
 
-
 // CRUD Modalities Routes
 $routes->get('/modalities','ModalitieController::modalities',['filter' => 'auth']);
+
     //Añadir modalidad
-// $routes->post('/modalities/addModality','ModalitieController::addModality',['filter' => 'auth']);
+    // $routes->post('/modalities/addModality','ModalitieController::addModality',['filter' => 'auth']);
 
     //Importar PDF y procesar con OpenAI
 $routes->post('/modalities/add','importPdfController::importPdf',['filter' => 'auth']);
 
     // Procesar y guardar modalidad en BD
-$routes->get('/modalities/process','ModalitieController::processModalitie',['filter' => 'auth']);
+$routes->post('/modalities/process','ModalitieController::processModalitie',['filter' => 'auth']);
 
-    // Listar Modalidades en formato JSON
+    // Listar Modalidades en formato
 $routes->get('/modalities/getmodalities','ModalitieController::getmodalities',['filter' => 'auth']);
 
 // Configuration Routes

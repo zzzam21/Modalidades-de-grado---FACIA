@@ -271,10 +271,16 @@ class importPdfController extends BaseController {
             }
             
             // Guardar los datos extraídos en sesión y redirigir al procesamiento
-            session()->set('modalityData', $data);
-            return redirect()->to('/modalities/process')->with('success', 'PDF procesado correctamente. Guardando información...');
+            return $this->response->setJSON([
+                'success' => true,
+                'data' => $data
+            ]);
+            
         } else {
-            return redirect()->to('/modalities')->with('error', 'Error al procesar el archivo PDF');
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Error al importar datos desde la IA'
+            ]);
         }
     }
 }

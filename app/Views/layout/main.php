@@ -62,5 +62,9 @@
     <script src="<?= base_url("js/tables/studentDataTable.js") ?>"></script>
         <!-- teachersDataTables -->
     <script src="<?= base_url("js/tables/teachersDataTables.js") ?>"></script>
+
+    <!-- API -->
+        <!-- ModalitiesAPI -->
+    <script src="<?= base_url("js/api/modalitiesAPI.js") ?>"></script>
 </body>
 </html>

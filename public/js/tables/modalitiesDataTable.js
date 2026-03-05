@@ -43,6 +43,7 @@ $(document).ready(function () {
                             </button>`;
                 }
             }
+            
         ],
         drawCallback: function() {
             initPopovers();

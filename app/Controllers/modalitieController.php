@@ -22,16 +22,14 @@ class modalitieController extends BaseController {
     }
 
     public function processModalitie(){
-        // Recuperar datos de la sesión (enviados por importPdfController)
-        $data = session()->get('modalityData');
+        
+        $data = $this->request->getJSON(true);
         
         if (!$data) {
-            return redirect()->to('/modalities')->with('error', 'No hay datos para procesar. Intente nuevamente.');
-        }
-        
-        // Validar campos críticos de modalidad
-        if (empty($data["modalidad"]["No_acuerdo"])) {
-            return redirect()->to('/modalities')->with('error', 'Error: Número de acuerdo no encontrado en el PDF.');
+            return $this->response->setJSON([
+                "success" => false,
+                "message" => "No se recibieron datos!"
+            ]);
         }
         
         $studentModel = new \App\Models\studentModel();
@@ -170,13 +168,19 @@ class modalitieController extends BaseController {
             }
             // Confirmar transacción
             $db->transCommit();
-            session()->remove('modalityData');
-            return redirect()->to('/modalities')->with('success', 'Modalidad agregada exitosamente.');
+            $db->transComplete();
+            
+            return $this->response->setJSON([
+                "success"=>true,
+                "message"=>"Modalidad creada correctamente"
+            ]);
 
-        } catch (Exception $e) {
+        } catch (Exception) {
             $db->transRollback();
-            log_message('error', 'Error procesando modalidad: ' . $e->getMessage());
-            return redirect()->to('/modalities')->with('error', 'Error al guardar la modalidad. Por favor, intente nuevamente.');
+            return $this->response->setJSON([
+                "success"=> false,
+                "message"=>"Error al guardar la modalidad. Por favor, intente nuevamente."
+            ]);
         }
 
     }
