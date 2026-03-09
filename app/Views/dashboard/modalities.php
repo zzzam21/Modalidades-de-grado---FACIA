@@ -53,8 +53,11 @@
 
     <!-- Modal para agregar modalidades -->
     <div class="modal fade" id="addmodalitie" tabindex="-1" aria-labelledby="addmodalitie" aria-hidden="true">
+        
         <div class="modal-dialog modal-dialog-centered">
+            
             <div class="modal-content">
+
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="addmodalitie">Agregar Modalidad</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

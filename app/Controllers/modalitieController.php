@@ -17,10 +17,6 @@ class modalitieController extends BaseController {
         return $this->response->setJSON($data);
     }
 
-    public function addModality(){
-        return '';
-    }
-
     public function processModalitie(){
         
         $data = $this->request->getJSON(true);

@@ -12,7 +12,7 @@
                 <p><?php echo session()->get('user_name');?></p>
             </div>
             <div class="col-auto ms-auto">
-                <button type="button" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                <button type="button" class="btn btn-sm btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
                 data-bs-toggle="modal" data-bs-target="#userNameModal">
                     <span class="icon">
                         <i class="bi bi-pencil"></i>
@@ -29,7 +29,7 @@
                 <p><?php echo session('user_email')?></p>
             </div>
             <div class="col-auto ms-auto">
-                <button type="button"  class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                <button type="button"  class="btn btn-sm btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
                 data-bs-toggle="modal" data-bs-target="#userEmailModal">
                     <span class="icon">
                         <i class="bi bi-pencil"></i>

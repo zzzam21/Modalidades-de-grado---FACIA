@@ -9,7 +9,9 @@ $routes->get('/', 'Home::index', ['filter' => 'auth']);
 
 $routes->get('/dashboard', 'Home::index', ['filter' => 'auth']);
 
-// Login Routes
+// -----------------------------------
+// LOGIN ROUTES
+// -----------------------------------
 $routes->get('/auth/login', 'Auth::index');
 
 $routes->post('/auth/login', 'Auth::loginPost');
@@ -17,25 +19,26 @@ $routes->post('/auth/login', 'Auth::loginPost');
     // Logout Route
 $routes->get('/auth/logout', 'Auth::logout', ['filter' => 'auth']);
 
-// CRUD Students Routes
+// -----------------------------------
+// STUDENTS ROUTES
+// -----------------------------------
 $routes->get('/students','StudentController::students',['filter' => 'auth']);
 
 $routes->get('/students/getstudents', 'studentController::getStudents',['filter' => 'auth']);
 
-//$routes->post('/students/addstudent','StudentController::addStudent',['filter' => 'auth']);
-
-// CRUD Teachers Routes
+// -----------------------------------
+// TEACHERS ROUTES
+// -----------------------------------
 $routes->get('/teachers','TeachersController::teachers',['filter' => 'auth']);
 
 $routes->get('/teachers/getteacher','TeachersController::getTeachers',['filter' => 'auth']);
 
 // $routes->post('/teachers/add','TeachersController::addTeacher',['filter' => 'auth']);
 
-// CRUD Modalities Routes
+// -----------------------------------
+// MODALITIES ROUTES
+// -----------------------------------
 $routes->get('/modalities','ModalitieController::modalities',['filter' => 'auth']);
-
-    //Añadir modalidad
-    // $routes->post('/modalities/addModality','ModalitieController::addModality',['filter' => 'auth']);
 
     //Importar PDF y procesar con OpenAI
 $routes->post('/modalities/add','importPdfController::importPdf',['filter' => 'auth']);
@@ -46,7 +49,9 @@ $routes->post('/modalities/process','ModalitieController::processModalitie',['fi
     // Listar Modalidades en formato
 $routes->get('/modalities/getmodalities','ModalitieController::getmodalities',['filter' => 'auth']);
 
-// Configuration Routes
+// -----------------------------------
+// USER ROUTES
+// -----------------------------------
 $routes->get('/configuration','Config::config',['filter' => 'auth']);
 
     // Actualizar Correo
