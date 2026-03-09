@@ -34,3 +34,41 @@ tbody td {
     vertical-align: middle;
 }
 
+.badge-custom {
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.85em;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.375rem; /* Bordes redondeados */
+}
+
+/* Colores específicos según el estado */
+.badge-aprobado {
+    background-color: #ffc107; /* Amarillo */
+    color: #212529; /* Texto oscuro para contraste */
+}
+
+.badge-en-curso {
+    background-color: #28a745; /* Verde A (Bootstrap success) */
+    color: #ffffff; /* Texto blanco */
+}
+
+.badge-cancelado {
+    background-color: #dc3545; /* Rojo */
+    color: #ffffff;
+}
+
+.badge-finalizado {
+    background-color: #20c997; /* Verde distinto (Teal) */
+    color: #ffffff;
+}
+
+/* Fallback por si llega un estado desconocido */
+.badge-default {
+    background-color: #6c757d;
+    color: #ffffff;
+}

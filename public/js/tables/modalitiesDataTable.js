@@ -31,7 +31,29 @@ $(document).ready(function () {
                 }
             },
             { data: "type_modality" },
-            { data: "status" },
+            { 
+                data: "status",
+                render: function(data, type, row) {
+                    // Si DataTables está pidiendo el dato para mostrar en pantalla (display)
+                    if (type === 'display') {
+                        // Diccionario de clases
+                        const statusClases = {
+                            'aprobada': 'badge-aprobado',
+                            'En curso': 'badge-en-curso',
+                            'Cancelado': 'badge-cancelado',
+                            'Finalizado': 'badge-finalizado'
+                        };
+
+                        // Obtenemos la clase o usamos la por defecto
+                        const claseCss = statusClases[data] || 'badge-default';
+                        
+                        // Retornamos el span con la clase dinámica
+                        return `<span class="badge-custom ${claseCss}">${data}</span>`;
+                    }
+                    // Si es para ordenamiento o búsqueda (filter/sort), retornamos el texto puro
+                    return data;
+                }
+            },
             { data: "date_approved" },
             { data: "duration" },
             { data: "date_end" },

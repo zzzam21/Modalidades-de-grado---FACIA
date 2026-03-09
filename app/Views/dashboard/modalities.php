@@ -53,7 +53,7 @@
 
     <!-- Modal para agregar modalidades -->
     <div class="modal fade" id="addmodalitie" tabindex="-1" aria-labelledby="addmodalitie" aria-hidden="true">
-        
+
         <div class="modal-dialog modal-dialog-centered">
             
             <div class="modal-content">
@@ -69,12 +69,13 @@
                         <input type="file" required class="form-control" name="formFile" id="formFile">
                     </div>
                     <div class="text-center">
-                        <div class="spinner-grow text-info d-none" id="loadingModality">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <div class="spinner-grow spinner-grow-sm text-success d-none" id="loadingModality">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button class="btn btn-success" id="saveModality" type="button" >Guardar </button>
                 </div>
