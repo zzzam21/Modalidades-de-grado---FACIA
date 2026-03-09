@@ -24,7 +24,8 @@ El proyecto está desarrollado bajo arquitectura MVC utilizando CodeIgniter.
 - Procesamiento del documento utilizando modelo de IA.
 - Extracción estructurada de información relevante.
 - Inserción automática de datos en la base de datos.
-<img width="1918" height="956" alt="image" src="https://github.com/user-attachments/assets/c13cdc23-acc7-44d1-8f3e-ecec754da1ce" />
+<img width="1919" height="974" alt="image" src="https://github.com/user-attachments/assets/b68a26a0-3b03-4f02-8e27-8a53b69ee248" />
+
 
 
 ### Gestión de Docentes
