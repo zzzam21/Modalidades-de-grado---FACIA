@@ -65,10 +65,16 @@
                         <label for="formFile" class="form-label">Agregar acuerdo</label>
                         <input type="file" required class="form-control" name="formFile" id="formFile">
                     </div>
+                    <div class="text-center">
+                        <div class="spinner-border d-none" id="loadingModality" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button class="btn btn-success" id="saveModality" type="button" >Guardar</button>
+                    <button class="btn btn-success" id="saveModality" type="button" >Guardar </button>
                 </div>
                 
             </div>

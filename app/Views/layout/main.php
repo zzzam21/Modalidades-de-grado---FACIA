@@ -44,8 +44,12 @@
     <script src="https://cdn.datatables.net/2.3.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.3.7/js/dataTables.bootstrap5.js"></script>
     
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- AdminLte -->
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    
     <!-- Own Scripts -->
     <!-- Sidebar -->
     <script src="<?= base_url("js/sidebar.js") ?>"></script>
@@ -53,6 +57,7 @@
     <script src="<?= base_url("js/popovers.js") ?>"></script>
     <!-- tooltip -->
     <script src="<?= base_url("js/tooltip.js") ?>"></script>
+
     <!-- DataTables -->
         <!-- common -->
     <script src="<?= base_url('js/tables/common.js') ?>"></script>
