@@ -66,11 +66,10 @@
                         <input type="file" required class="form-control" name="formFile" id="formFile">
                     </div>
                     <div class="text-center">
-                        <div class="spinner-border d-none" id="loadingModality" role="status">
+                        <div class="spinner-grow text-info d-none" id="loadingModality">
                             <span class="visually-hidden">Loading...</span>
                         </div>
                     </div>
-                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
