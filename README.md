@@ -20,11 +20,12 @@ El proyecto está desarrollado bajo arquitectura MVC utilizando CodeIgniter.
 
 ### Gestión de Modalidades
 - Registro automático de modalidades mediante carga de acuerdos en PDF.
-  <img width="1920" height="958" alt="image" src="https://github.com/user-attachments/assets/6618a8e2-7aa9-45be-a7f6-1fefecb7be0b" />
+<img width="1919" height="974" alt="image" src="https://github.com/user-attachments/assets/4d36e035-e25b-47d9-bbf1-b1f3c52272b2" />
 - Procesamiento del documento utilizando modelo de IA.
 - Extracción estructurada de información relevante.
 - Inserción automática de datos en la base de datos.
-<img width="1919" height="974" alt="image" src="https://github.com/user-attachments/assets/b68a26a0-3b03-4f02-8e27-8a53b69ee248" />
+<img width="1920" height="934" alt="image" src="https://github.com/user-attachments/assets/94fc258d-130e-4c8e-9153-8f849cbb4c30" />
+
 
 
 
