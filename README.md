@@ -25,8 +25,8 @@ El proyecto está desarrollado bajo arquitectura MVC utilizando CodeIgniter.
 - Extracción estructurada de información relevante.
 - Inserción automática de datos en la base de datos.
 <img width="1920" height="934" alt="image" src="https://github.com/user-attachments/assets/94fc258d-130e-4c8e-9153-8f849cbb4c30" />
-
-
+- Manejo de errores
+<img width="1920" height="962" alt="image" src="https://github.com/user-attachments/assets/b298a63d-8d54-4285-9c10-c8b07233e82c" />
 
 
 ### Gestión de Docentes
