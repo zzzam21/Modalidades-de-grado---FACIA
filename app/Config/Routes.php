@@ -46,8 +46,14 @@ $routes->post('/modalities/add','importPdfController::importPdf',['filter' => 'a
     // Procesar y guardar modalidad en BD
 $routes->post('/modalities/process','ModalitieController::processModalitie',['filter' => 'auth']);
 
-    // Listar Modalidades en formato
+    // Listar Modalidades
 $routes->get('/modalities/getmodalities','ModalitieController::getmodalities',['filter' => 'auth']);
+
+    // Vista Información Detallada Modalidad
+$routes->get('/modalities/modality/(:num)','ModalitieController::modality/$1',['filter' => 'auth']);
+
+$routes->get('/modalities/getmodality/(:num)', 'ModalitieController::getModality/$1', ['filter' => 'auth']);
+
 
 // -----------------------------------
 // USER ROUTES

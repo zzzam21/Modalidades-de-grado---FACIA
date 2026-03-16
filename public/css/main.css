@@ -48,12 +48,12 @@ tbody td {
 
 /* Colores específicos según el estado */
 .badge-aprobado {
-    background-color: #ffc107; /* Amarillo */
-    color: #212529; /* Texto oscuro para contraste */
+    background-color: #198452; /* Amarillo */
+    color: #ffffff; /* Texto oscuro para contraste */
 }
-
+/* #198452 */
 .badge-en-curso {
-    background-color: #28a745; /* Verde A (Bootstrap success) */
+    background-color: #ffc107; /* Verde A (Bootstrap success) */
     color: #ffffff; /* Texto blanco */
 }
 
@@ -63,7 +63,7 @@ tbody td {
 }
 
 .badge-finalizado {
-    background-color: #20c997; /* Verde distinto (Teal) */
+    background-color: #0E69F0; /* Verde distinto (Teal) */
     color: #ffffff;
 }
 

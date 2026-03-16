@@ -31,9 +31,9 @@ $(document).ready(function () {
                 }
             },
             { data: "type_modality" },
-            { 
+            {
                 data: "status",
-                render: function(data, type, row) {
+                render: function(data, type) {
                     // Si DataTables está pidiendo el dato para mostrar en pantalla (display)
                     if (type === 'display') {
                         // Diccionario de clases
@@ -58,14 +58,14 @@ $(document).ready(function () {
             { data: "duration" },
             { data: "date_end" },
             {
-                data: null,
-                render: function() {
-                    return `<button class="btn btn-sm btn-success">
+                data: "modality_ID",
+                render: function(data) {
+                    return `<a href="./modalities/modality/${data}" id="idGetModality" class="btn btn-sm btn-success">
                                 <i class="bi bi-eye"></i>
-                            </button>`;
+                            </a>`;
                 }
             }
-            
+            // onclick="getModality(${data})"
         ],
         drawCallback: function() {
             initPopovers();

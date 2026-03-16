@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Controllers;
+
+use CodeIgniter\HTTP\ResponseInterface;
 use Exception;
 
 class modalitieController extends BaseController {
@@ -9,6 +11,32 @@ class modalitieController extends BaseController {
         $data = ['tittle' => 'Modalidades',
                  'icon' => '<i class="bi bi-mortarboard"></i> Modalidades'];
         return view('dashboard/modalities',$data);
+    }
+
+    public function modality($id): string{
+        $data = ['tittle' => 'Modalidad',
+                'icon' => '<i class="bi bi-mortarboard"></i> Modalidad',
+                'target_id' => $id];
+        return view('dashboard/Modules/modality', $data);
+    }
+
+    public function getModality($id): ResponseInterface{ 
+        
+        $modalityModel = new \App\Models\modalitieModel();
+        // Buscamos solo el registro que coincida con el ID
+        $data = $modalityModel->find($id);
+
+        if ($data) {
+            return $this->response->setJSON([
+                'success' => true,
+                'data'    => $data
+            ]);
+        }
+
+        return $this->response->setStatusCode(404)->setJSON([
+            'success' => false,
+            'message' => 'Modalidad no encontrada.'
+        ]);
     }
 
     public function getmodalities(){

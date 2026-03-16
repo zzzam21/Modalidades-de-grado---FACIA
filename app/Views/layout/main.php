@@ -71,5 +71,6 @@
     <!-- API -->
         <!-- ModalitiesAPI -->
     <script src="<?= base_url("js/api/modalitiesAPI.js") ?>"></script>
+    
 </body>
 </html>
