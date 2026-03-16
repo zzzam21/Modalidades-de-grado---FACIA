@@ -20,11 +20,13 @@ El proyecto está desarrollado bajo arquitectura MVC utilizando CodeIgniter.
 
 ### Gestión de Modalidades
 - Registro automático de modalidades mediante carga de acuerdos en PDF.
-  <img width="1920" height="958" alt="image" src="https://github.com/user-attachments/assets/6618a8e2-7aa9-45be-a7f6-1fefecb7be0b" />
+<img width="1919" height="974" alt="image" src="https://github.com/user-attachments/assets/4d36e035-e25b-47d9-bbf1-b1f3c52272b2" />
 - Procesamiento del documento utilizando modelo de IA.
 - Extracción estructurada de información relevante.
 - Inserción automática de datos en la base de datos.
-<img width="1918" height="956" alt="image" src="https://github.com/user-attachments/assets/c13cdc23-acc7-44d1-8f3e-ecec754da1ce" />
+<img width="1920" height="934" alt="image" src="https://github.com/user-attachments/assets/94fc258d-130e-4c8e-9153-8f849cbb4c30" />
+- Manejo de errores
+<img width="1920" height="962" alt="image" src="https://github.com/user-attachments/assets/b298a63d-8d54-4285-9c10-c8b07233e82c" />
 
 
 ### Gestión de Docentes
@@ -42,7 +44,8 @@ El proyecto está desarrollado bajo arquitectura MVC utilizando CodeIgniter.
 ### Panel de Inicio
 - Vista general del sistema.
 - Acceso rápido a los módulos principales.
-<img width="1920" height="953" alt="image" src="https://github.com/user-attachments/assets/082bee98-af02-4a41-9759-d1bd6fdb831e" />
+<img width="1898" height="978" alt="image" src="https://github.com/user-attachments/assets/96b73453-c56c-4f39-9771-3a2a143f744e" />
+
 
 
 
