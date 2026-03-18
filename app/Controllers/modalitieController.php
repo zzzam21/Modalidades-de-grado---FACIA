@@ -16,20 +16,23 @@ class modalitieController extends BaseController {
     public function modality($id): string{
         $data = ['tittle' => 'Modalidad',
                 'icon' => '<i class="bi bi-mortarboard"></i> Modalidad',
-                'target_id' => $id];
+                'id' => $id];
         return view('dashboard/Modules/modality', $data);
     }
 
     public function getModality($id): ResponseInterface{ 
         
         $modalityModel = new \App\Models\modalitieModel();
+        $studentModel = new \App\Models\studentModel();
         // Buscamos solo el registro que coincida con el ID
         $data = $modalityModel->find($id);
+        $estudiante = $studentModel->getStudentByModality($id);
 
         if ($data) {
             return $this->response->setJSON([
                 'success' => true,
-                'data'    => $data
+                'data'    => $data,
+                'estudiante' => $estudiante
             ]);
         }
 

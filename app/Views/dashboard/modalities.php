@@ -1,6 +1,7 @@
 <?php echo $this->extend('layout/main'); ?>
 <?php echo $this->section('content'); ?>    
 
+<div id="app" data-view="modalities">
     <div class="container text-center pt-0">
         <div class="row justify-content-between pt-4">
 
@@ -50,7 +51,7 @@
             </table>
         </div>
     </div>
-
+</div>
     <!-- Modal para agregar modalidades -->
     <div class="modal fade" id="addmodalitie" tabindex="-1" aria-labelledby="addmodalitie" aria-hidden="true">
 

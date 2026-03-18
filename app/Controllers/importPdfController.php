@@ -10,7 +10,7 @@ class importPdfController extends BaseController {
         $file = $this->request->getFile('formFile');
 
         if ($file && $file->isValid() && !$file->hasMoved()) {
-
+ 
             $parser = new \Smalot\PdfParser\Parser();
 
             $pdf = $parser->parseFile($file->getTempName());

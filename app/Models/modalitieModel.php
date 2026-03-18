@@ -46,4 +46,5 @@ class modalitieModel extends Model{
         }
         return (array) $modality->goal;
     }
+
 }

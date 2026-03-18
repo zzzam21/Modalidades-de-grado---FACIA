@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 use CodeIgniter\HTTP\ResponseInterface;
-
-
 class teachersController extends BaseController {
     
     public function teachers(): string{

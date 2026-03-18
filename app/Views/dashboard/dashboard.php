@@ -1,6 +1,7 @@
 <?php echo $this->extend('layout/main'); ?>
 <?php echo $this->section('content'); ?>
     
+<div id="app" data-view="dashboard">
     <div class="row justify-content-center g-2 pt-4">
         <div class="col-md-4 col-sm-4">
             <div class="small-box bg-info" >
@@ -63,4 +64,6 @@
             </thead>
         </table>
     </div>
+</div>
+    
 <?php echo $this->endSection(); ?>
