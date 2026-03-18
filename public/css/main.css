@@ -40,7 +40,7 @@ tbody td {
     gap: 6px;
 
     padding: 6px 12px;
-    border-radius: 50px; /* pill */
+    border-radius: 50px; 
 
     font-size: 0.75rem;
     font-weight: 600;
@@ -49,35 +49,34 @@ tbody td {
     border: 1px solid transparent;
 }
 
-/* 🟢 APROBADO */
+
 .badge-aprobado {
     background-color: rgba(25, 132, 82, 0.1);
     color: #198452;
     border-color: rgba(25, 132, 82, 0.3);
 }
 
-/* 🟡 EN CURSO */
+
 .badge-en-curso {
     background-color: rgba(255, 193, 7, 0.15);
     color: #b58100;
     border-color: rgba(255, 193, 7, 0.4);
 }
 
-/* 🔴 CANCELADO */
+
 .badge-cancelado {
     background-color: rgba(220, 53, 69, 0.1);
     color: #dc3545;
     border-color: rgba(220, 53, 69, 0.3);
 }
 
-/* 🔵 FINALIZADO */
+
 .badge-finalizado {
     background-color: rgba(18, 98, 219, 0.1);
     color: #1262db;
     border-color: rgba(18, 98, 219, 0.3);
 }
 
-/* Fallback por si llega un estado desconocido */
 .badge-default {
     background-color: #6c757d;
     color: #ffffff;
