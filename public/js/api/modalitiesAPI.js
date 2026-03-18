@@ -133,7 +133,10 @@ async function getModality(id) {
             const estadoElt = document.getElementById('det_estado');
             const badgeClass = statusClasses[mod.status] || "bg-seconday";
             estadoElt.innerHTML = `<span class="badge-custom ${badgeClass} p-2">${mod.status}</span>`;
-            renderParticipantes(result.estudiante);
+            renderStudents(result.student);
+            renderAsesor(result.asesor);
+            renderCoAsesor(result.coasesor);
+            renderJurado(result.jurado);
             console.log(result)
         }
     }catch(e) {
@@ -150,8 +153,8 @@ function serverError(){
     })
 }
 
-function renderParticipantes(data) {
-    // ===== ESTUDIANTES =====
+function renderStudents(data) {
+
     const listaEstudiantes = document.getElementById("listaEstudiantes");
     listaEstudiantes.innerHTML = "";
 
@@ -167,34 +170,38 @@ function renderParticipantes(data) {
             `;
         });
     }
+}
 
-    // // ===== ASESOR =====
-    // const asesor = document.getElementById("det_asesor");
-    // asesor.innerHTML = data.asesor 
-    //     ? `<p class="mb-1 fw-semibold">${data.asesor.nombre}</p>
-    //        <small class="text-muted">${data.asesor.area}</small>`
-    //     : `<span class="text-muted">No asignado</span>`;
+function renderAsesor(data) {
+    const asesor = document.getElementById("det_asesor");
+    
+    asesor.innerHTML = data
+        ? `<p class="mb-1 fw-semibold">${data.name}</p>
+           <small class="text-muted">${data.role}</small>`
+        : `<span class="text-muted">No asignado</span>`;
+}
 
-    // // ===== COASESOR =====
-    // const coasesor = document.getElementById("det_coasesor");
-    // coasesor.innerHTML = data.coasesor 
-    //     ? `<p class="mb-1 fw-semibold">${data.coasesor.nombre}</p>
-    //        <small class="text-muted">${data.coasesor.area}</small>`
-    //     : `<span class="text-muted">No asignado</span>`;
+function renderCoAsesor(data) {
+    const coasesor = document.getElementById("det_coasesor");
+    coasesor.innerHTML = data 
+        ? `<p class="mb-1 fw-semibold">${data.name}</p>
+           <small class="text-muted">${data.role}</small>`
+        : `<span class="text-muted">No asignado</span>`;
+}
 
-    // // ===== JURADOS =====
-    // const listaJurados = document.getElementById("listaJurados");
-    // listaJurados.innerHTML = "";
+function renderJurado(data){
+    const jurado = document.getElementById('listJurados');
+    listaJurados.innerHTML = "";
 
-    // if (data.jurados.length === 0) {
-    //     listaJurados.innerHTML = `<li class="list-group-item text-muted">Sin jurados</li>`;
-    // } else {
-    //     data.jurados.forEach(j => {
-    //         listaJurados.innerHTML += `
-    //             <li class="list-group-item">
-    //                 ${j.nombre}
-    //             </li>
-    //         `;
-    //     });
-    // }
+    if (data.length === 0) {
+        listaJurados.innerHTML = `<li class="list-group-item text-muted">Sin jurados</li>`;
+    } else {
+        data.forEach(j => {
+            listaJurados.innerHTML += `
+                <li class="list-group-item">
+                    ${j.name}
+                </li>
+            `;
+        });
+    }
 }

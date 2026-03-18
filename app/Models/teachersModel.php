@@ -79,4 +79,27 @@ class teachersModel extends Model{
     public function addTeacher($data){
         return $this->insert($data);
     }
+
+    public function getAsesor($id) {
+        return $this->select('teachers.*, mt.role')
+                    ->join('modalitie_teacher as mt', 'mt.teacher_ID = teachers.teacher_ID')
+                    ->where('mt.modality_ID',$id)
+                    ->where('mt.role','Asesor')
+                    ->first();
+    }
+
+    public function getCoAsesor($id) {
+        return $this->select('teachers.*, mt.role')
+                    ->join('modalitie_teacher as mt', 'mt.teacher_ID = teachers.teacher_ID')
+                    ->where('mt.modality_ID',$id)
+                    ->where('mt.role','Coasesor')
+                    ->first();
+    }
+    public function getJurado($id) {
+        return $this->select('teachers.*, mt.role')
+                    ->join('modalitie_teacher as mt', 'mt.teacher_ID = teachers.teacher_ID')
+                    ->where('mt.modality_ID',$id)
+                    ->where('mt.role','Jurado')
+                    ->findAll();
+    }
 }

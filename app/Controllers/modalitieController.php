@@ -24,15 +24,22 @@ class modalitieController extends BaseController {
         
         $modalityModel = new \App\Models\modalitieModel();
         $studentModel = new \App\Models\studentModel();
-        // Buscamos solo el registro que coincida con el ID
+        $asesorModel = new \App\Models\teachersModel();
+        
         $data = $modalityModel->find($id);
-        $estudiante = $studentModel->getStudentByModality($id);
+        $student = $studentModel->getStudentByModality($id);
+        $asesor = $asesorModel->getAsesor($id);
+        $coasesor = $asesorModel->getCoAsesor($id);
+        $jurado = $asesorModel->getJurado($id);
 
         if ($data) {
             return $this->response->setJSON([
                 'success' => true,
                 'data'    => $data,
-                'estudiante' => $estudiante
+                'student' => $student,
+                'asesor' => $asesor,
+                'coasesor' => $coasesor,
+                'jurado' => $jurado
             ]);
         }
 

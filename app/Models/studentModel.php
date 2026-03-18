@@ -51,10 +51,9 @@ class studentModel extends Model{
 
     public function getStudentByModality($id){
         if ($id){
-            $data = $this->select('students.*')
+            return $this->select('students.*')
                          ->join('modalitie_student ms', 'ms.student_ID = students.student_ID')
                          ->where('ms.modality_ID',$id)->findAll();
-            return $data;
         }
     }
 }

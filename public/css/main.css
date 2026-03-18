@@ -35,36 +35,46 @@ tbody td {
 }
 
 .badge-custom {
-    display: inline-block;
-    padding: 0.35em 0.65em;
-    font-size: 0.85em;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 6px 12px;
+    border-radius: 50px; /* pill */
+
+    font-size: 0.75rem;
     font-weight: 600;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: 0.375rem; /* Bordes redondeados */
+    letter-spacing: 0.5px;
+
+    border: 1px solid transparent;
 }
 
-/* Colores específicos según el estado */
+/* 🟢 APROBADO */
 .badge-aprobado {
-    background-color: #198452; /* Amarillo */
-    color: #ffffff; /* Texto oscuro para contraste */
+    background-color: rgba(25, 132, 82, 0.1);
+    color: #198452;
+    border-color: rgba(25, 132, 82, 0.3);
 }
-/* #198452 */
+
+/* 🟡 EN CURSO */
 .badge-en-curso {
-    background-color: #ffc107; /* Verde A (Bootstrap success) */
-    color: #ffffff; /* Texto blanco */
+    background-color: rgba(255, 193, 7, 0.15);
+    color: #b58100;
+    border-color: rgba(255, 193, 7, 0.4);
 }
 
+/* 🔴 CANCELADO */
 .badge-cancelado {
-    background-color: #dc3545; /* Rojo */
-    color: #ffffff;
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border-color: rgba(220, 53, 69, 0.3);
 }
 
+/* 🔵 FINALIZADO */
 .badge-finalizado {
-    background-color: #1262db;
-    color: #ffffff;
+    background-color: rgba(18, 98, 219, 0.1);
+    color: #1262db;
+    border-color: rgba(18, 98, 219, 0.3);
 }
 
 /* Fallback por si llega un estado desconocido */
