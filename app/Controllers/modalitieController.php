@@ -73,8 +73,8 @@ class modalitieController extends BaseController {
         $modality_teacherModel = new \App\Models\modalitie_teacherModel();
 
         try {
+
             $db = \Config\Database::connect();
-            
             // Iniciar transacción
             $db->transStart();
 
@@ -138,21 +138,21 @@ class modalitieController extends BaseController {
                     'modality_ID' => $no_acuerdo,
                     'student_ID' => $document
                 ];
-                
+
                 // Asociar estudiante con modalidad
                 $studentModel->addStudent($studentData);
                 $studentModalityModel->addModalitieStudent($studentModalityData);
             }
 
             // ASESORES
-            if ($data["asesores"] && !empty($data["asesores"])){
+            if ($data["asesores"] && !empty($data["asesores"])) {
                 foreach ($data["asesores"] as $advisor) {
                     $advisor_name = $advisor["nombre"];
                     
                     if ($advisor_name) {
                         // Obtener o crear docente
                         $teacher_ID = $teacherModel->getOrCreateTeacher($advisor_name);
-                            
+
                         // Asociar a la modalidad con rol de Asesor
                         $modality_teacherModel->associateTeacher(
                             $teacher_ID,
@@ -160,18 +160,18 @@ class modalitieController extends BaseController {
                             'Asesor'
                         );
                     }
-                }    
+                }
             }
 
             // COASESORES
             if ($data["coasesores"] && !empty($data["coasesores"])){
                 foreach ($data["coasesores"] as $coadvisor) {
                     $coadvisor_name = $coadvisor["nombre"];
-                    
+
                     if ($coadvisor_name) {
                         // Obtener o crear docente
                         $teacher_ID = $teacherModel->getOrCreateTeacher($coadvisor_name);
-                        
+
                         // Asociar a la modalidad con rol de Coasesor
                         $modality_teacherModel->associateTeacher(
                             $teacher_ID, 
@@ -200,6 +200,7 @@ class modalitieController extends BaseController {
                     }
                 }
             }
+
             // Confirmar transacción
             $db->transCommit();
             $db->transComplete();
@@ -216,7 +217,5 @@ class modalitieController extends BaseController {
                 "message"=>"Error al guardar la modalidad. Por favor, intente nuevamente."
             ]);
         }
-
     }
-
 }

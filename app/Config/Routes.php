@@ -61,4 +61,4 @@ $routes->get('/modalities/getmodality/(:num)', 'ModalitieController::getModality
 $routes->get('/configuration','Config::config',['filter' => 'auth']);
 
     // Actualizar Correo
-$routes->post('/configuration/updateName','Config::updateUser',['filter'=> 'auth']);
+$routes->put('/configuration/updateName', 'Config::updateUser', ['filter'=> 'auth']);

@@ -2,68 +2,86 @@
 <?php echo $this->section('content'); ?>
     
 <div id="app" data-view="dashboard">
-    <div class="row justify-content-center g-2 pt-4">
-        <div class="col-md-4 col-sm-4">
-            <div class="small-box bg-info" >
+
+    <!-- CARDS -->
+    <div class="row justify-content-center g-3 pt-3">
+
+        <!-- Estudiantes -->
+        <div class="col-12 col-sm-6 col-md-4">
+            <div class="small-box bg-info h-100">
                 <div class="inner">
                     <h3><?= $countStudents ?></h3>
-                    <h5>Estudiantes Activos</h5>
+                    <p class="mb-0">Estudiantes Activos</p>
                 </div>
                 <div class="icon">
                     <i class="bi bi-backpack3-fill"></i>
                 </div>  
                 <a href="<?= base_url("students") ?>" class="small-box-footer">
-                    Mirar Estudiantes <i class="bi bi-arrow-right-circle-fill"></i>
+                    Ver Estudiantes <i class="bi bi-arrow-right-circle-fill"></i>
                 </a>
             </div>
         </div>
-        <div class="col-md-4 col-sm-4">
-            <div class="small-box bg-info" >
+
+        <!-- Modalidades -->
+        <div class="col-12 col-sm-6 col-md-4">
+            <div class="small-box bg-info h-100">
                 <div class="inner">
                     <h3><?= $countModalities ?></h3>
-                    <h5>Modalidades Vigentes</h5>
+                    <p class="mb-0">Modalidades Vigentes</p>
                 </div>
-                <div class="icon">
+                <div class="icon icon-fluid">
                     <i class="bi bi-mortarboard"></i>
                 </div>  
                 <a href="<?= base_url("modalities") ?>" class="small-box-footer">
-                    Mirar Modalidades <i class="bi bi-arrow-right-circle-fill"></i>
+                    Ver Modalidades <i class="bi bi-arrow-right-circle-fill"></i>
                 </a>
             </div>
         </div>
-        <div class="col-md-4 col-sm-4">
-            <div class="small-box bg-info" >
+
+        <!-- Docentes -->
+        <div class="col-12 col-sm-6 col-md-4">
+            <div class="small-box bg-info h-100">
                 <div class="inner">
                     <h3><?= $countTeachers ?></h3>
-                    <h5>Docentes Asignados</h5>
+                    <p class="mb-0">Docentes Asignados</p>
                 </div>
                 <div class="icon">
                     <i class="bi bi-clipboard-check"></i>
                 </div>  
                 <a href="<?= base_url("teachers") ?>" class="small-box-footer">
-                    Mirar Docentes <i class="bi bi-arrow-right-circle-fill"></i>
+                    Ver Docentes <i class="bi bi-arrow-right-circle-fill"></i>
                 </a>
             </div>
         </div>
+
     </div>
 
-    <div class="table-responsive mt-4">
-        <h4 class="text-center"><b>MODALIDADES DE GRADO</b></h4>
-        <table class="table display responsive" id="modalityTable">
-            <thead>
-                <tr>
-                    <th># Acuerdo</th>
-                    <th>Nombre Modalidad</th>
-                    <th>Modalidad</th>
-                    <th>Estado</th>
-                    <th>Fecha Inicio</th>
-                    <th>Duración</th>
-                    <th>Final Estimado</th>
-                    <th></th>
-                </tr>
-            </thead>
-        </table>
+    <div class="mt-4">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3 gap-2">
+            <h4 class="mb-0 text-center text-md-start fw-bold">
+                MODALIDADES DE GRADO
+            </h4>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table w-100" id="modalityTable">
+                <thead class="table-light">
+                    <tr>
+                        <th></th>
+                        <th># Acuerdo</th>
+                        <th>Nombre Modalidad</th>
+                        <th>Modalidad</th>
+                        <th>Estado</th>
+                        <th>Fecha Inicio</th>
+                        <th>Duración</th>
+                        <th>Final Estimado</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
     </div>
+
 </div>
     
 <?php echo $this->endSection(); ?>

@@ -1,23 +1,44 @@
-<nav class="navbar bg-body-tertiary">
-  <div class="container-fluid" >
-      
-    <span class="navbar-text" style="font-size:large;"><b><?php echo $icon;?></b></span>
-      
-    <div class="d-flex">
-        <span class="navbar-text me-3">
-            <b> <?php echo session()->get('user_name');?> 
-            <img src="<?= base_url("img/header/icono-usuario.webp") ?>" width="25" height="25" alt="UserIcon" 
-                data-bs-toggle="popover" 
-                data-bs-title="Perfil"
-                data-bs-content="Haz clic para ver tu perfil"
-                data-bs-placement="bottom"
-                role="button"
-                style="cursor: pointer;">
-            </b>
+<nav class="navbar navbar-expand-lg bg-body-tertiary px-2 px-md-3">
+    <div class="container-fluid">
+
+        <span class="navbar-text fw-bold fs-6 fs-md-5 text-truncate">
+            <?php echo $icon; ?>
         </span>
-        <button type="button" class="btn btn-outline-danger ms-1" width="5px" onclick="window.location.href='<?= base_url('auth/logout') ?>'">
+
+        
+        <div class="d-flex align-items-center gap-2 gap-md-3 flex-shrink-0">
+
+            
+            <span class="navbar-text d-flex align-items-center gap-2 text-truncate">
+
+                
+                <span id="currentUser" class="fw-semibold d-none d-sm-inline">
+                    <?= esc(session()->get('user_name')); ?>
+                </span>
+
+                
+                <img 
+                    src="<?= base_url("img/header/icono-usuario.webp") ?>" 
+                    class="img-fluid rounded-circle"
+                    style="width: 28px; height: 28px; object-fit: cover; cursor: pointer;"
+                    alt="Usuario"
+                    data-bs-toggle="popover" 
+                    data-bs-title="Perfil"
+                    data-bs-content="Haz clic para ver tu perfil"
+                    data-bs-placement="bottom"
+                    role="button"
+                >
+            </span>
+
+            
+            <button 
+                type="button" 
+                class="btn btn-outline-danger btn-sm d-flex align-items-center justify-content-center"
+                onclick="window.location.href='<?= base_url('auth/logout') ?>'"
+            >
                 <i class="bi bi-box-arrow-right"></i>
-        </button>
+            </button>
+
+        </div>
     </div>
-  </div>
 </nav>

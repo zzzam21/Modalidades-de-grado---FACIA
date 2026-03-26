@@ -1,13 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const path = window.location.pathname;
-
-    if (path.includes('addmodalitie')){
-        const button = document.getElementById("saveModality");
-        button.addEventListener("click", postModalitie);
-    }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
     const app = document.getElementById("app");
     const view = app.dataset.view;
 
@@ -17,6 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (modalityId.value) {
                     getModality(modalityId.value);
                 }
+            break;
+        case "modalities":
+            const button = document.getElementById("saveModality");
+            button.addEventListener("click", postModalitie);
+        default:
             break;
     }
 })
@@ -81,11 +77,7 @@ async function postModalitie() {
         $("#addmodalitie").modal("hide");
         spinner.classList.add('d-none');
         console.error(error);
-        Swal.fire({
-            title: "Error del Servidor!",
-            icon: "error",
-            draggable: true
-        });
+        serverError();
     }
 }
 

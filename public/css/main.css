@@ -30,9 +30,6 @@ main.content {
     flex: 1;
 }
 
-tbody td {
-    vertical-align: middle;
-}
 
 .badge-custom {
     display: inline-flex;
