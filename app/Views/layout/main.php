@@ -21,6 +21,7 @@
     <?= $this->include('layout/sidebar') ?>
     
     <div class="page-wrapper d-flex">
+
         <div class="main-content">
             <header>
                 <?= $this->include('layout/header') ?>
@@ -37,6 +38,7 @@
                 <?= $this->include('layout/footer') ?>
             </footer>
         </div>
+        
     </div>
 
     <!-- BootStrap -->

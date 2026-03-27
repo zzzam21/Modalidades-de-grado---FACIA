@@ -60,5 +60,7 @@ $routes->get('/modalities/getmodality/(:num)', 'ModalitieController::getModality
 // -----------------------------------
 $routes->get('/configuration','Config::config',['filter' => 'auth']);
 
-    // Actualizar Correo
-$routes->put('/configuration/updateName', 'Config::updateUser', ['filter'=> 'auth']);
+    // Actualizar Nombre de usuario
+$routes->put('/configuration/updateName', 'Config::updateUser', ['filter' => 'auth']);
+    // Actualizar Email de usuario
+$routes->put('/configuration/updateEmail', 'Config::updateEmail', ['filter' => 'auth']);

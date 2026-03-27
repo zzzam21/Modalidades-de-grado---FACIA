@@ -12,4 +12,8 @@ class UserModel extends Model{
     protected $allowedFields = ['name', 'email', 'passwordu'];
 
     protected $returnType = 'array';
+
+    function getUserById($id){
+        return $this->where('id', $id);
+    }
 }

@@ -7,14 +7,18 @@
         <h4>Usuario</h4>
         <img class="pb-3" src="<?= base_url("img/header/icono-usuario.webp") ?>" alt="Usuario" width="30%;">
         <div class="row g-3">
+            
             <div class="col-auto">
                 <p style="font-size: 17px;"><b>Nombre:</b></p>
             </div>
-            <div class="col-auto">
-                <p><?= session()->get('user_name');?></p>
-            </div>
-            <div class="col-auto ms-auto">
 
+            <div class="col-auto">
+                <span id="currentUser">
+                    <?= esc(session()->get('user_name')); ?>
+                </span>
+            </div>
+
+            <div class="col-auto ms-auto">
                 <button type="button" class="btn btn-sm btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
                 data-bs-toggle="modal" data-bs-target="#userNameModal">
                     <span class="icon">
@@ -22,6 +26,7 @@
                     </span>
                 </button>
             </div>
+
         </div>
 
         <div class="row g-3">
@@ -76,15 +81,18 @@
                 <h1 class="modal-title fs-5" id="userEmailModalLabel">Actualizar Correo</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <div class="modal-body">
                 <div class="mb-3">
                     <label for="userEmailInputEmail" class="form-label">Correo</label>
                     <input type="text" class="form-control" id="userEmailInputEmail" value="<?php echo session()->get("user_email") ?>">
                 </div>
             </div>
+
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button"  class="btn btn-success">Guardar</button>
+                <button id="saveEmail" class="btn btn-success">
+                    <i class="bi bi-floppy"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -101,12 +109,12 @@
 
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="passwordActualEmail" class="form-label">Contraseña actual</label>
-                    <input type="password" class="form-control" id="passwordActualEmail" placeholder="*********" autocomplete="current-password">
+                    <label for="currentPassword" class="form-label">Contraseña actual</label>
+                    <input type="password" class="form-control" id="currentPassword" placeholder="*********" autocomplete="current-password">
                 </div>
                 <div class="mb-3">
-                    <label for="passwordNewEmail" class="form-label">Nueva Contraseña</label>
-                    <input type="password" class="form-control" id="passwordNewEmail" placeholder="********" autocomplete="new-password">
+                    <label for="NewPassword" class="form-label">Nueva Contraseña</label>
+                    <input type="password" class="form-control" id="NewPassword" placeholder="********" autocomplete="new-password">
                 </div>
                 <div class="mb-3">
                     <label for="passwordConfirmEmail" class="form-label">Confirmar Contraseña</label>

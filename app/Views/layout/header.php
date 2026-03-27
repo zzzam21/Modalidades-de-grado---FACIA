@@ -10,13 +10,11 @@
 
             
             <span class="navbar-text d-flex align-items-center gap-2 text-truncate">
-
                 
                 <span id="currentUser" class="fw-semibold d-none d-sm-inline">
                     <?= esc(session()->get('user_name')); ?>
                 </span>
 
-                
                 <img 
                     src="<?= base_url("img/header/icono-usuario.webp") ?>" 
                     class="img-fluid rounded-circle"
@@ -29,7 +27,6 @@
                     role="button"
                 >
             </span>
-
             
             <button 
                 type="button" 
