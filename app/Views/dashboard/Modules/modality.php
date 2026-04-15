@@ -6,6 +6,7 @@
 <div class="pt-3" id="app" data-view="modality-detail">
 
     <div class="card shadow-sm border-0 mb-4">
+        
         <div class="card-header bg-white py-3">
             <div class="d-flex align-items-center justify-content-between">
                 <h4 class="mb-0 fw-bold">Detalle de Modalidad de Grado</h4>
@@ -87,13 +88,7 @@
                         data-bs-parent="#accordionParticipantes">
 
                         <ul class="list-group list-group-flush" id="listaEstudiantes">
-                            <!-- JS dinámico -->
-                            <!-- Ejemplo:
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Juan Pérez
-                                <span class="badge bg-secondary">Código: 12345</span>
-                            </li>
-                            -->
+                            
                         </ul>
 
                     </div>
@@ -111,11 +106,6 @@
                         data-bs-parent="#accordionParticipantes">
 
                         <div class="p-3" id="det_asesor">
-                            <!-- JS dinámico -->
-                            <!-- Ejemplo:
-                            <p class="mb-1 fw-semibold">Dr. Carlos Gómez</p>
-                            <small class="text-muted">Ingeniería de Sistemas</small>
-                            -->
                         </div>
 
                     </div>

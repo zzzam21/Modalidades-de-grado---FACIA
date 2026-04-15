@@ -79,6 +79,10 @@
     <script src="<?= base_url("js/api/modalitiesAPI.js") ?>"></script>
         <!-- UserAPI -->
     <script src="<?= base_url("js/api/configCRUD.js") ?>"></script>
+        <!-- studentAPI -->
+    <script src="<?= base_url("js/api/studentAPI.js") ?>"></script>
+        <!-- teacherAPI -->
+    <script src="<?= base_url("js/api/teacherAPI.js") ?>"></script>
     
 </body>
 </html>

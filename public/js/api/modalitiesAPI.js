@@ -83,7 +83,6 @@ async function postModalitie() {
 
 async function getModality(id) {
     try {
-
         const response = await fetch(
             `../getmodality/${id}`,
             {
@@ -122,6 +121,7 @@ async function getModality(id) {
                 'Cancelado': 'badge-cancelado',
                 'Finalizado': 'badge-finalizado'
             };
+            
             const estadoElt = document.getElementById('det_estado');
             const badgeClass = statusClasses[mod.status] || "bg-seconday";
             estadoElt.innerHTML = `<span class="badge-custom ${badgeClass} p-2">${mod.status}</span>`;
@@ -129,7 +129,6 @@ async function getModality(id) {
             renderAsesor(result.asesor);
             renderCoAsesor(result.coasesor);
             renderJurado(result.jurado);
-            console.log(result)
         }
     }catch(e) {
         console.error("Fetch error:", e);

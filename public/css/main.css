@@ -15,8 +15,7 @@ footer {
 }
 
 .text-truncate-modal {
-    max-width: 200px !important;
-    white-space: nowrap; 
+    max-width: 250px !important;
     overflow: hidden; 
     text-overflow: ellipsis;
 }
@@ -77,4 +76,18 @@ main.content {
 .badge-default {
     background-color: #6c757d;
     color: #ffffff;
+}
+/* Evita que el texto rompa el diseño */
+table.dataTable td {
+    white-space: nowrap;
+}
+
+/* Mejora visual en mobile */
+.dtr-details {
+    width: 100%;
+}
+
+/* Botón expandir más visible */
+td.dtr-control {
+    cursor: pointer;
 }

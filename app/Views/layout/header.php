@@ -1,11 +1,11 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary px-2 px-md-3">
     <div class="container-fluid">
 
-        <span class="navbar-text fw-bold fs-6 fs-md-5 text-truncate">
-            <?php echo $icon; ?>
+        <span class="navbar-text fs-6 fs-md-5 text-truncate" id="header-title">
+            <span class="fw-bold"><?php echo $icon; ?></span>
+            <span id="nombre-docente"></span>
         </span>
 
-        
         <div class="d-flex align-items-center gap-2 gap-md-3 flex-shrink-0">
 
             

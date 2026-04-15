@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const email_btn = document.getElementById("saveEmail");
             email_btn.addEventListener("click", saveEmail);
 
+            const password_btn = document.getElementById("savePassword");
+            password_btn.addEventListener("click", savePassword);
+
             break;
         default:
             break;
@@ -32,14 +35,13 @@ async function saveUser() {
     });
 
     const data = await response.json();
-
+    
     if(!response.ok){
         Messages(data.status,data.message);
         throw new Error(data.message);
     }
-
-    document.getElementById('currentUser').textContent = userName;
-    console.log(document.getElementById("currentUser"));
+    document.getElementById("currentUser").textContent = userName;
+    document.getElementById("currentUserName").textContent = userName;
     $('#userNameModal').modal("hide");
     Messages(data.status, data.message);
 
@@ -65,33 +67,40 @@ async function saveEmail() {
         throw new Error(data.message);
     }
     
+    
+    document.getElementById("currentUserEmail").textContent = userEmail;
     $('#userEmailModal').modal("hide");
     Messages(data.status, data.message);
 
 }
 
+async function savePassword() {
+    
+    const currentPassword = document.getElementById("currentPassword").value;
+    const newPassword = document.getElementById("NewPassword").value;
+    const confirmPassword = document.getElementById("passwordConfirmEmail").value;
 
-async function getPassword(){
-    const currentPassword = document.getElementById("currentPassword");
-    const newPassword = document.getElementById("NewPassword");
-    const confirmPassword = document.getElementById("passwordConfirmEmail");
-
-    const response = await fetch(`./configuration/getUser`,{
-        method: 'GET',
+    const response = await fetch(`./configuration/updatePassword`, {
+        method: 'PUT',
         headers: {
-            "Content-type": "application/json"
-        }
-    })
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            currentPassword: currentPassword,
+            newPassword: newPassword,
+            confirmPassword: confirmPassword
+        })
+    });
 
-    data = response.json();
+    const data = await response.json();
 
-    if(!response){
-        Messages(data.status, data.Description);
-        throw new Error(data.Description);
+    if(!response.ok){
+        Messages(data.status,data.message);
+        throw new Error(data.message);
     }
 
     $('#passwordModal').modal("hide");
-    Messages(data.status, data.Description);
+    Messages(data.status,data.message);
 }
 
 function Messages(status, Description) {

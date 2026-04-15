@@ -13,7 +13,7 @@ class UserModel extends Model{
 
     protected $returnType = 'array';
 
-    function getUserById($id){
-        return $this->where('id', $id);
+    function getUserById($id) {
+        return $this->where('id', $id)->first();
     }
 }

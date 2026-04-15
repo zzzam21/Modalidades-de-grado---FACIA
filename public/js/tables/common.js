@@ -14,8 +14,8 @@ const dataTableConfig = {
 
 function configureDataTableTypes() {
     DataTable.type('num', 'className', 'dt-body-center');
-    DataTable.type('num-fmt', 'className', 'dt-body-left');
-    DataTable.type('date', 'className', 'dt-body-left');
+    DataTable.type('num-fmt', 'className', 'dt-body-center');
+    DataTable.type('date', 'className', 'dt-body-center');
     DataTable.type('string', 'className', 'dt-head-center');
 }
 

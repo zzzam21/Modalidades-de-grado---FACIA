@@ -17,4 +17,20 @@ class studentController extends BaseController {
         $data = $studentModel->getStudentsByProgram();
         return $this->response->setJSON($data);
     }
+
+    public function student($id): string{
+        $data = ['tittle' => 'Estudiante',
+                 'icon' => '<i class="bi bi-backpack"></i> Estudiante',
+                'id' => $id];
+        
+        return view('dashboard/Modules/student',$data);
+    }
+
+    public function getStudent($id): ResponseInterface{
+        $studentModel = new \App\Models\studentModel();
+        return $this->response->setJSON([
+            'student' => $studentModel->getStudentById($id),
+            'modality' => $studentModel->getModalityByStudent($id)
+        ]);
+    }
 }

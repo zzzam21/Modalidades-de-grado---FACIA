@@ -16,6 +16,10 @@ class teachersModel extends Model{
         return $this->findAll();
     }
 
+    public function getTeacher($id){
+        return $this->where('teacher_ID',$id)->first();
+    }
+
     public function teachersCount(){
         return $this->countAllResults();
     }
@@ -76,6 +80,7 @@ class teachersModel extends Model{
             return $this->insertID();
         }
     }
+    
     public function addTeacher($data){
         return $this->insert($data);
     }
@@ -100,6 +105,40 @@ class teachersModel extends Model{
                     ->join('modalitie_teacher as mt', 'mt.teacher_ID = teachers.teacher_ID')
                     ->where('mt.modality_ID',$id)
                     ->where('mt.role','Jurado')
+                    ->findAll();
+    }
+
+    public function countByRole($id, $role) {
+        return $this->select('COUNT(*) as count')
+                    ->join('modalitie_teacher as mt', 'mt.teacher_ID = teachers.teacher_ID')
+                    ->where('mt.teacher_ID', $id)
+                    ->where('mt.role', $role)
+                    ->first()['count'] ?? 0;
+    }
+    
+    public function countModalitiesByStatus($id, $status) {
+        return $this->select('COUNT(*) as count')
+                    ->join('modalitie_teacher as mt', 'mt.teacher_ID = teachers.teacher_ID')
+                    ->join('modalities m', 'mt.modality_ID = m.modality_ID')
+                    ->where('mt.teacher_ID', $id)
+                    ->whereIn('m.status', $status)
+                    ->first()['count'] ?? 0;
+    }
+
+    public function countFinishedModalities($id) {
+        return $this->select('COUNT(*) as count')
+                    ->join('modalitie_teacher as mt', 'mt.teacher_ID = teachers.teacher_ID')
+                    ->join('modalities m', 'mt.modality_ID = m.modality_ID')
+                    ->where('mt.teacher_ID', $id)
+                    ->where('m.status', 'Finalizada')
+                    ->first()['count'] ?? 0;
+    }
+
+    public function getModalityInfoByTeacher($id) {
+        return $this->select('m.modality_ID, m.name_modalitie, mt.role, m.status')
+                    ->join('modalitie_teacher as mt', 'mt.teacher_ID = teachers.teacher_ID')
+                    ->join('modalities m', 'm.modality_ID = mt.modality_ID')
+                    ->where('teachers.teacher_ID', $id)
                     ->findAll();
     }
 }

@@ -15,11 +15,15 @@ $(document).ready(function ()
             {data: 'sede'},
             {data: 'type_modalitie'},
             {
-                data: null,
-                render: function() {
+                data: 'student_ID',
+                oderable: false,
+                render: function(data) {
                     return `
-                        <button type="button" class="btn btn-sm btn-success"><span><i class="bi bi-pencil-square"></i></span></button>
-                    `
+                        <a href="./students/student/${data}"
+                           class="btn btn-sm btn-success">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        `
                 }
             }
         ]

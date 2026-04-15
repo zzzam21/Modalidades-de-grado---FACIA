@@ -13,9 +13,9 @@
             </div>
 
             <div class="col-auto">
-                <span id="currentUser">
+                <p id="currentUserName">
                     <?= esc(session()->get('user_name')); ?>
-                </span>
+                </p>
             </div>
 
             <div class="col-auto ms-auto">
@@ -34,7 +34,9 @@
                 <p style="font-size: 17px;"><b>Correo:</b></p>
             </div>
             <div class="col-auto">
-                <p><?= session('user_email')?></p>
+                <p id="currentUserEmail">
+                    <?= session('user_email')?>
+                </p>
             </div>
             <div class="col-auto ms-auto">
                 <button type="button"  class="btn btn-sm btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
@@ -46,8 +48,7 @@
         <a href="" data-bs-toggle="modal" data-bs-target="#passwordModal">Cambiar contraseña</a>
     </div>
 </div>
-    
-    
+
 <!-- Modals para el cambio de información del usuario -->
 <!-- Modal userName-->
 <div class="modal fade" id="userNameModal" tabindex="-1" aria-labelledby="userNameModalLabel" aria-hidden="true">
@@ -121,10 +122,13 @@
                     <input type="password" class="form-control" id="passwordConfirmEmail" placeholder="********" autocomplete="new-password">    
                 </div>
             </div>
+            
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-success">Guardar</button>
-            </div>            
+                <button id="savePassword" class="btn btn-success">
+                    <i class="bi bi-floppy"></i>
+                </button>
+            </div>
+
         </div>
     </div>
 </div>

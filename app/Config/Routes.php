@@ -26,12 +26,23 @@ $routes->get('/students','StudentController::students',['filter' => 'auth']);
 
 $routes->get('/students/getstudents', 'studentController::getStudents',['filter' => 'auth']);
 
+    // Vista Información Detallada Estudiante
+$routes->get('/students/student/(:num)','StudentController::student/$1',['filter' => 'auth']);
+
+$routes->get('/students/getstudent/(:num)','StudentController::getStudent/$1',['filter' => 'auth']);
+
 // -----------------------------------
 // TEACHERS ROUTES
 // -----------------------------------
 $routes->get('/teachers','TeachersController::teachers',['filter' => 'auth']);
 
-$routes->get('/teachers/getteacher','TeachersController::getTeachers',['filter' => 'auth']);
+$routes->get('/teachers/getteachers','TeachersController::getTeachers',['filter' => 'auth']);
+
+$routes->get('/teachers/teacher/(:num)','TeachersController::teacher/$1',['filter' => 'auth']);
+
+$routes->get('/teachers/getteacher/(:num)','TeachersController::getTeacher/$1',['filter' => 'auth']);
+
+$routes->get('/teachers/getInfoModalByTeacher/(:num)','TeachersController::getInfoModalityByTeacher/$1',['filter' => 'auth']);
 
 // $routes->post('/teachers/add','TeachersController::addTeacher',['filter' => 'auth']);
 
@@ -54,13 +65,18 @@ $routes->get('/modalities/modality/(:num)','ModalitieController::modality/$1',['
 
 $routes->get('/modalities/getmodality/(:num)', 'ModalitieController::getModality/$1', ['filter' => 'auth']);
 
-
 // -----------------------------------
 // USER ROUTES
 // -----------------------------------
-$routes->get('/configuration','Config::config',['filter' => 'auth']);
 
+$routes->get('/configuration','Config::config',['filter' => 'auth']);
     // Actualizar Nombre de usuario
 $routes->put('/configuration/updateName', 'Config::updateUser', ['filter' => 'auth']);
     // Actualizar Email de usuario
 $routes->put('/configuration/updateEmail', 'Config::updateEmail', ['filter' => 'auth']);
+    // Actualizar Contraseña de usuario
+$routes->put('/configuration/updatePassword', 'Config::updatePassword', ['filter' => 'auth']);
+    // Obtener información del usuario
+$routes->get('/configuration/getUser', 'Config::getUser', ['filter' => 'auth']);
+    // Actualizar perfil del usuario
+$routes->put('/configuration/updatePassword', 'Config::updatePassword', ['filter' => 'auth']);
