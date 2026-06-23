@@ -26,7 +26,7 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
+        'hostname'     => '',
         'username'     => '',
         'password'     => '',
         'database'     => '',
@@ -195,7 +195,7 @@ class Database extends Config
 
         // Ensure that we always set the database group to 'tests' if
         // we are currently running an automated test suite, so that
-        // we don't overwrite live data on accident.
+    // we don't overwrite live data on accident.
         if (ENVIRONMENT === 'testing') {
             $this->defaultGroup = 'tests';
         }

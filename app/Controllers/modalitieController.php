@@ -218,4 +218,26 @@ class modalitieController extends BaseController {
             ]);
         }
     }
+
+    public function deleteModality($id)
+    {
+        $modalityModel = new \App\Models\modalitieModel();
+        $teacherModalityModel = new \App\Models\modalitie_teacherModel();
+        $studentModalityModel = new \App\Models\modalitie_studentModel();
+        $studentModel = new \App\Models\studentModel();
+
+        $teacherModalityModel->deleteModalityTeacher($id);
+        $studentsID = $studentModalityModel->deleteModalityStudent($id);
+
+        foreach ($studentsID as $student) {
+            $studentModel->delete($student['student_ID']);
+        }
+
+        $modalityModel->delete($id);
+
+        return $this->response->setJSON([
+            'success' => true,
+            'message' => "Modalidad eliminada correctamente"
+        ]);
+    }
 }

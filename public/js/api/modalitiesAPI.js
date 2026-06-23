@@ -136,6 +136,45 @@ async function getModality(id) {
     }
 }
 
+async function deleteModality(id) {
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+        title: "¿Estas seguro?",
+        text: "No podras revertir esto!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Eliminar Modalidad!",
+        cancelButtonText: "No, cancelar!",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(
+                `../deleteModality/${id}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+            window.location.href = '../';
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire({
+                title: "Cancelado",
+                text: "No has eliminado la modalidad :)",
+                icon: "error"
+            });
+        }
+    });
+}
+
 function serverError(){
     Swal.fire({
         title: "Error del servidor!",

@@ -29,7 +29,7 @@ class teachersController extends BaseController {
             'coasesor' => $teachersModel->countByRole($id, 'Coasesor'),
             'jurado' => $teachersModel->countByRole($id, 'Jurado'),
             'proceso' => $teachersModel->countModalitiesByStatus($id, ['aprobada', 'En curso']),
-            'finalizadas' => $teachersModel->countModalitiesByStatus($id, ['Finalizado'])
+            'finalizadas' => $teachersModel->countModalitiesByStatus($id, ['Finalizada'])
         ]);
     }
     public function getInfoModalityByTeacher($id): ResponseInterface {

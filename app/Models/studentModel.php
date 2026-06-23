@@ -30,9 +30,11 @@ class studentModel extends Model{
         }
         $userId = session()->get('user_id');
         
-        $user_programModel = new user_programModel();
-        $program = $user_programModel->userProgram($userId);
-        return $this->where('program_ID', $program['program_ID'])->countAllResults();
+        return $this->join('users_program', 'users_program.program_ID = students.program_ID')
+                    ->join('programs ', 'programs.program_ID = users_program.program_ID')
+                    ->join('users', 'users.id = users_program.user_ID')
+                    ->where('users.id', $userId)
+                    ->countAllResults();
     }
 
     public function getStudentsByProgram(){
@@ -68,5 +70,9 @@ class studentModel extends Model{
                         ->join('teachers t', 'mt.teacher_ID = t.teacher_ID')
                         ->where('students.student_ID', $id)->findAll();
         }
-    }    
+    }
+
+    public function deleteStudent($id){
+        $this->delete($id);
+    }
 }

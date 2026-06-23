@@ -16,8 +16,6 @@ class Home extends BaseController
                  'countTeachers' => $teachersModel->teachersCount()
                  ];
         
-        $modalityModel = new \App\Models\modalitieModel();
-        $data['modalities'] = $modalityModel->getModalities();
         return view('dashboard/dashboard',data: $data);
     }
 }

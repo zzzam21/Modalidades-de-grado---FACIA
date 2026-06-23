@@ -15,5 +15,10 @@ class modalitie_studentModel extends Model{
     public function addModalitieStudent($data) {
         $this->insert($data);
     }
-    
+
+    public function deleteModalityStudent($modality_ID) {
+        $studentsId = $this->select('student_ID')->where('modality_ID', $modality_ID)->findAll();
+        $this->where('modality_ID', $modality_ID)->delete();
+        return $studentsId;
+    }
 }

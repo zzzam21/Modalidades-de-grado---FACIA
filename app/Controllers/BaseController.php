@@ -51,9 +51,13 @@ abstract class BaseController extends Controller
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
-        
-        // Preload any models, libraries, etc, here.
-
-        // E.g.: $this->session = service('session');
+        // Debug: check DB config values
+        $dbConfig = config('Database');
+        log_message('error', 'DEBUG DB hostname: "' . ($dbConfig->default['hostname'] ?? 'NULL') . '"');
+        log_message('error', 'DEBUG DB username: "' . ($dbConfig->default['username'] ?? 'NULL') . '"');
+        log_message('error', 'DEBUG DB database: "' . ($dbConfig->default['database'] ?? 'NULL') . '"');
+        log_message('error', 'DEBUG DB port: ' . ($dbConfig->default['port'] ?? 'NULL'));
+        log_message('error', 'DEBUG _ENV db.hostname: "' . ($_ENV['database.default.hostname'] ?? 'NULL') . '"');
+        log_message('error', 'DEBUG getenv db.hostname: "' . (getenv('database.default.hostname') ?: 'NULL') . '"');
     }
 }

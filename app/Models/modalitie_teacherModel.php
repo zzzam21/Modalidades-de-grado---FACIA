@@ -31,4 +31,8 @@ class modalitie_teacherModel extends Model{
         }
         return true;
     }
+
+    public function deleteModalityTeacher($modality_ID) {
+        return $this->where('modality_ID', $modality_ID)->delete();
+    }
 }

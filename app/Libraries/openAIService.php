@@ -11,7 +11,7 @@ class openAIService {
 
     public function __construct() {
         $this->apiKey = getenv('GEMINI_API_KEY');
-        $this->endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemma-3-27b-it:generateContent?key=' . $this->apiKey;
+        $this->endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemma-4-26b-it:generateContent?key=' . $this->apiKey;
 
         if (!$this->apiKey) {
             throw new \Exception('API KEY no encontrada');

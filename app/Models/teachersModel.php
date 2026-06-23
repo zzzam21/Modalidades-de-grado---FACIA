@@ -21,8 +21,17 @@ class teachersModel extends Model{
     }
 
     public function teachersCount(){
-        return $this->countAllResults();
+        if (!session()->has('user_id')) {
+            return null; // O redirigir a la página de inicio de sesión
+        }
+        $userId = session()->get('user_id');
+        return $this->join('modalitie_teacher as mt', 'teachers.teacher_ID = mt.teacher_ID')
+                    ->join('modalities m', 'm.modality_ID = mt.modality_ID')
+                    ->join('users_program up', 'm.program_ID = up.program_ID')
+                    ->where('up.user_ID', $userId)
+                    ->countAllResults();
     }
+
     // Buscar docente por nombre con búsqueda inteligente bidireccional
     // Maneja nombres completos, parciales y en cualquier orden
     public function findByName($name) {
@@ -63,7 +72,6 @@ class teachersModel extends Model{
                 return $teacher['teacher_ID'];
             }
         }
-
         return null;
     }
 
@@ -109,36 +117,44 @@ class teachersModel extends Model{
     }
 
     public function countByRole($id, $role) {
-        return $this->select('COUNT(*) as count')
+        if (!session()->has('user_id')) {
+            return null; // O redirigir a la página de inicio de sesión
+        }
+        $user_id = session()->get('user_id');
+        return $this
                     ->join('modalitie_teacher as mt', 'mt.teacher_ID = teachers.teacher_ID')
+                    ->join('modalities m', 'm.modality_ID = mt.modality_ID')
+                    ->join('users_program up', 'up.program_ID = m.program_ID')
                     ->where('mt.teacher_ID', $id)
                     ->where('mt.role', $role)
-                    ->first()['count'] ?? 0;
-    }
-    
-    public function countModalitiesByStatus($id, $status) {
-        return $this->select('COUNT(*) as count')
-                    ->join('modalitie_teacher as mt', 'mt.teacher_ID = teachers.teacher_ID')
-                    ->join('modalities m', 'mt.modality_ID = m.modality_ID')
-                    ->where('mt.teacher_ID', $id)
-                    ->whereIn('m.status', $status)
-                    ->first()['count'] ?? 0;
+                    ->where('up.user_ID', $user_id)
+                    ->countAllResults() ?? 0;
     }
 
-    public function countFinishedModalities($id) {
+    public function countModalitiesByStatus($id, $status) {
+        if (!session()->has('user_id')) {
+            return null; // O redirigir a la página de inicio de sesión
+        }
+        $user_id = session()->get('user_id');
         return $this->select('COUNT(*) as count')
                     ->join('modalitie_teacher as mt', 'mt.teacher_ID = teachers.teacher_ID')
-                    ->join('modalities m', 'mt.modality_ID = m.modality_ID')
+                    ->join('modalities m', 'm.modality_ID = mt.modality_ID')
+                    ->join('users_program up', 'up.program_ID = m.program_ID')
                     ->where('mt.teacher_ID', $id)
-                    ->where('m.status', 'Finalizada')
+                    ->whereIn('m.status', $status)
+                    ->where('up.user_ID', $user_id)
                     ->first()['count'] ?? 0;
     }
 
     public function getModalityInfoByTeacher($id) {
+        $userId = session()->get('user_id');
+    
         return $this->select('m.modality_ID, m.name_modalitie, mt.role, m.status')
-                    ->join('modalitie_teacher as mt', 'mt.teacher_ID = teachers.teacher_ID')
+                    ->join('modalitie_teacher mt', 'teachers.teacher_ID = mt.teacher_ID')
                     ->join('modalities m', 'm.modality_ID = mt.modality_ID')
+                    ->join('users_program up', 'm.program_ID = up.program_ID')
                     ->where('teachers.teacher_ID', $id)
+                    ->where('up.user_ID', $userId)
                     ->findAll();
     }
 }

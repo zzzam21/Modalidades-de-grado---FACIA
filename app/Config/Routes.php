@@ -65,6 +65,9 @@ $routes->get('/modalities/modality/(:num)','ModalitieController::modality/$1',['
 
 $routes->get('/modalities/getmodality/(:num)', 'ModalitieController::getModality/$1', ['filter' => 'auth']);
 
+$routes->delete('/modalities/deleteModality/(:num)', 'ModalitieController::deleteModality/$1', ['filter' => 'auth']);
+
+
 // -----------------------------------
 // USER ROUTES
 // -----------------------------------

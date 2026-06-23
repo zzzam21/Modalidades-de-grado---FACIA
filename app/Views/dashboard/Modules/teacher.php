@@ -1,10 +1,14 @@
 <?php echo $this->extend('layout/main'); ?>
 <?php echo $this->section('content'); ?>
 
-<input type="hidden" id="teacherId" value="<?= $id ?>">
+<input type="hidden" id="teacherId" value="<?= $id ?? null ?>">
 
 <div class="row g-3 mb-4" id="app" data-view="teacher-detail">
-
+    <div class="d-grip gap-1 d-md-flex justify-content-md-start">
+        <a href="<?= base_url('/teachers') ?>" class="btn btn-light">
+            <i class="bi bi-arrow-left me-2"></i> Docentes
+        </a>
+    </div>
     <!-- ASESOR -->
     <div class="col-md-4">
         <div class="card border-0 shadow-sm">

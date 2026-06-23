@@ -263,7 +263,7 @@ class importPdfController extends BaseController {
             // Realizar ajustes al response para que no haya errores json
             $response = str_replace('`', '', $response);
             $response = str_replace('json','',$response);
-                    
+
             $data = json_decode($response,true);
         
             if (json_last_error() !== JSON_ERROR_NONE) {

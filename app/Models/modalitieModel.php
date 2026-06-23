@@ -21,7 +21,6 @@ class modalitieModel extends Model{
                                 'duration',
                                 'type_modality'];
 
-
     public function addModality($data){
         return $this->insert($data);
     }
@@ -32,11 +31,16 @@ class modalitieModel extends Model{
     }
 
     public function countModalitie () {
-        return $this->countAllResults();
-    }
+        if (!session()->has('user_id')) {
+            return 0;
+        }
+        $userId = session()->get('user_id');
 
-    public function getModalities() {
-        return $this->findAll();
+        return $this->join('users_program', 'users_program.program_ID = modalities.program_ID')
+                    ->join('programs ', 'programs.program_ID = users_program.program_ID')
+                    ->join('users', 'users.id = users_program.user_ID')
+                    ->where('users.id', $userId)
+                    ->countAllResults();
     }
 
     // Método para obtener los objetivos como array
@@ -47,4 +51,7 @@ class modalitieModel extends Model{
         return (array) $modality->goal;
     }
 
+    public function deleteModality($id){
+        $this->delete($id);
+    }
 }

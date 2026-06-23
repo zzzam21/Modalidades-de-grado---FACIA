@@ -1,9 +1,14 @@
 <?php echo $this->extend('layout/main'); ?>
 <?php echo $this->section('content'); ?>
 
-<input type="hidden" id="modalityId" value="<?= $id ?>">
+<input type="hidden" id="modalityId" value="<?= $id ?? null ?>">
 
 <div class="pt-3" id="app" data-view="modality-detail">
+    <div class="d-grip gap-2 d-md-flex justify-content-md-start mb-4">
+        <a href="<?= base_url('/modalities') ?>" class="btn btn-light">
+            <i class="bi bi-arrow-left me-2"></i> Modalidades
+        </a>
+    </div>
 
     <div class="card shadow-sm border-0 mb-4">
         
@@ -150,6 +155,13 @@
             </div>
         </div>
     </div>
+
+    <div class="d-grip gap-2 d-md-flex justify-content-end ">
+        <a class="btn btn-danger" id="deleteModality" onclick="deleteModality(<?= $id ?? null ?>)">
+            <i class="bi bi-trash me-2"></i> Eliminar Modalidad
+        </a>
+    </div>
+    
 </div>
 
 <?php echo $this->endSection();?>

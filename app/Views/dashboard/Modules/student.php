@@ -1,7 +1,13 @@
 <?php echo $this->extend('layout/main'); ?>
 <?php echo $this->section('content'); ?>
 
-<input type="hidden" id="studentId" value="<?= $id ?>">
+<input type="hidden" id="studentId" value="<?= $id ?? null ?>">
+
+<div class="d-grip gap-1 d-md-flex justify-content-md-start mb-4">
+    <a href="<?= base_url('/students') ?>" class="btn btn-light">
+        <i class="bi bi-arrow-left me-2"></i> Estudiantes
+    </a>
+</div>
 
 <div class="card shadow-sm border-0 mb-4" id="app" data-view="student-detail">
 
@@ -17,14 +23,14 @@
     </div>
 
     <div class="card shadow-sm border-0">
-        
+
         <div class="card-header bg-white">
             <div class="d-flex align-items-center">
                 <div class="p-2 flex-grow-1 align-self-end">
-                    <h5 id="mod-type"class="fw-bold mb-0">Modalidad de Grado</h5>
+                    <h5 id="mod-type" class="fw-bold mb-0">Modalidad de Grado</h5>
                 </div>
                 <div class="p-2">
-                    <div id="badge-custom" class="mt-2"></div>  
+                    <div id="badge-custom" class="mt-2"></div>
                 </div>
             </div>
         </div>
@@ -59,7 +65,7 @@
 
             </div>
 
-            
+
             <div class="text-end">
                 <a id="btn_ver_modalidad" href="./" class="btn btn-primary">
                     <i class="bi bi-eye"></i> Ver detalle completo
@@ -70,4 +76,4 @@
     </div>
 </div>
 
-<?php echo $this->endSection();?>
+<?php echo $this->endSection(); ?>
