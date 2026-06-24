@@ -10,8 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             break;
         case "modalities":
-            const button = document.getElementById("saveModality");
-            button.addEventListener("click", postModalitie);
+            document.getElementById("saveModality").addEventListener("click", postModalitie);
+            document.getElementById("confirmSaveModality").addEventListener("click", confirmSaveModality);
+            document.getElementById("addStudentRow").addEventListener("click", () => addStudentRow());
         default:
             break;
     }
@@ -39,8 +40,7 @@ async function postModalitie() {
 
         const formData = new FormData();
         formData.append("formFile", file.files[0]);
-        
-        // Procesar PDF
+
         const response = await fetch("modalities/add", {
             method: "POST",
             body: formData
@@ -53,35 +53,11 @@ async function postModalitie() {
         }
 
         if (result.success) {
-
-            const save = await fetch("modalities/process", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(result.data)
-            });
-
-            const saveResult = await save.json();
+            window.verificationData = result.data;
+            populateVerificationModal(result.data);
             $("#addmodalitie").modal("hide");
             spinner.classList.add('d-none');
-
-            if (saveResult.success) {
-                Swal.fire({
-                    title: "Modalidad Agregada Correctamente!",
-                    icon: "success",
-                    draggable: true
-                });
-
-                $('#modalityTable').DataTable().ajax.reload();
-            } else {
-                Swal.fire({
-                    title: "Error agregando modalidad!",
-                    icon: "error",
-                    draggable: true
-                });
-            }
-
+            $("#verifyModal").modal("show");
         } else {
             $("#addmodalitie").modal("hide");
             spinner.classList.add('d-none');
@@ -101,6 +77,176 @@ async function postModalitie() {
         serverError();
     }
 }
+
+function populateVerificationModal(data) {
+    const m = data.modalidad;
+
+    document.getElementById("v_name_trabajo").value = m.nombre_trabajo || "";
+    document.getElementById("v_tipo_modalidad").value = m.tipo_modalidad || "";
+    document.getElementById("v_id_modalidad").value = m.id_modalidad ?? "";
+    document.getElementById("v_no_acuerdo").value = m.No_acuerdo ?? "";
+    document.getElementById("v_estado").value = m.estado_modalidad || "";
+    document.getElementById("v_fecha_inicio").value = m.fecha_inicio_modalidad || "";
+    document.getElementById("v_duracion").value = m.duracion_modalidad || "";
+    document.getElementById("v_fin_estimado").value = m.fin_estimado_modalidad || "";
+
+    document.getElementById("v_objetivos").value = (m.objetivos_modalidad || []).join("\n");
+
+    const tbody = document.getElementById("v_students_tbody");
+    tbody.innerHTML = "";
+    (data.estudiantes || []).forEach(s => addStudentRow(s));
+
+    renderRoles("asesores", data.asesores || []);
+    renderRoles("coasesores", data.coasesores || []);
+    renderRoles("jurados", data.jurados || []);
+}
+
+function renderRoles(role, items) {
+    const container = document.getElementById(`v_${role}_container`);
+    container.innerHTML = "";
+    if (items.length === 0) {
+        items.push({ nombre: "" });
+    }
+    items.forEach(item => addRoleRow(role, item.nombre || ""));
+}
+
+function addStudentRow(data) {
+    data = data || {};
+    const tbody = document.getElementById("v_students_tbody");
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td><input type="text" class="form-control form-control-sm v-student-code" value="${escapeHtml(data.codigo_estudiantil || "")}"></td>
+        <td><input type="text" class="form-control form-control-sm v-student-doc" value="${escapeHtml(data.documento_identidad || "")}"></td>
+        <td><input type="text" class="form-control form-control-sm v-student-name" value="${escapeHtml(data.nombre || "")}"></td>
+        <td><input type="text" class="form-control form-control-sm v-student-program" value="${escapeHtml(data.programa || "")}"></td>
+        <td><input type="text" class="form-control form-control-sm v-student-sede" value="${escapeHtml(data.nombre_sede || "")}"></td>
+        <td><input type="text" class="form-control form-control-sm v-student-sede-code" value="${escapeHtml(data.sede_codigo || "")}"></td>
+        <td class="text-center"><button type="button" class="btn btn-sm btn-outline-danger" onclick="this.closest('tr').remove()"><i class="bi bi-x"></i></button></td>
+    `;
+    tbody.appendChild(row);
+}
+
+function addRoleRow(role, nombre) {
+    nombre = nombre || "";
+    const container = document.getElementById(`v_${role}_container`);
+    const div = document.createElement("div");
+    div.className = "input-group input-group-sm mb-1";
+    div.innerHTML = `
+        <input type="text" class="form-control v-${role}-name" value="${escapeHtml(nombre)}" placeholder="Nombre">
+        <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()"><i class="bi bi-x"></i></button>
+    `;
+    container.appendChild(div);
+}
+
+function collectVerificationData() {
+    const estudiantes = [];
+    document.querySelectorAll("#v_students_tbody tr").forEach(row => {
+        estudiantes.push({
+            codigo_estudiantil: row.querySelector(".v-student-code").value || null,
+            documento_identidad: row.querySelector(".v-student-doc").value || null,
+            nombre: row.querySelector(".v-student-name").value || null,
+            programa: row.querySelector(".v-student-program").value || null,
+            nombre_sede: row.querySelector(".v-student-sede").value || null,
+            sede_codigo: row.querySelector(".v-student-sede-code").value || null
+        });
+    });
+
+    const objetivosText = document.getElementById("v_objetivos").value;
+    const objetivos = objetivosText
+        .split("\n")
+        .map(l => l.trim())
+        .filter(l => l.length > 0);
+
+    return {
+        estudiantes: estudiantes,
+        asesores: collectRoleNames("asesores"),
+        coasesores: collectRoleNames("coasesores"),
+        jurados: collectRoleNames("jurados"),
+        modalidad: {
+            No_acuerdo: document.getElementById("v_no_acuerdo").value || null,
+            nombre_trabajo: document.getElementById("v_name_trabajo").value || null,
+            tipo_modalidad: document.getElementById("v_tipo_modalidad").value || null,
+            id_modalidad: document.getElementById("v_id_modalidad").value || null,
+            estado_modalidad: document.getElementById("v_estado").value || null,
+            fecha_inicio_modalidad: document.getElementById("v_fecha_inicio").value || null,
+            objetivos_modalidad: objetivos,
+            duracion_modalidad: document.getElementById("v_duracion").value || null,
+            fin_estimado_modalidad: document.getElementById("v_fin_estimado").value || null
+        }
+    };
+}
+
+function collectRoleNames(role) {
+    const names = [];
+    document.querySelectorAll(`#v_${role}_container .v-${role}-name`).forEach(input => {
+        const val = input.value.trim();
+        if (val) {
+            names.push({ nombre: val });
+        }
+    });
+    return names.length > 0 ? names : [{ nombre: null }];
+}
+
+async function confirmSaveModality() {
+    const spinner = document.getElementById("loadingVerify");
+    spinner.classList.remove('d-none');
+
+    try {
+        const data = collectVerificationData();
+
+        if (!data.modalidad.nombre_trabajo || !data.modalidad.id_modalidad) {
+            spinner.classList.add('d-none');
+            Swal.fire({
+                title: "Datos incompletos",
+                text: "El nombre del trabajo y el tipo de modalidad son obligatorios.",
+                icon: "warning",
+                confirmButtonText: "Aceptar",
+                draggable: true
+            });
+            return;
+        }
+
+        const response = await fetch("modalities/process", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        $("#verifyModal").modal("hide");
+        spinner.classList.add('d-none');
+
+        if (result.success) {
+            Swal.fire({
+                title: "Modalidad Agregada Correctamente!",
+                icon: "success",
+                draggable: true
+            });
+            $('#modalityTable').DataTable().ajax.reload();
+        } else {
+            Swal.fire({
+                title: "Error agregando modalidad!",
+                icon: "error",
+                draggable: true
+            });
+        }
+    } catch (error) {
+        $("#verifyModal").modal("hide");
+        spinner.classList.add('d-none');
+        console.error(error);
+        serverError();
+    }
+}
+
+function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+// -----------------------------------------------------------------------
+// Funciones existentes (sin cambios)
+// -----------------------------------------------------------------------
 
 async function getModality(id) {
     try {
@@ -122,19 +268,16 @@ async function getModality(id) {
             const result = await response.json();
             const mod = result.data;
 
-            // Datos básicos
             document.getElementById('det_titulo').innerText = mod.name_modalitie;
             document.getElementById('det_tipo').innerText = mod.type_modality;
             document.getElementById('det_inicio').innerText = mod.date_approved;
             document.getElementById('det_fin').innerText = mod.date_end;
             document.getElementById('det_duracion').innerText = mod.duration;
 
-            // Objetivos (Suponiendo que vienen en el JSON)
             const objetivos = JSON.parse(mod.goal);
             document.getElementById("listaObjetivos").innerHTML =
                 objetivos.map(o => `<li class="list-group-item">${o}</li>`).join("");
 
-            // Estado con clase dinámica
             const statusClasses = {
                 'aprobada': 'badge-aprobado',
                 'En curso': 'badge-en-curso',
@@ -240,7 +383,7 @@ function renderCoAsesor(data) {
 }
 
 function renderJurado(data) {
-    const jurado = document.getElementById('listJurados');
+    const listaJurados = document.getElementById('listaJurados');
     listaJurados.innerHTML = "";
 
     if (data.length === 0) {
