@@ -10,10 +10,10 @@ composer install
 php spark serve
 ```
 
-- **Dev server** (spark): `http://localhost:8080/`
+- **Dev server**: `http://localhost:8080/`
 - **XAMPP Apache**: `http://localhost/modalidades/public/`
-- **DB**: MySQL `modalidadesfacia`, default user `root`, port `3306` (XAMPP) or `3307` (Docker), creds in `.env`
-- `.env` is gitignored — never commit secrets
+- **DB**: MySQL `modalidadesfacia`, user `root`, port `3306` (XAMPP), creds in `.env`
+- `.env` is gitignored — never commit secrets. Template is `env` (copy to `.env`).
 
 ## Key commands
 
@@ -22,60 +22,38 @@ php spark serve
 | Run all tests | `vendor/bin/phpunit` or `composer test` |
 | Run single test | `vendor/bin/phpunit --filter testName` |
 | CI4 CLI | `php spark` |
-| Dev server | `php spark serve` |
 
 No linter, typechecker, or codegen configured.
 
 ## Architecture
 
-- **`app/Controllers/`** — MVC controllers with inconsistent casing (e.g., `modalitieController`, `TeachersController`) — match existing style per file
-- **`app/Models/`** — extend `CodeIgniter\Model`; tables: `modalities`, `teachers`, `students`, `programs`, `users_program`, `type_modalities`, `modalitie_student`, `modalitie_teacher`
-- **`app/Views/`** — dashboard views under `dashboard/`, `dashboard/Modules/`, `auth/`
-- **`app/Libraries/openAIService.php`** — calls **Google Gemini** (`gemma-4-26b-it`), **not** OpenAI. Expects `GEMINI_API_KEY` in `.env`.
-- **`app/Filters/AuthFilter.php`** — session-based auth guard (`logged_in` session key)
-- **`app/Config/Routes.php`** — all internal routes use `['filter' => 'auth']`; only `/auth/login` is public
+- **Controllers** (`app/Controllers/`) — inconsistent casing (`modalitieController`, `studentController`, `importPdfController`, `TeachersController`) — match existing style per file. Routes reference PascalCase even when filename is camelCase.
+- **Models** (`app/Models/`) — extend `CodeIgniter\Model`; 8 models for tables: `modalities`, `teachers`, `students`, `programs`, `users_program`, `type_modalities`, `modalitie_student`, `modalitie_teacher`, plus `UserModel` for `users`.
+- **Views** (`app/Views/`) — `dashboard/`, `dashboard/Modules/`, `auth/`, `layout/`, `errors/`
+- **`app/Libraries/openAIService.php`** — calls **Google Gemini** (`gemini-2.5-flash`), **not** OpenAI despite the name. Expects `GEMINI_API_KEY` in `.env`.
+- **`app/Filters/AuthFilter.php`** — session-based auth guard (`logged_in` session key). Capital `A` required for PSR-4 (Linux case-sensitive).
+- **Routes** (`app/Config/Routes.php`) — all internal routes use `['filter' => 'auth']`; only `/auth/login` (GET+POST) is public. **Duplicate route**: `/configuration/updatePassword` defined twice on lines 81 and 85.
 
 ## PDF import flow
 
 1. POST `/modalities/add` → `importPdfController::importPdf` — parses PDF with `smalot/pdfparser`, sends text to Gemini with a detailed extraction prompt
 2. Returns JSON with structured data (students, advisors, modality details)
-3. POST `/modalities/process` → `modalitieController::processModalitie` — validates and persists via DB transaction (rolls back on failure)
+3. POST `/modalities/process` → `ModalitieController::processModalitie` — validates and persists via DB transaction (rolls back on failure)
+
+## Testing
+
+- Test DB auto-switches to SQLite3 `:memory:` when `ENVIRONMENT === 'testing'` (`Config\Database` constructor)
+- Only CI4 boilerplate tests exist (`HealthTest.php`, `ExampleDatabaseTest.php`, `ExampleSessionTest.php`) — no app-specific tests
+- PHPUnit 10 config in `phpunit.xml.dist`; copy to `phpunit.xml` to customize
 
 ## Database
 
-- No migration files — authoritative schema is `db/init.sql` (8 tables with foreign keys, seeded programs and admin user)
+- Schema is managed directly (no migration files, no `db/init.sql`). Tables are created manually or via phpMyAdmin.
 - **Default admin**: `admin@admin.com` / `admin123`
-- The `programs` table (8 rows: program+sede combos with `program_ID` codes like 31/170/171) is the critical lookup for PDF extraction — `sede_codigo` must match exactly or extraction returns null
-
-## Testing quirks
-
-- Test DB auto-switches to SQLite3 `:memory:` when `ENVIRONMENT === 'testing'` (`Config\Database` constructor checks this)
-- Only CI4 boilerplate tests exist (`HealthTest.php`, `ExampleDatabaseTest.php`, `ExampleSessionTest.php`) — no app-specific tests yet
-- PHPUnit 10 config in `phpunit.xml.dist`; copy to `phpunit.xml` to customize
-
-## Docker
-
-```powershell
-# Requires env vars: GEMINI_API_KEY, DB_PASSWORD, DB_ROOT_PASSWORD
-docker compose up -d
-```
-
-| Service | URL |
-|---|---|
-| App | `http://localhost/` |
-| phpMyAdmin | `http://localhost:8081` |
-| MySQL (host) | `localhost:3307` |
-
-- `db:8.4` with healthcheck; app waits for healthy DB
-- `db/init.sql` auto-seeds schema + data on first start
-- PHP 8.3 Apache with aggressive OPcache, mod_rewrite+headers+expires
-
-## Linux case-sensitivity
-
-`app/Filters/AuthFilter.php` must keep capital `A` (PSR-4). Windows tolerates lowercase, Linux Docker container does not.
+- The `programs` table (program+sede combos with `program_ID` codes like 31/170/171) is the critical lookup for PDF extraction — `sede_codigo` must match exactly or extraction returns null.
 
 ## Notable conventions
 
 - All text content is Spanish (UI, comments, variables, AI prompt)
 - Controllers instantiate models inline with `new \App\Models\...` (no DI)
-- `.env` is gitignored — never commit secrets
+- `builds` script toggles CI4 between stable release and dev-develop
