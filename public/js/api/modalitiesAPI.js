@@ -1,3 +1,5 @@
+const ROLE_LIMITS = { asesores: 1, coasesores: 1, jurados: 2 };
+
 document.addEventListener("DOMContentLoaded", () => {
     const app = document.getElementById("app");
     const view = app.dataset.view;
@@ -10,13 +12,57 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             break;
         case "modalities":
+            loadFormData();
             document.getElementById("saveModality").addEventListener("click", postModalitie);
             document.getElementById("confirmSaveModality").addEventListener("click", confirmSaveModality);
             document.getElementById("addStudentRow").addEventListener("click", () => addStudentRow());
+            document.getElementById("addAsesorBtn").addEventListener("click", () => addRoleRow("asesores"));
+            document.getElementById("addCoasesorBtn").addEventListener("click", () => addRoleRow("coasesores"));
+            document.getElementById("addJuradoBtn").addEventListener("click", () => addRoleRow("jurados"));
         default:
             break;
     }
 })
+
+async function loadFormData() {
+    try {
+        const resp = await fetch("modalities/getFormData");
+        const data = await resp.json();
+        window.formData = data;
+        populateTypeSelect(data.type_modalities);
+    } catch (e) {
+        console.error("Error cargando datos del formulario", e);
+    }
+}
+
+function populateTypeSelect(types) {
+    const sel = document.getElementById("v_tipo_modalidad");
+    sel.innerHTML = '<option value="">-- Seleccione --</option>';
+    types.forEach(t => {
+        const opt = document.createElement("option");
+        opt.value = t.id_type_mod;
+        opt.textContent = t.type_name;
+        sel.appendChild(opt);
+    });
+}
+
+function getUniquePrograms(programs) {
+    const seen = {};
+    programs.forEach(p => { seen[p.program_name] = true; });
+    return Object.keys(seen).sort();
+}
+
+function getSedesForProgram(programs, programName) {
+    return programs
+        .filter(p => p.program_name === programName)
+        .map(p => p.sede)
+        .sort();
+}
+
+function getProgramId(programs, programName, sede) {
+    const match = programs.find(p => p.program_name === programName && p.sede === sede);
+    return match ? match.program_ID : null;
+}
 
 async function postModalitie() {
 
@@ -80,21 +126,39 @@ async function postModalitie() {
 
 function populateVerificationModal(data) {
     const m = data.modalidad;
+    const programs = (window.formData && window.formData.programs) || [];
 
     document.getElementById("v_name_trabajo").value = m.nombre_trabajo || "";
-    document.getElementById("v_tipo_modalidad").value = m.tipo_modalidad || "";
-    document.getElementById("v_id_modalidad").value = m.id_modalidad ?? "";
     document.getElementById("v_no_acuerdo").value = m.No_acuerdo ?? "";
-    document.getElementById("v_estado").value = m.estado_modalidad || "";
     document.getElementById("v_fecha_inicio").value = m.fecha_inicio_modalidad || "";
     document.getElementById("v_duracion").value = m.duracion_modalidad || "";
     document.getElementById("v_fin_estimado").value = m.fin_estimado_modalidad || "";
+
+    const tipoSel = document.getElementById("v_tipo_modalidad");
+    if (m.tipo_modalidad) {
+        for (const opt of tipoSel.options) {
+            if (opt.textContent === m.tipo_modalidad) {
+                opt.selected = true;
+                break;
+            }
+        }
+    }
+
+    const estadoSel = document.getElementById("v_estado");
+    if (m.estado_modalidad) {
+        for (const opt of estadoSel.options) {
+            if (opt.value === m.estado_modalidad) {
+                opt.selected = true;
+                break;
+            }
+        }
+    }
 
     document.getElementById("v_objetivos").value = (m.objetivos_modalidad || []).join("\n");
 
     const tbody = document.getElementById("v_students_tbody");
     tbody.innerHTML = "";
-    (data.estudiantes || []).forEach(s => addStudentRow(s));
+    (data.estudiantes || []).forEach(s => addStudentRow(s, programs));
 
     renderRoles("asesores", data.asesores || []);
     renderRoles("coasesores", data.coasesores || []);
@@ -104,50 +168,156 @@ function populateVerificationModal(data) {
 function renderRoles(role, items) {
     const container = document.getElementById(`v_${role}_container`);
     container.innerHTML = "";
-    if (items.length === 0) {
-        items.push({ nombre: "" });
+    const limit = ROLE_LIMITS[role];
+    const sliced = items.slice(0, limit);
+    if (sliced.length === 0) {
+        sliced.push({ nombre: "" });
     }
-    items.forEach(item => addRoleRow(role, item.nombre || ""));
+    sliced.forEach(item => addRoleRow(role, item.nombre || ""));
+    updateRoleBtn(role);
 }
 
-function addStudentRow(data) {
+function updateRoleBtn(role) {
+    const container = document.getElementById(`v_${role}_container`);
+    const count = container.children.length;
+    const btn = document.getElementById(`add${role.charAt(0).toUpperCase() + role.slice(1)}Btn`);
+    const limit = ROLE_LIMITS[role];
+    if (btn) {
+        btn.disabled = count >= limit;
+        btn.classList.toggle("disabled", count >= limit);
+    }
+}
+
+function addStudentRow(data, programs) {
+    programs = programs || (window.formData && window.formData.programs) || [];
     data = data || {};
     const tbody = document.getElementById("v_students_tbody");
     const row = document.createElement("tr");
-    row.innerHTML = `
-        <td><input type="text" class="form-control form-control-sm v-student-code" value="${escapeHtml(data.codigo_estudiantil || "")}"></td>
-        <td><input type="text" class="form-control form-control-sm v-student-doc" value="${escapeHtml(data.documento_identidad || "")}"></td>
-        <td><input type="text" class="form-control form-control-sm v-student-name" value="${escapeHtml(data.nombre || "")}"></td>
-        <td><input type="text" class="form-control form-control-sm v-student-program" value="${escapeHtml(data.programa || "")}"></td>
-        <td><input type="text" class="form-control form-control-sm v-student-sede" value="${escapeHtml(data.nombre_sede || "")}"></td>
-        <td><input type="text" class="form-control form-control-sm v-student-sede-code" value="${escapeHtml(data.sede_codigo || "")}"></td>
-        <td class="text-center"><button type="button" class="btn btn-sm btn-outline-danger" onclick="this.closest('tr').remove()"><i class="bi bi-x"></i></button></td>
-    `;
+
+    const uniquePrograms = getUniquePrograms(programs);
+
+    const codeTd = document.createElement("td");
+    codeTd.innerHTML = `<input type="text" class="form-control form-control-sm v-student-code" value="${escapeHtml(data.codigo_estudiantil || "")}">`;
+
+    const docTd = document.createElement("td");
+    docTd.innerHTML = `<input type="text" class="form-control form-control-sm v-student-doc" value="${escapeHtml(data.documento_identidad || "")}">`;
+
+    const nameTd = document.createElement("td");
+    nameTd.innerHTML = `<input type="text" class="form-control form-control-sm v-student-name" value="${escapeHtml(data.nombre || "")}">`;
+
+    const programTd = document.createElement("td");
+    const programSel = document.createElement("select");
+    programSel.className = "form-select form-select-sm v-student-program";
+    const blankOpt = document.createElement("option");
+    blankOpt.value = "";
+    blankOpt.textContent = "-- Seleccione --";
+    programSel.appendChild(blankOpt);
+    uniquePrograms.forEach(pn => {
+        const opt = document.createElement("option");
+        opt.value = pn;
+        opt.textContent = pn;
+        if (data.programa === pn) opt.selected = true;
+        programSel.appendChild(opt);
+    });
+    programTd.appendChild(programSel);
+
+    const sedeTd = document.createElement("td");
+    const sedeSel = document.createElement("select");
+    sedeSel.className = "form-select form-select-sm v-student-sede";
+    const blankSede = document.createElement("option");
+    blankSede.value = "";
+    blankSede.textContent = "-- Seleccione --";
+    sedeSel.appendChild(blankSede);
+    if (data.programa) {
+        getSedesForProgram(programs, data.programa).forEach(s => {
+            const opt = document.createElement("option");
+            opt.value = s;
+            opt.textContent = s;
+            if (data.nombre_sede === s) opt.selected = true;
+            sedeSel.appendChild(opt);
+        });
+    }
+    sedeTd.appendChild(sedeSel);
+
+    const removeTd = document.createElement("td");
+    removeTd.className = "text-center";
+    removeTd.innerHTML = `<button type="button" class="btn btn-sm btn-outline-danger" onclick="this.closest('tr').remove()"><i class="bi bi-x"></i></button>`;
+
+    row.append(codeTd, docTd, nameTd, programTd, sedeTd, removeTd);
     tbody.appendChild(row);
+
+    programSel.addEventListener("change", () => onStudentProgramChange(row, programs));
+    sedeSel.addEventListener("change", () => onStudentSedeChange(row, programs));
+}
+
+function onStudentProgramChange(row, programs) {
+    const programSel = row.querySelector(".v-student-program");
+    const sedeSel = row.querySelector(".v-student-sede");
+    const programName = programSel.value;
+
+    sedeSel.innerHTML = '<option value="">-- Seleccione --</option>';
+    if (programName) {
+        getSedesForProgram(programs, programName).forEach(s => {
+            const opt = document.createElement("option");
+            opt.value = s;
+            opt.textContent = s;
+            sedeSel.appendChild(opt);
+        });
+    }
+}
+
+function onStudentSedeChange(row, programs) {
+    const programSel = row.querySelector(".v-student-program");
+    const sedeSel = row.querySelector(".v-student-sede");
+    const programName = programSel.value;
+    const sedeName = sedeSel.value;
+}
+
+function getStudentSedeCodigo(row, programs) {
+    const programName = row.querySelector(".v-student-program").value;
+    const sedeName = row.querySelector(".v-student-sede").value;
+    if (programName && sedeName) {
+        return getProgramId(programs, programName, sedeName);
+    }
+    return null;
 }
 
 function addRoleRow(role, nombre) {
     nombre = nombre || "";
     const container = document.getElementById(`v_${role}_container`);
+    const limit = ROLE_LIMITS[role];
+
+    if (container.children.length >= limit) {
+        return;
+    }
+
     const div = document.createElement("div");
     div.className = "input-group input-group-sm mb-1";
     div.innerHTML = `
         <input type="text" class="form-control v-${role}-name" value="${escapeHtml(nombre)}" placeholder="Nombre">
-        <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()"><i class="bi bi-x"></i></button>
+        <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove(); updateRoleBtn('${role}')"><i class="bi bi-x"></i></button>
     `;
     container.appendChild(div);
+    updateRoleBtn(role);
 }
 
 function collectVerificationData() {
+    const programs = (window.formData && window.formData.programs) || [];
+
     const estudiantes = [];
     document.querySelectorAll("#v_students_tbody tr").forEach(row => {
+        const programSel = row.querySelector(".v-student-program");
+        const sedeSel = row.querySelector(".v-student-sede");
+        const programName = programSel ? programSel.value : null;
+        const sedeName = sedeSel ? sedeSel.value : null;
+
         estudiantes.push({
             codigo_estudiantil: row.querySelector(".v-student-code").value || null,
             documento_identidad: row.querySelector(".v-student-doc").value || null,
             nombre: row.querySelector(".v-student-name").value || null,
-            programa: row.querySelector(".v-student-program").value || null,
-            nombre_sede: row.querySelector(".v-student-sede").value || null,
-            sede_codigo: row.querySelector(".v-student-sede-code").value || null
+            programa: programName || null,
+            nombre_sede: sedeName || null,
+            sede_codigo: (programName && sedeName) ? getProgramId(programs, programName, sedeName) : null
         });
     });
 
@@ -157,6 +327,10 @@ function collectVerificationData() {
         .map(l => l.trim())
         .filter(l => l.length > 0);
 
+    const tipoSel = document.getElementById("v_tipo_modalidad");
+    const tipoText = tipoSel.options[tipoSel.selectedIndex] ? tipoSel.options[tipoSel.selectedIndex].text : "";
+    const tipoValue = tipoSel.value;
+
     return {
         estudiantes: estudiantes,
         asesores: collectRoleNames("asesores"),
@@ -165,8 +339,8 @@ function collectVerificationData() {
         modalidad: {
             No_acuerdo: document.getElementById("v_no_acuerdo").value || null,
             nombre_trabajo: document.getElementById("v_name_trabajo").value || null,
-            tipo_modalidad: document.getElementById("v_tipo_modalidad").value || null,
-            id_modalidad: document.getElementById("v_id_modalidad").value || null,
+            tipo_modalidad: (tipoValue && tipoText !== "-- Seleccione --") ? tipoText : null,
+            id_modalidad: tipoValue || null,
             estado_modalidad: document.getElementById("v_estado").value || null,
             fecha_inicio_modalidad: document.getElementById("v_fecha_inicio").value || null,
             objetivos_modalidad: objetivos,

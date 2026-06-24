@@ -219,6 +219,16 @@ class modalitieController extends BaseController {
         }
     }
 
+    public function getFormData()
+    {
+        $typeModel = new \App\Models\typeModalitieModel();
+        $programModel = new \App\Models\programModel();
+        return $this->response->setJSON([
+            'type_modalities' => $typeModel->findAll(),
+            'programs' => $programModel->findAll()
+        ]);
+    }
+
     public function deleteModality($id)
     {
         $modalityModel = new \App\Models\modalitieModel();

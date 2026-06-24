@@ -67,6 +67,8 @@ $routes->get('/modalities/getmodality/(:num)', 'ModalitieController::getModality
 
 $routes->delete('/modalities/deleteModality/(:num)', 'ModalitieController::deleteModality/$1', ['filter' => 'auth']);
 
+    // Obtener datos para formularios (tipos, programas)
+$routes->get('/modalities/getFormData', 'ModalitieController::getFormData', ['filter' => 'auth']);
 
 // -----------------------------------
 // USER ROUTES

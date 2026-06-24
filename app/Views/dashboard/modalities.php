@@ -96,19 +96,23 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label">Tipo de Modalidad</label>
-                                            <input type="text" class="form-control" id="v_tipo_modalidad">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="form-label">ID Modalidad</label>
-                                            <input type="number" class="form-control" id="v_id_modalidad">
+                                            <select class="form-select" id="v_tipo_modalidad">
+                                                <option value="">-- Seleccione --</option>
+                                            </select>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="form-label">No. Acuerdo</label>
                                             <input type="text" class="form-control" id="v_no_acuerdo">
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="form-label">Estado</label>
-                                            <input type="text" class="form-control" id="v_estado">
+                                            <select class="form-select" id="v_estado">
+                                                <option value="">-- Seleccione --</option>
+                                                <option value="aprobada">Aprobada</option>
+                                                <option value="En curso">En curso</option>
+                                                <option value="Cancelado">Cancelado</option>
+                                                <option value="Finalizado">Finalizado</option>
+                                            </select>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Fecha Inicio</label>
@@ -144,7 +148,6 @@
                                                     <th>Nombre</th>
                                                     <th>Programa</th>
                                                     <th>Sede</th>
-                                                    <th style="width:100px">Código Sede</th>
                                                     <th style="width:40px"></th>
                                                 </tr>
                                             </thead>
@@ -169,23 +172,23 @@
                                 <div class="accordion-body">
                                     <div class="row g-3">
                                         <div class="col-md-4">
-                                            <label class="fw-semibold mb-2">Asesores</label>
+                                            <label class="fw-semibold mb-2">Asesor <small class="text-muted">(máx. 1)</small></label>
                                             <div id="v_asesores_container"></div>
-                                            <button type="button" class="btn btn-sm btn-outline-primary mt-1" onclick="addRoleRow('asesores')">
+                                            <button type="button" class="btn btn-sm btn-outline-primary mt-1" id="addAsesorBtn">
                                                 <i class="bi bi-plus-lg"></i>
                                             </button>
                                         </div>
                                         <div class="col-md-4">
-                                            <label class="fw-semibold mb-2">Coasesores</label>
+                                            <label class="fw-semibold mb-2">Coasesor <small class="text-muted">(máx. 1)</small></label>
                                             <div id="v_coasesores_container"></div>
-                                            <button type="button" class="btn btn-sm btn-outline-primary mt-1" onclick="addRoleRow('coasesores')">
+                                            <button type="button" class="btn btn-sm btn-outline-primary mt-1" id="addCoasesorBtn">
                                                 <i class="bi bi-plus-lg"></i>
                                             </button>
                                         </div>
                                         <div class="col-md-4">
-                                            <label class="fw-semibold mb-2">Jurados</label>
+                                            <label class="fw-semibold mb-2">Jurados <small class="text-muted">(máx. 2)</small></label>
                                             <div id="v_jurados_container"></div>
-                                            <button type="button" class="btn btn-sm btn-outline-primary mt-1" onclick="addRoleRow('jurados')">
+                                            <button type="button" class="btn btn-sm btn-outline-primary mt-1" id="addJuradoBtn">
                                                 <i class="bi bi-plus-lg"></i>
                                             </button>
                                         </div>
