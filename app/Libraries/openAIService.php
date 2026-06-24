@@ -11,11 +11,11 @@ class openAIService {
 
     public function __construct() {
         $this->apiKey = getenv('GEMINI_API_KEY');
-        $this->endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemma-4-26b-it:generateContent?key=' . $this->apiKey;
 
         if (!$this->apiKey) {
             throw new \Exception('API KEY no encontrada');
         }
+        $this->endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' . $this->apiKey;
 
     }
 
@@ -25,14 +25,20 @@ class openAIService {
         $data = [
             "contents" => [
                 "parts" => [
-                    ["text" => $prompt]
+                    [
+                        "text" => $prompt
+                    ]
                 ]
+            ],
+            "generationConfig" => [
+                "temperature" => 0
             ]
         ];
 
-        $ch = curl_init($this->endpoint);
+        $ch = curl_init();
 
         curl_setopt_array($ch, [
+            CURLOPT_URL => $this->endpoint,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_HTTPHEADER => [
@@ -42,9 +48,24 @@ class openAIService {
         ]);
 
         $response = curl_exec($ch);
-        // curl_close($ch);
 
+        if (curl_errno($ch)) {
+            throw new \Exception(
+                'Error CURL: ' . curl_error($ch)
+            );
+        }
+
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        curl_close($ch);
         $result = json_decode($response, true);
+
+         if ($httpCode !== 200) {
+            throw new \Exception(
+                $result['error']['message']
+                ?? 'Error desconocido'
+            );
+        }
 
         return $result['candidates'][0]['content']['parts'][0]['text'] ?? 'Sin respuesta';
     }

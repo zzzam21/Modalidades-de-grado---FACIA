@@ -2,12 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const app = document.getElementById("app");
     const view = app.dataset.view;
 
-    switch(view){
+    switch (view) {
         case "modality-detail":
-                const modalityId = document.getElementById("modalityId")
-                if (modalityId.value) {
-                    getModality(modalityId.value);
-                }
+            const modalityId = document.getElementById("modalityId")
+            if (modalityId.value) {
+                getModality(modalityId.value);
+            }
             break;
         case "modalities":
             const button = document.getElementById("saveModality");
@@ -22,17 +22,35 @@ async function postModalitie() {
     const spinner = document.getElementById("loadingModality");
     spinner.classList.remove('d-none');
 
-    const file = document.getElementById("formFile");
-    const formData = new FormData();
-    formData.append("formFile",file.files[0]);
-
     try {
+        const file = document.getElementById("formFile");
+
+        if (!file.files.length) {
+            spinner.classList.add('d-none');
+            Swal.fire({
+                title: "Por favor, selecciona un archivo PDF!",
+                text: "No se ha seleccionado ningún archivo.",
+                icon: "warning",
+                confirmButtonText: "Aceptar",
+                draggable: true
+            });
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("formFile", file.files[0]);
+        
+        // Procesar PDF
         const response = await fetch("modalities/add", {
             method: "POST",
             body: formData
         });
 
         const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error("Error en la solicitud: " + result.message);
+        }
 
         if (result.success) {
 
@@ -48,7 +66,7 @@ async function postModalitie() {
             $("#addmodalitie").modal("hide");
             spinner.classList.add('d-none');
 
-            if (saveResult.success) {    
+            if (saveResult.success) {
                 Swal.fire({
                     title: "Modalidad Agregada Correctamente!",
                     icon: "success",
@@ -56,21 +74,24 @@ async function postModalitie() {
                 });
 
                 $('#modalityTable').DataTable().ajax.reload();
-            }else{
+            } else {
                 Swal.fire({
                     title: "Error agregando modalidad!",
                     icon: "error",
                     draggable: true
                 });
             }
-            
+
         } else {
             $("#addmodalitie").modal("hide");
             spinner.classList.add('d-none');
+
             Swal.fire({
                 title: "Error Procesando PDF!",
+                text: result.message || "Ocurrió un error al procesar el PDF.",
                 icon: "error",
-                draggable: true
+                draggable: true,
+                confirmButtonText: "Aceptar"
             });
         }
     } catch (error) {
@@ -86,7 +107,7 @@ async function getModality(id) {
         const response = await fetch(
             `../getmodality/${id}`,
             {
-                method : 'GET',
+                method: 'GET',
                 headers: {
                     "Content-Type": "application/json"
                 }
@@ -94,13 +115,12 @@ async function getModality(id) {
         )
 
         if (!response.ok) {
-            alert('Error de solicitud') 
+            alert('Error de solicitud')
             return;
         }
-        else
-        {
+        else {
             const result = await response.json();
-            const mod = result.data;  
+            const mod = result.data;
 
             // Datos básicos
             document.getElementById('det_titulo').innerText = mod.name_modalitie;
@@ -121,7 +141,7 @@ async function getModality(id) {
                 'Cancelado': 'badge-cancelado',
                 'Finalizado': 'badge-finalizado'
             };
-            
+
             const estadoElt = document.getElementById('det_estado');
             const badgeClass = statusClasses[mod.status] || "bg-seconday";
             estadoElt.innerHTML = `<span class="badge-custom ${badgeClass} p-2">${mod.status}</span>`;
@@ -130,7 +150,7 @@ async function getModality(id) {
             renderCoAsesor(result.coasesor);
             renderJurado(result.jurado);
         }
-    }catch(e) {
+    } catch (e) {
         console.error("Fetch error:", e);
         serverError();
     }
@@ -175,7 +195,7 @@ async function deleteModality(id) {
     });
 }
 
-function serverError(){
+function serverError() {
     Swal.fire({
         title: "Error del servidor!",
         icon: "error",
@@ -204,7 +224,7 @@ function renderStudents(data) {
 
 function renderAsesor(data) {
     const asesor = document.getElementById("det_asesor");
-    
+
     asesor.innerHTML = data
         ? `<p class="mb-1 fw-semibold">${data.name}</p>
            <small class="text-muted">${data.role}</small>`
@@ -213,13 +233,13 @@ function renderAsesor(data) {
 
 function renderCoAsesor(data) {
     const coasesor = document.getElementById("det_coasesor");
-    coasesor.innerHTML = data 
+    coasesor.innerHTML = data
         ? `<p class="mb-1 fw-semibold">${data.name}</p>
            <small class="text-muted">${data.role}</small>`
         : `<span class="text-muted">No asignado</span>`;
 }
 
-function renderJurado(data){
+function renderJurado(data) {
     const jurado = document.getElementById('listJurados');
     listaJurados.innerHTML = "";
 

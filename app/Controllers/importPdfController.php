@@ -1,29 +1,34 @@
 <?php
 
 namespace App\Controllers;
-use App\Libraries\openAIService;
-class importPdfController extends BaseController {
 
-    public function importPdf(){
+use App\Libraries\openAIService;
+
+class importPdfController extends BaseController
+{
+
+    public function importPdf()
+    {
 
         // Lógica para procesar el PDF y extraer información con OpenAI
         $file = $this->request->getFile('formFile');
 
-        if ($file && $file->isValid() && !$file->hasMoved()) {
- 
-            $parser = new \Smalot\PdfParser\Parser();
+        try {
+            if ($file && $file->isValid() && !$file->hasMoved()) {
 
-            $pdf = $parser->parseFile($file->getTempName());
+                $parser = new \Smalot\PdfParser\Parser();
 
-            $text = $pdf->getText();
-            
-            // Se quita comillas que confunden a la IA
-            $text = str_replace('“', "", $text);
-            $text = str_replace('”', "", $text);
+                $pdf = $parser->parseFile($file->getTempName());
 
-            $ai = new openAIService();
+                $text = $pdf->getText();
 
-            $response = $ai->chat('Eres un sistema de extracción de información académica.
+                // Se quita comillas que confunden a la IA
+                $text = str_replace('“', "", $text);
+                $text = str_replace('”', "", $text);
+
+                $ai = new openAIService();
+
+                $response = $ai->chat('Eres un sistema de extracción de información académica.
                                 Tu tarea es analizar el texto proporcionado y EXTRAER ÚNICAMENTE
                                 la información solicitada, SIN interpretar, inferir ni deducir datos.
 
@@ -260,26 +265,49 @@ class importPdfController extends BaseController {
 
                                 TEXTO A ANALIZAR: ' . $text);
 
-            // Realizar ajustes al response para que no haya errores json
-            $response = str_replace('`', '', $response);
-            $response = str_replace('json','',$response);
+                // Realizar ajustes al response para que no haya errores json
+                $response = str_replace('```json', '', $response);
+                $response = str_replace('```', '', $response);
+                $response = trim($response);
+                log_message('debug', 'Respuesta IA original: ' . $response);
 
-            $data = json_decode($response,true);
-        
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new \Exception('JSON inválido generado por la IA');
+                $data = json_decode($response, true);
+
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    $jsonError = json_last_error_msg();
+
+                    log_message(
+                        'error',
+                        'JSON inválido generado por IA: ' .
+                            $jsonError .
+                            ' | Respuesta: ' .
+                            $response
+                    );
+                    return $this->response->setJSON([
+                        'success' => false,
+                        'message' => 'Error al decodificar JSON generado por IA: ' . $jsonError,
+                        'debug' => [
+                            'error' => $jsonError,
+                            'response' => $response
+                        ]
+                    ]);
+                }
+
+                // Guardar los datos extraídos en sesión y redirigir al procesamiento
+                return $this->response->setJSON([
+                    'success' => true,
+                    'data' => $data
+                ]);
+            } else {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'Error al importar datos desde la IA'
+                ]);
             }
-            
-            // Guardar los datos extraídos en sesión y redirigir al procesamiento
-            return $this->response->setJSON([
-                'success' => true,
-                'data' => $data
-            ]);
-            
-        } else {
+        } catch (\Exception $e) {
             return $this->response->setJSON([
                 'success' => false,
-                'message' => 'Error al importar datos desde la IA'
+                'message' => 'Error al procesar el archivo PDF: ' . $e->getMessage()
             ]);
         }
     }
