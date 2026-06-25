@@ -63,7 +63,8 @@
             </h4>
         </div>
         
-        <table class="table w-100 responsive" id="modalityTable">
+        <div class="table-responsive">
+            <table class="table w-100 responsive" id="modalityTable">
                 <thead class="table-light">
                     <tr>
                         <th></th>
@@ -78,6 +79,7 @@
                     </tr>
                 </thead>
             </table>
+        </div>
     </div>
 
 </div>

@@ -68,7 +68,7 @@
         <!-- common -->
     <script src="<?= base_url('js/tables/common.js') ?>"></script>
         <!-- modalitiesDataTables -->
-    <script src="<?= base_url("js/tables/modalitiesDataTable.js") ?>?v=<?= filemtime(FCPATH . 'js/tables/modalitiesDataTable.js') ?>"></script>
+    <script src="<?= base_url("js/tables/modalitiesDataTable.js") ?>"></script>
         <!-- studentDataTables -->
     <script src="<?= base_url("js/tables/studentDataTable.js") ?>"></script>
         <!-- teachersDataTables -->

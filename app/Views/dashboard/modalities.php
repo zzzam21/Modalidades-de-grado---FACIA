@@ -14,6 +14,7 @@
 
         <div class="mt-4">
             <h4 class="text-center"><b>MODALIDADES DE GRADO</b></h4>
+            <div class="table-responsive">
                 <table class="table responsive" id="modalityTable">
                     <thead>
                         <tr>
@@ -29,6 +30,7 @@
                         </tr>
                     </thead>
                 </table>
+            </div>
         </div>
     </div>
 </div>
