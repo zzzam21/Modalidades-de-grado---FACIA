@@ -367,15 +367,31 @@ async function confirmSaveModality() {
 
     try {
         const data = collectVerificationData();
+        const errors = [];
 
-        if (!data.modalidad.nombre_trabajo || !data.modalidad.id_modalidad) {
+        if (!data.modalidad.nombre_trabajo) errors.push("- Nombre del trabajo");
+        if (!data.modalidad.id_modalidad) errors.push("- Tipo de modalidad");
+        if (!data.modalidad.No_acuerdo) errors.push("- No. Acuerdo");
+        if (!data.modalidad.estado_modalidad) errors.push("- Estado");
+
+        if (!data.estudiantes || data.estudiantes.length === 0) {
+            errors.push("- Debe haber al menos un estudiante");
+        } else {
+            data.estudiantes.forEach((s, i) => {
+                if (!s.codigo_estudiantil) errors.push("- Est. #" + (i+1) + ": c\u00f3digo");
+                if (!s.documento_identidad) errors.push("- Est. #" + (i+1) + ": documento");
+                if (!s.nombre) errors.push("- Est. #" + (i+1) + ": nombre");
+                if (!s.sede_codigo) errors.push("- Est. #" + (i+1) + ": programa/sede");
+            });
+        }
+
+        if (errors.length) {
             spinner.classList.add('d-none');
             Swal.fire({
-                title: "Datos incompletos",
-                text: "El nombre del trabajo y el tipo de modalidad son obligatorios.",
+                title: "Campos requeridos",
+                html: errors.join("<br>"),
                 icon: "warning",
-                confirmButtonText: "Aceptar",
-                draggable: true
+                confirmButtonText: "Aceptar"
             });
             return;
         }

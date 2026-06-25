@@ -95,7 +95,29 @@ class modalitieController extends BaseController {
             if (!$modality_name || !$modality_type_id) {
                 throw new Exception('Modalidad incompleta: nombre o tipo de modalidad no encontrados.');
             }
-            
+
+            if (!$no_acuerdo) {
+                throw new Exception('El n\u00famero de Acuerdo es obligatorio.');
+            }
+
+            if (!$modality_status) {
+                throw new Exception('El estado de la modalidad es obligatorio.');
+            }
+
+            if (empty($data["estudiantes"])) {
+                throw new Exception('Debe haber al menos un estudiante.');
+            }
+
+            foreach ($data["estudiantes"] as $i => $student) {
+                $code = str_replace('.', '', $student["codigo_estudiantil"] ?? '');
+                $name = trim($student["nombre"] ?? '');
+                $sede = $student["sede_codigo"] ?? '';
+
+                if (!$code || !$name || !$sede) {
+                    throw new Exception('Datos incompletos del estudiante #' . ($i + 1) . ': c\u00f3digo, nombre y programa/sede son obligatorios.');
+                }
+            }
+
             $modality_data = [
                 'modality_ID' => $no_acuerdo,
                 'name_modalitie' => $modality_name, 
