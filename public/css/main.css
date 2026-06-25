@@ -77,9 +77,8 @@ main.content {
     background-color: #6c757d;
     color: #ffffff;
 }
-/* Evita que el texto rompa el diseño */
 table.dataTable td {
-    white-space: nowrap;
+    white-space: normal;
 }
 
 /* Mejora visual en mobile */
