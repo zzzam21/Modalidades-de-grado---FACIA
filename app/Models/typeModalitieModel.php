@@ -10,5 +10,5 @@ class typeModalitieModel extends Model{
 
     protected $primaryKey = 'id_type_mod';
     
-    protected $allowedFields = ['type_name'];
+    protected $allowedFields = ['type_name', 'type_modalitie'];
 }

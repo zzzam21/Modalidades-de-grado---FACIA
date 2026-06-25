@@ -105,20 +105,15 @@ class importPdfController extends BaseController
                                 - id_modalidad SOLO se asigna si tipo_modalidad coincide EXACTAMENTE.
                                 - NO deduzcas ni asumas.
 
-                                ASIGNACIÓN OBLIGATORIA:
-                                - Trabajo de Investigación
-                                - Articulo Cientifico
-                                - Participación en Grupos de Investigación
-                                    → id_modalidad = 1
-
-                                - Diplomado
-                                - Créditos en Cursos de Postgrado
-                                    → id_modalidad = 2
-
-                                - Pasantia Empresarial
-                                - Proyectos comunitarios
-                                - Estancias Académicas
-                                    → id_modalidad = 3
+                                 ASIGNACIÓN OBLIGATORIA:
+                                - Trabajo de Investigación → id_modalidad = 1
+                                - Articulo Cientifico → id_modalidad = 2
+                                - Participación en Grupos de Investigación → id_modalidad = 3
+                                - Diplomado → id_modalidad = 4
+                                - Créditos en Cursos de Postgrado → id_modalidad = 5
+                                - Pasantia Empresarial → id_modalidad = 6
+                                - Proyectos comunitarios → id_modalidad = 7
+                                - Estancias Académicas → id_modalidad = 8
 
                                 - Si no hay coincidencia exacta → id_modalidad = null
 
