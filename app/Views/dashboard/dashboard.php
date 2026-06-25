@@ -14,7 +14,7 @@
                     <p class="mb-0">Estudiantes Activos</p>
                 </div>
                 <div class="icon">
-                    <i class="bi bi-backpack"></i>
+                    <i class="bi bi-backpack3-fill"></i>
                 </div>  
                 <a href="<?= base_url("students") ?>" class="small-box-footer">
                     Ver Estudiantes <i class="bi bi-arrow-right-circle-fill"></i>
@@ -64,7 +64,7 @@
         </div>
         
         <div class="table-responsive">
-            <table class="table w-100 responsive" id="modalityTable">
+            <table class="table w-100" id="modalityTable">
                 <thead class="table-light">
                     <tr>
                         <th></th>

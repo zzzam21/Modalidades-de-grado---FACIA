@@ -14,23 +14,21 @@
 
         <div class="mt-4">
             <h4 class="text-center"><b>MODALIDADES DE GRADO</b></h4>
-            <div class="table-responsive">
-                <table class="table responsive" id="modalityTable">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th># Acuerdo</th>
-                            <th>Nombre Modalidad</th>
-                            <th>Modalidad</th>
-                            <th>Estado</th>
-                            <th>Fecha Inicio</th>
-                            <th>Duración</th>
-                            <th>Final Estimado</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+            <table class="table responsive" id="modalityTable">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th># Acuerdo</th>
+                        <th>Nombre Modalidad</th>
+                        <th>Modalidad</th>
+                        <th>Estado</th>
+                        <th>Fecha Inicio</th>
+                        <th>Duración</th>
+                        <th>Final Estimado</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
 </div>
@@ -120,11 +118,11 @@
                                             <label class="form-label">Fecha Inicio</label>
                                             <input type="date" class="form-control" id="v_fecha_inicio">
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-2">
                                             <label class="form-label">Duración</label>
                                             <input type="text" class="form-control" id="v_duracion">
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-2">
                                             <label class="form-label">Fin Estimado</label>
                                             <input type="date" class="form-control" id="v_fin_estimado">
                                         </div>
@@ -245,13 +243,12 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <div class="spinner-grow spinner-grow-sm text-success d-none" id="editLoadingModality">
+                <div class="spinner-grow spinner-grow-sm text-success d-none" id="loadingModality">
                     <span class="visually-hidden">Loading...</span>
                 </div>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button class="btn btn-success" id="editSaveModality" type="button">Guardar </button>
+                <button class="btn btn-success" id="saveModality" type="button">Guardar </button>
             </div>
-
         </div>
     </div>
 </div>

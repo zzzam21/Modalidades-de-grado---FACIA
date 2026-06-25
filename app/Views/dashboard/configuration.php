@@ -3,37 +3,49 @@
 
 <div id="app" data-view="configuration">
 
-    <div class="d-flex justify-content-center pt-5">
-        <div class="card shadow-sm border-0" style="max-width:480px;width:100%;">
-            <div class="card-body text-center">
-                <h4>Usuario</h4>
-                <img class="pb-3" src="<?= base_url("img/header/icono-usuario.webp") ?>" alt="Usuario" style="width:120px;max-width:30%;">
-                
-                <div class="d-flex align-items-center justify-content-center gap-2 flex-wrap mb-2">
-                    <span class="fw-semibold fs-6">Nombre:</span>
-                    <span id="currentUserName" class="fs-6">
-                        <?= esc(session()->get('user_name')); ?>
-                    </span>
-                    <button type="button" class="btn btn-sm btn-success flex-shrink-0"
-                    data-bs-toggle="modal" data-bs-target="#userNameModal">
-                        <i class="bi bi-pencil"></i>
-                    </button>
-                </div>
+    <div class="text-center mx-auto justify-content-center align-items-center pt-5" style="width:fit-content">
+        <h4>Usuario</h4>
+        <img class="pb-3" src="<?= base_url("img/header/icono-usuario.webp") ?>" alt="Usuario" width="30%;">
+        <div class="row g-3">
+            
+            <div class="col-auto">
+                <p style="font-size: 17px;"><b>Nombre:</b></p>
+            </div>
 
-                <div class="d-flex align-items-center justify-content-center gap-2 flex-wrap mb-3">
-                    <span class="fw-semibold fs-6">Correo:</span>
-                    <span id="currentUserEmail" class="fs-6">
-                        <?= session('user_email')?>
-                    </span>
-                    <button type="button" class="btn btn-sm btn-success flex-shrink-0"
-                    data-bs-toggle="modal" data-bs-target="#userEmailModal">
-                        <i class="bi bi-pencil"></i>
-                    </button>
-                </div>
+            <div class="col-auto">
+                <p id="currentUserName">
+                    <?= esc(session()->get('user_name')); ?>
+                </p>
+            </div>
 
-                <a href="" data-bs-toggle="modal" data-bs-target="#passwordModal">Cambiar contraseña</a>
+            <div class="col-auto ms-auto">
+                <button type="button" class="btn btn-sm btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                data-bs-toggle="modal" data-bs-target="#userNameModal">
+                    <span class="icon">
+                        <i class="bi bi-pencil"></i>
+                    </span>
+                </button>
+            </div>
+
+        </div>
+
+        <div class="row g-3">
+            <div class="col-auto">
+                <p style="font-size: 17px;"><b>Correo:</b></p>
+            </div>
+            <div class="col-auto">
+                <p id="currentUserEmail">
+                    <?= session('user_email')?>
+                </p>
+            </div>
+            <div class="col-auto ms-auto">
+                <button type="button"  class="btn btn-sm btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                data-bs-toggle="modal" data-bs-target="#userEmailModal">
+                    <i class="bi bi-pencil"></i>
+                </button>
             </div>
         </div>
+        <a href="" data-bs-toggle="modal" data-bs-target="#passwordModal">Cambiar contraseña</a>
     </div>
 </div>
 
