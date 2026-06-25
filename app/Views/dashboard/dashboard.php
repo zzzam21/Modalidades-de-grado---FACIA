@@ -67,7 +67,6 @@
             <table class="table w-100" id="modalityTable">
                 <thead class="table-light">
                     <tr>
-                        <th></th>
                         <th># Acuerdo</th>
                         <th>Nombre Modalidad</th>
                         <th>Modalidad</th>
