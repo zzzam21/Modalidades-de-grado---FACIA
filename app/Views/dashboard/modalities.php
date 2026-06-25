@@ -17,6 +17,7 @@
             <table class="table responsive" id="modalityTable">
                 <thead>
                     <tr>
+                        <th></th>
                         <th># Acuerdo</th>
                         <th>Nombre Modalidad</th>
                         <th>Modalidad</th>
