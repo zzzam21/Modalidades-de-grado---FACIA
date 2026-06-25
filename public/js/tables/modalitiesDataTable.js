@@ -8,16 +8,13 @@ $(document).ready(function () {
                 type: 'column',
                 target: 0
             }
-        }, 
-        autoWidth: false,
+        },
         columnDefs: [
             {
                 className: 'dtr-control',
                 orderable: false,
                 targets: 0
             },
-            { responsivePriority: 1, targets: 1 },
-            { responsivePriority: 2, targets: 2 },
             {
                 targets: 2,
                 className: "text-truncate-modal"
@@ -31,10 +28,10 @@ $(document).ready(function () {
 
         columns: [
             { data: null, defaultContent: '' },
-            { data: "modality_ID" },
+            { data: "modality_ID", responsivePriority: 1 },
 
             {
-                data: "name_modalitie",
+                data: "name_modalitie", responsivePriority: 2,
                 render: function(data) {
                     return `
                         <span class="text-truncate-modal"
