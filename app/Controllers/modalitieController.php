@@ -22,11 +22,15 @@ class modalitieController extends BaseController {
 
     public function getModality($id): ResponseInterface{ 
         
-        $modalityModel = new \App\Models\modalitieModel();
         $studentModel = new \App\Models\studentModel();
         $asesorModel = new \App\Models\teachersModel();
         
-        $data = $modalityModel->find($id);
+        $db = \Config\Database::connect();
+        $builder = $db->table('modalities m');
+        $builder->select('m.*, tm.type_name as type_modality');
+        $builder->join('type_modalities tm', 'm.id_type_mod = tm.id_type_mod', 'left');
+        $builder->where('m.modality_ID', $id);
+        $data = $builder->get()->getRow();
         $student = $studentModel->getStudentByModality($id);
         $asesor = $asesorModel->getAsesor($id);
         $coasesor = $asesorModel->getCoAsesor($id);
@@ -50,8 +54,11 @@ class modalitieController extends BaseController {
     }
 
     public function getmodalities(){
-        $modalityModel = new \App\Models\modalitieModel();
-        $data = $modalityModel->findAll();
+        $db = \Config\Database::connect();
+        $builder = $db->table('modalities m');
+        $builder->select('m.*, tm.type_name as type_modality');
+        $builder->join('type_modalities tm', 'm.id_type_mod = tm.id_type_mod', 'left');
+        $data = $builder->get()->getResult();
         return $this->response->setJSON($data);
     }
 
@@ -127,8 +134,7 @@ class modalitieController extends BaseController {
                 'goal' => json_encode($modality_objectives),
                 'date_approved' => $modality_start_date, 
                 'date_end' => $modality_end,
-                'duration' => $modality_duration,
-                'type_modality' => $modality_type
+                'duration' => $modality_duration
             ];
 
             $modality_model->addModality($modality_data);

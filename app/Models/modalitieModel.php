@@ -18,8 +18,7 @@ class modalitieModel extends Model{
                                 'goal',
                                 'date_approved', 
                                 'date_end',
-                                'duration',
-                                'type_modality'];
+                                'duration'];
 
     public function addModality($data){
         return $this->insert($data);

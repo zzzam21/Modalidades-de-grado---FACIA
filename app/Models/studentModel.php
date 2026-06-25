@@ -46,9 +46,10 @@ class studentModel extends Model{
         $user_programModel = new user_programModel();
         $program = $user_programModel->userProgram($userId);
         
-        $data = $this->select('students.*, m.type_modality as type_modalitie, p.program_name, p.sede')
+        $data = $this->select('students.*, tm.type_name as type_modalitie, p.program_name, p.sede')
                      ->join('modalitie_student mo', 'mo.student_ID = students.student_ID')
                      ->join('modalities m', 'm.modality_ID = mo.modality_ID')
+                     ->join('type_modalities tm', 'm.id_type_mod = tm.id_type_mod', 'left')
                      ->join('programs p', 'students.program_ID = p.program_ID')
                      ->where('students.program_ID', $program['program_ID'])->findAll();
         return $data;
@@ -63,10 +64,11 @@ class studentModel extends Model{
     }
     public function getModalityByStudent($id){
         if ($id){
-            return $this->select('m.* , t.name, mt.role')
+            return $this->select('m.*, t.name, mt.role, tm.type_name as type_modality')
                         ->join('modalitie_student ms', 'ms.student_ID = students.student_ID')
                         ->join('modalitie_teacher mt', 'ms.modality_ID = mt.modality_ID')
                         ->join('modalities m', 'm.modality_ID = ms.modality_ID')
+                        ->join('type_modalities tm', 'm.id_type_mod = tm.id_type_mod', 'left')
                         ->join('teachers t', 'mt.teacher_ID = t.teacher_ID')
                         ->where('students.student_ID', $id)->findAll();
         }
