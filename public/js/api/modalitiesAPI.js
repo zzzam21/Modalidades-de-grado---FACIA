@@ -59,6 +59,11 @@ function getSedesForProgram(programs, programName) {
         .sort();
 }
 
+function normalizeStr(str) {
+    if (!str) return '';
+    return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+}
+
 function getProgramId(programs, programName, sede) {
     const match = programs.find(p => p.program_name === programName && p.sede === sede);
     return match ? match.program_ID : null;
@@ -216,7 +221,7 @@ function addStudentRow(data, programs) {
         const opt = document.createElement("option");
         opt.value = pn;
         opt.textContent = pn;
-        if (data.programa === pn) opt.selected = true;
+        if (data.programa && normalizeStr(data.programa) === normalizeStr(pn)) opt.selected = true;
         programSel.appendChild(opt);
     });
     programTd.appendChild(programSel);
@@ -229,13 +234,17 @@ function addStudentRow(data, programs) {
     blankSede.textContent = "-- Seleccione --";
     sedeSel.appendChild(blankSede);
     if (data.programa) {
-        getSedesForProgram(programs, data.programa).forEach(s => {
-            const opt = document.createElement("option");
-            opt.value = s;
-            opt.textContent = s;
-            if (data.nombre_sede === s) opt.selected = true;
-            sedeSel.appendChild(opt);
-        });
+        const match = programs.find(p => normalizeStr(p.program_name) === normalizeStr(data.programa));
+        if (match) {
+            programs.filter(p => p.program_name === match.program_name).map(p => p.sede).sort()
+                .forEach(s => {
+                    const opt = document.createElement("option");
+                    opt.value = s;
+                    opt.textContent = s;
+                    if (data.nombre_sede && normalizeStr(data.nombre_sede) === normalizeStr(s)) opt.selected = true;
+                    sedeSel.appendChild(opt);
+                });
+        }
     }
     sedeTd.appendChild(sedeSel);
 
