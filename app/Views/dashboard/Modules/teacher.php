@@ -8,6 +8,9 @@
         <a href="<?= base_url('/teachers') ?>" class="btn btn-light">
             <i class="bi bi-arrow-left me-2"></i> Docentes
         </a>
+        <a href="<?= base_url('/teachers/report/' . $id) ?>" class="btn btn-primary" target="_blank">
+            <i class="bi bi-file-earmark-text me-2"></i> Generar Reporte
+        </a>
     </div>
     <!-- ASESOR -->
     <div class="col-md-4">

@@ -44,6 +44,8 @@ $routes->get('/teachers/getteacher/(:num)','TeachersController::getTeacher/$1',[
 
 $routes->get('/teachers/getInfoModalByTeacher/(:num)','TeachersController::getInfoModalityByTeacher/$1',['filter' => 'auth']);
 
+$routes->get('/teachers/report/(:num)','TeachersController::report/$1',['filter' => 'auth']);
+
 // $routes->post('/teachers/add','TeachersController::addTeacher',['filter' => 'auth']);
 
 // -----------------------------------
