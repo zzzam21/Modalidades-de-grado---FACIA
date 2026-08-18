@@ -910,7 +910,7 @@ function renderStudents(data) {
         data.forEach(est => {
             listaEstudiantes.innerHTML += `
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    ${est.name_student}
+                    <a href="../../students/student/${est.student_ID}" class="text-decoration-none">${est.name_student}</a>
                     <span class="badge bg-secondary">${est.code}</span>
                 </li>
             `;
@@ -922,7 +922,7 @@ function renderAsesor(data) {
     const asesor = document.getElementById("det_asesor");
 
     asesor.innerHTML = data
-        ? `<p class="mb-1 fw-semibold">${data.name}</p>
+        ? `<p class="mb-1"><a href="../../teachers/teacher/${data.teacher_ID}" class="text-decoration-none fw-semibold">${data.name}</a></p>
            <small class="text-muted">${data.role}</small>`
         : `<span class="text-muted">No asignado</span>`;
 }
@@ -930,7 +930,7 @@ function renderAsesor(data) {
 function renderCoAsesor(data) {
     const coasesor = document.getElementById("det_coasesor");
     coasesor.innerHTML = data
-        ? `<p class="mb-1 fw-semibold">${data.name}</p>
+        ? `<p class="mb-1"><a href="../../teachers/teacher/${data.teacher_ID}" class="text-decoration-none fw-semibold">${data.name}</a></p>
            <small class="text-muted">${data.role}</small>`
         : `<span class="text-muted">No asignado</span>`;
 }
@@ -945,7 +945,7 @@ function renderJurado(data) {
         data.forEach(j => {
             listaJurados.innerHTML += `
                 <li class="list-group-item">
-                    ${j.name}
+                    <a href="../../teachers/teacher/${j.teacher_ID}" class="text-decoration-none">${j.name}</a>
                 </li>
             `;
         });
