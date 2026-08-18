@@ -81,13 +81,3 @@ main.content {
 table.dataTable td {
     white-space: nowrap;
 }
-
-/* Mejora visual en mobile */
-.dtr-details {
-    width: 100%;
-}
-
-/* Botón expandir más visible */
-td.dtr-control {
-    cursor: pointer;
-}

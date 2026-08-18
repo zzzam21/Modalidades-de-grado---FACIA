@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
     <!-- DataTable Styles -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.7/css/dataTables.bootstrap5.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.min.css">
     <!-- Own styles -->
     <link rel="stylesheet" href="<?= base_url("css/sidebar.css") ?>">
     <link rel="stylesheet" href="<?= base_url("css/main.css") ?>">
@@ -62,10 +61,7 @@
     <script src="<?= base_url("js/tooltip.js") ?>"></script>
 
     <!-- DataTables -->
-    <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap5.min.js"></script>
-
-        <!-- common -->
+    <!-- common -->
     <script src="<?= base_url('js/tables/common.js') ?>"></script>
         <!-- modalitiesDataTables -->
     <script src="<?= base_url("js/tables/modalitiesDataTable.js") ?>"></script>

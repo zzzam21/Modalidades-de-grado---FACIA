@@ -1,4 +1,7 @@
 const ROLE_LIMITS = { asesores: 1, coasesores: 1, jurados: 2 };
+const SUSTENTACION_STATES = ['aprobada', 'En curso'];
+let editingModalityId = null;
+let currentModalityStatus = null;
 
 document.addEventListener("DOMContentLoaded", () => {
     const app = document.getElementById("app");
@@ -10,23 +13,39 @@ document.addEventListener("DOMContentLoaded", () => {
             if (modalityId.value) {
                 getModality(modalityId.value);
             }
+            wireVerifyModalControls();
+            document.getElementById("editModalityBtn").addEventListener("click", () => openEditModality(modalityId.value));
+            document.getElementById("setSustentacionBtn").addEventListener("click", openSustentacionModal);
+            document.getElementById("saveSustentacionBtn").addEventListener("click", saveSustentacion);
             break;
         case "modalities":
             loadFormData();
             document.getElementById("saveModality").addEventListener("click", postModalitie);
-            document.getElementById("confirmSaveModality").addEventListener("click", confirmSaveModality);
-            document.getElementById("addStudentRow").addEventListener("click", () => addStudentRow());
-            document.getElementById("addAsesorBtn").addEventListener("click", () => addRoleRow("asesores"));
-            document.getElementById("addCoasesorBtn").addEventListener("click", () => addRoleRow("coasesores"));
-            document.getElementById("addJuradoBtn").addEventListener("click", () => addRoleRow("jurados"));
+            document.getElementById("addModalityManual").addEventListener("click", openManualModality);
+            wireVerifyModalControls();
         default:
             break;
     }
 })
 
+function wireVerifyModalControls() {
+    document.getElementById("confirmSaveModality").addEventListener("click", confirmSaveModality);
+    document.getElementById("addStudentRow").addEventListener("click", () => addStudentRow());
+    document.getElementById("addAsesorBtn").addEventListener("click", () => addRoleRow("asesores"));
+    document.getElementById("addCoasesorBtn").addEventListener("click", () => addRoleRow("coasesores"));
+    document.getElementById("addJuradoBtn").addEventListener("click", () => addRoleRow("jurados"));
+}
+
+function getApiUrl(path) {
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    const idx = parts.indexOf('modalities');
+    const base = parts.slice(0, idx + 1).join('/');
+    return `${window.location.origin}/${base}/${path}`;
+}
+
 async function loadFormData() {
     try {
-        const resp = await fetch("modalities/getFormData");
+        const resp = await fetch(getApiUrl("getFormData"));
         const data = await resp.json();
         window.formData = data;
         populateTypeSelect(data.type_modalities);
@@ -105,6 +124,9 @@ async function postModalitie() {
 
         if (result.success) {
             window.verificationData = result.data;
+            editingModalityId = null;
+            setNoAcuerdoEditable(true);
+            setVerifyModalTitle('pdf');
             populateVerificationModal(result.data);
             $("#addmodalitie").modal("hide");
             spinner.classList.add('d-none');
@@ -126,6 +148,123 @@ async function postModalitie() {
         spinner.classList.add('d-none');
         console.error(error);
         serverError();
+    }
+}
+
+function setVerifyModalTitle(mode) {
+    const title = document.getElementById("verifyModalTitle");
+    const alert = document.getElementById("verifyInfoAlert");
+    if (mode === 'manual') {
+        title.textContent = "Agregar Modalidad Manualmente";
+        if (alert) alert.classList.add("d-none");
+    } else if (mode === 'edit') {
+        title.textContent = "Editar Modalidad";
+        if (alert) alert.classList.add("d-none");
+    } else {
+        title.textContent = "Verificar Datos Extraídos";
+        if (alert) alert.classList.remove("d-none");
+    }
+}
+
+function setNoAcuerdoEditable(editable) {
+    const input = document.getElementById("v_no_acuerdo");
+    if (editable) {
+        input.removeAttribute("disabled");
+    } else {
+        input.setAttribute("disabled", "disabled");
+    }
+}
+
+async function openManualModality() {
+    if (!window.formData) {
+        await loadFormData();
+    }
+
+    editingModalityId = null;
+
+    document.getElementById("v_name_trabajo").value = "";
+    document.getElementById("v_no_acuerdo").value = "";
+    document.getElementById("v_fecha_inicio").value = "";
+    document.getElementById("v_duracion").value = "";
+    document.getElementById("v_fin_estimado").value = "";
+    document.getElementById("v_tipo_modalidad").value = "";
+    document.getElementById("v_estado").value = "";
+    document.getElementById("v_objetivos").value = "";
+
+    const tbody = document.getElementById("v_students_tbody");
+    tbody.innerHTML = "";
+    addStudentRow({}, (window.formData && window.formData.programs) || []);
+
+    renderRoles("asesores", []);
+    renderRoles("coasesores", []);
+    renderRoles("jurados", []);
+
+    setNoAcuerdoEditable(true);
+    setVerifyModalTitle('manual');
+    $("#verifyModal").modal("show");
+}
+
+async function openEditModality(id) {
+    if (!window.formData) {
+        await loadFormData();
+    }
+
+    try {
+        const response = await fetch(`../getmodality/${id}`);
+        if (!response.ok) {
+            throw new Error('Error al cargar la modalidad');
+        }
+        const result = await response.json();
+        const mod = result.data;
+        const programs = (window.formData && window.formData.programs) || [];
+
+        const estudiantes = (result.student || []).map(s => {
+            const prog = programs.find(p => p.program_ID == s.program_ID) || null;
+            return {
+                codigo_estudiantil: s.code || "",
+                documento_identidad: s.student_ID || "",
+                nombre: s.name_student || "",
+                programa: prog ? prog.program_name : "",
+                nombre_sede: prog ? prog.sede : ""
+            };
+        });
+
+        let objetivos = [];
+        try {
+            objetivos = JSON.parse(mod.goal) || [];
+        } catch (e) {
+            objetivos = [];
+        }
+
+        const mapped = {
+            estudiantes: estudiantes,
+            asesores: result.asesor ? [{ nombre: result.asesor.name }] : [],
+            coasesores: result.coasesor ? [{ nombre: result.coasesor.name }] : [],
+            jurados: (result.jurado || []).map(j => ({ nombre: j.name })),
+            modalidad: {
+                No_acuerdo: mod.modality_ID,
+                nombre_trabajo: mod.name_modalitie,
+                tipo_modalidad: mod.type_modality,
+                id_modalidad: mod.id_type_mod,
+                estado_modalidad: mod.status,
+                fecha_inicio_modalidad: mod.date_approved,
+                objetivos_modalidad: objetivos,
+                duracion_modalidad: mod.duration,
+                fin_estimado_modalidad: mod.date_end
+            }
+        };
+
+        editingModalityId = id;
+        setNoAcuerdoEditable(false);
+        setVerifyModalTitle('edit');
+        populateVerificationModal(mapped);
+        $("#verifyModal").modal("show");
+    } catch (e) {
+        console.error("Error al abrir edición:", e);
+        Swal.fire({
+            title: "Error al cargar la modalidad",
+            icon: "error"
+        });
     }
 }
 
@@ -405,7 +544,10 @@ async function confirmSaveModality() {
             return;
         }
 
-        const response = await fetch("modalities/process", {
+        const isEdit = editingModalityId !== null;
+        const url = isEdit ? `../updateModality/${editingModalityId}` : "modalities/process";
+
+        const response = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
@@ -416,15 +558,27 @@ async function confirmSaveModality() {
         spinner.classList.add('d-none');
 
         if (result.success) {
-            Swal.fire({
-                title: "Modalidad Agregada Correctamente!",
-                icon: "success",
-                draggable: true
-            });
-            $('#modalityTable').DataTable().ajax.reload();
+            if (isEdit) {
+                Swal.fire({
+                    title: "Modalidad Actualizada Correctamente!",
+                    icon: "success",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+                editingModalityId = null;
+                getModality($('#modalityId').val());
+            } else {
+                Swal.fire({
+                    title: "Modalidad Agregada Correctamente!",
+                    icon: "success",
+                    draggable: true
+                });
+                $('#modalityTable').DataTable().ajax.reload();
+            }
         } else {
             Swal.fire({
-                title: "Error agregando modalidad!",
+                title: isEdit ? "Error actualizando modalidad!" : "Error agregando modalidad!",
+                text: result.message || undefined,
                 icon: "error",
                 draggable: true
             });
@@ -446,6 +600,76 @@ function escapeHtml(str) {
 // -----------------------------------------------------------------------
 // Funciones existentes (sin cambios)
 // -----------------------------------------------------------------------
+
+function formatSustentacion(value) {
+    if (!value) return "--";
+    let date, time = "";
+    if (value.includes(" ")) {
+        [date, time] = value.split(" ");
+    } else if (value.includes("T")) {
+        [date, time] = value.split("T");
+    } else {
+        date = value;
+    }
+    const parts = date.split("-");
+    const formatted = `${parts[2]}/${parts[1]}/${parts[0]}`;
+    return time ? `${formatted} ${time.slice(0, 5)}` : formatted;
+}
+
+function toDatetimeLocal(value) {
+    if (!value) return "";
+    return value.includes("T") ? value.slice(0, 16) : value.replace(" ", "T").slice(0, 16);
+}
+
+function refreshSustentacionControls(status, dateValue) {
+    const value = dateValue || "";
+    document.getElementById("det_sustentacion").innerText = formatSustentacion(value);
+    document.getElementById("det_sustentacion").dataset.value = value;
+    document.getElementById("setSustentacionBtn").classList.toggle("d-none", !SUSTENTACION_STATES.includes(status));
+}
+
+function openSustentacionModal() {
+    const current = document.getElementById("det_sustentacion").dataset.value || "";
+    document.getElementById("v_fecha_sustentacion").value = toDatetimeLocal(current);
+    $("#sustentacionModal").modal("show");
+}
+
+async function saveSustentacion() {
+    const modalityId = document.getElementById("modalityId").value;
+    const date = document.getElementById("v_fecha_sustentacion").value;
+    const btn = document.getElementById("saveSustentacionBtn");
+    const spinner = document.getElementById("loadingSustentacion");
+    btn.disabled = true;
+    spinner.classList.remove("d-none");
+    try {
+        const resp = await fetch(`../updateSustentacion/${modalityId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ date_sustentacion: date })
+        });
+        const result = await resp.json();
+        if (!resp.ok || !result.success) {
+            throw new Error(result.message || 'Error al guardar');
+        }
+        refreshSustentacionControls(currentModalityStatus, date);
+        $("#sustentacionModal").modal("hide");
+        Swal.fire({
+            title: 'Fecha de sustentación guardada',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
+        });
+    } catch (e) {
+        Swal.fire({
+            title: 'Error al guardar',
+            text: e.message,
+            icon: 'error'
+        });
+    } finally {
+        btn.disabled = false;
+        spinner.classList.add("d-none");
+    }
+}
 
 async function getModality(id) {
     try {
@@ -473,6 +697,9 @@ async function getModality(id) {
             document.getElementById('det_fin').innerText = mod.date_end;
             document.getElementById('det_duracion').innerText = mod.duration;
 
+            currentModalityStatus = mod.status;
+            refreshSustentacionControls(mod.status, mod.date_sustentacion);
+
             const objetivos = JSON.parse(mod.goal);
             document.getElementById("listaObjetivos").innerHTML =
                 objetivos.map(o => `<li class="list-group-item">${o}</li>`).join("");
@@ -484,9 +711,70 @@ async function getModality(id) {
                 'Finalizado': 'badge-finalizado'
             };
 
+            const statusLabels = {
+                'aprobada': 'Aprobada',
+                'En curso': 'En curso',
+                'Cancelado': 'Cancelado',
+                'Finalizado': 'Finalizado'
+            };
+
             const estadoElt = document.getElementById('det_estado');
-            const badgeClass = statusClasses[mod.status] || "bg-seconday";
-            estadoElt.innerHTML = `<span class="badge-custom ${badgeClass} p-2">${mod.status}</span>`;
+            const originalStatus = mod.status;
+
+            estadoElt.innerHTML = '';
+            const statusSelect = document.createElement('select');
+            statusSelect.className = 'form-select form-select-sm w-auto fw-semibold';
+            Object.keys(statusClasses).forEach(val => {
+                const opt = document.createElement('option');
+                opt.value = val;
+                opt.textContent = statusLabels[val] || val;
+                if (val === originalStatus) opt.selected = true;
+                statusSelect.appendChild(opt);
+            });
+            estadoElt.appendChild(statusSelect);
+
+            statusSelect.addEventListener('change', () => {
+                const newStatus = statusSelect.value;
+                Swal.fire({
+                    title: '¿Cambiar estado?',
+                    text: `Se actualizará el estado a "${statusLabels[newStatus] || newStatus}".`,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, cambiar',
+                    cancelButtonText: 'Cancelar'
+                }).then(async (res) => {
+                    if (!res.isConfirmed) {
+                        statusSelect.value = originalStatus;
+                        return;
+                    }
+                    try {
+                        const resp = await fetch(`../updateStatus/${mod.modality_ID}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ status: newStatus })
+                        });
+                        const result = await resp.json();
+                        if (!resp.ok || !result.success) {
+                            throw new Error(result.message || 'Error al actualizar');
+                        }
+                        Swal.fire({
+                            title: 'Estado actualizado',
+                            icon: 'success',
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                        currentModalityStatus = newStatus;
+                        refreshSustentacionControls(newStatus, document.getElementById("det_sustentacion").dataset.value || "");
+                    } catch (e) {
+                        statusSelect.value = originalStatus;
+                        Swal.fire({
+                            title: 'Error al actualizar',
+                            text: e.message,
+                            icon: 'error'
+                        });
+                    }
+                });
+            });
             renderStudents(result.student);
             renderAsesor(result.asesor);
             renderCoAsesor(result.coasesor);

@@ -18,6 +18,7 @@ class modalitieModel extends Model{
                                 'goal',
                                 'date_approved', 
                                 'date_end',
+                                'date_sustentacion',
                                 'duration'];
 
     public function addModality($data){

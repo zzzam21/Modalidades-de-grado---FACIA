@@ -3,21 +3,10 @@ $(document).ready(function () {
 
     $('#modalityTable').DataTable({
         ...dataTableConfig,
-        responsive: {
-            details: {
-                type: 'column',
-                target: 0
-            }
-        }, 
         autoWidth: false,
         columnDefs: [
             {
-                className: 'dtr-control',
-                orderable: false,
-                targets: 0
-            },
-            {
-                targets: 2,
+                targets: 1,
                 className: "text-truncate-modal"
             },
         ],
@@ -28,7 +17,6 @@ $(document).ready(function () {
         },
 
         columns: [
-            { data: null, defaultContent: '' },
             { data: "modality_ID" },
 
             {

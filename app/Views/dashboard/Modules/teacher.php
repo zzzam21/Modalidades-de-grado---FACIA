@@ -89,7 +89,6 @@
             <table id="teacherTable" class="table table-hover align-middle nowrap w-100">
                 <thead class="table-light">
                     <tr>
-                        <th></th>
                         <th>ID</th>
                         <th>Título</th>
                         <th>Rol</th>

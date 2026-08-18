@@ -11,7 +11,7 @@ php spark serve
 ```
 
 - **Dev server**: `http://localhost:8080/`
-- **XAMPP Apache**: `http://localhost/modalidades/public/`
+- **XAMPP Apache**: `http://localhost/` (VirtualHost apunta a `public`; ver `C:\xampp\apache\conf\extra\httpd-vhosts.conf`)
 - **DB**: MySQL `modalidadesfacia`, user `root`, port `3306` (XAMPP), creds in `.env`
 - `.env` is gitignored — never commit secrets. Template is `env` (copy to `.env`).
 

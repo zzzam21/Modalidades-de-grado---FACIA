@@ -34,30 +34,18 @@ $(document).ready(function ()
             url: '../../teachers/getInfoModalByTeacher/' + id,
             dataSrc: ''
         },
-        responsive: {
-            details: {
-                type: 'column',
-                target: 0
-            }
-        },
         columnDefs: [
-            {
-                className: 'dtr-control',
-                oderable: false,
-                targets: 0
-            },
             {
                 targets: -1,
                 orderable: false
             },
             {
-                targets: 2,
+                targets: 1,
                 className: "text-truncate-modal"
             }
         ],
 
         columns: [
-            {data: null, defaultContent: ''},
             {data: 'modality_ID'},
             {
                 data: "name_modalitie",
