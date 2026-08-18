@@ -383,6 +383,17 @@ class modalitieController extends BaseController {
             ]);
         }
 
+        $currentStatus = $db->table('modalities')
+                        ->where('modality_ID', $id)
+                        ->get()->getRow()->status;
+
+        if ($currentStatus === 'Cancelado') {
+            return $this->response->setStatusCode(403)->setJSON([
+                'success' => false,
+                'message' => 'No se pueden modificar modalidades canceladas.'
+            ]);
+        }
+
         $studentModel = new \App\Models\studentModel();
         $studentModalityModel = new \App\Models\modalitie_studentModel();
         $modalityModel = new \App\Models\modalitieModel();

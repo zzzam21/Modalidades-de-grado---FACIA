@@ -621,6 +621,24 @@ function toDatetimeLocal(value) {
     return value.includes("T") ? value.slice(0, 16) : value.replace(" ", "T").slice(0, 16);
 }
 
+function toggleEditButton(status) {
+    const btn = document.getElementById('editModalityBtn');
+    if (btn) btn.classList.toggle('d-none', status === 'Cancelado');
+}
+
+const STATUS_SELECT_CLASSES = {
+    'aprobada': 'status-select-aprobado',
+    'En curso': 'status-select-en-curso',
+    'Cancelado': 'status-select-cancelado',
+    'Finalizado': 'status-select-finalizado'
+};
+
+function applyStatusSelectStyle(select, status) {
+    Object.values(STATUS_SELECT_CLASSES).forEach(cls => select.classList.remove(cls));
+    const cls = STATUS_SELECT_CLASSES[status];
+    if (cls) select.classList.add(cls);
+}
+
 function refreshSustentacionControls(status, dateValue) {
     const value = dateValue || "";
     document.getElementById("det_sustentacion").innerText = formatSustentacion(value);
@@ -646,7 +664,7 @@ async function saveSustentacion() {
         });
         return;
     }
-    
+
     const btn = document.getElementById("saveSustentacionBtn");
     const spinner = document.getElementById("loadingSustentacion");
     btn.disabled = true;
@@ -742,16 +760,25 @@ async function getModality(id) {
                 statusSelect.appendChild(opt);
             });
             estadoElt.appendChild(statusSelect);
+            applyStatusSelectStyle(statusSelect, originalStatus);
+
+            toggleEditButton(originalStatus);
 
             statusSelect.addEventListener('change', () => {
                 const newStatus = statusSelect.value;
+                applyStatusSelectStyle(statusSelect, newStatus);
+                const isCancel = newStatus === 'Cancelado';
+
                 Swal.fire({
-                    title: '¿Cambiar estado?',
-                    text: `Se actualizará el estado a "${statusLabels[newStatus] || newStatus}".`,
-                    icon: 'question',
+                    title: isCancel ? '¿Cancelar modalidad?' : '¿Cambiar estado?',
+                    html: isCancel
+                        ? 'Una vez cancelada, <b>no podrá realizar modificaciones</b> a esta modalidad. Solo podrá eliminarla.'
+                        : `Se actualizará el estado a "<b>${statusLabels[newStatus] || newStatus}</b>".`,
+                    icon: isCancel ? 'warning' : 'question',
                     showCancelButton: true,
-                    confirmButtonText: 'Sí, cambiar',
-                    cancelButtonText: 'Cancelar'
+                    confirmButtonText: isCancel ? 'Sí, cancelar' : 'Sí, cambiar',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonColor: isCancel ? '#dc3545' : undefined
                 }).then(async (res) => {
                     if (!res.isConfirmed) {
                         statusSelect.value = originalStatus;
@@ -775,6 +802,7 @@ async function getModality(id) {
                         });
                         currentModalityStatus = newStatus;
                         refreshSustentacionControls(newStatus, document.getElementById("det_sustentacion").dataset.value || "");
+                        toggleEditButton(newStatus);
                     } catch (e) {
                         statusSelect.value = originalStatus;
                         Swal.fire({

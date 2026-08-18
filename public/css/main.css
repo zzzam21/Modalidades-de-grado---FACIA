@@ -81,3 +81,23 @@ main.content {
 table.dataTable td {
     white-space: nowrap;
 }
+
+.status-select-aprobado {
+    color: #198452 !important;
+    border-color: rgba(25, 132, 82, 0.5) !important;
+}
+
+.status-select-en-curso {
+    color: #b58100 !important;
+    border-color: rgba(255, 193, 7, 0.6) !important;
+}
+
+.status-select-cancelado {
+    color: #dc3545 !important;
+    border-color: rgba(220, 53, 69, 0.5) !important;
+}
+
+.status-select-finalizado {
+    color: #1262db !important;
+    border-color: rgba(18, 98, 219, 0.5) !important;
+}
