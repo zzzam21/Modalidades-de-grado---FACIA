@@ -767,6 +767,34 @@ async function getModality(id) {
             statusSelect.addEventListener('change', () => {
                 const newStatus = statusSelect.value;
                 applyStatusSelectStyle(statusSelect, newStatus);
+
+                if (newStatus === 'Finalizado') {
+                    const sustentacion = mod.date_sustentacion;
+                    if (!sustentacion) {
+                        statusSelect.value = originalStatus;
+                        applyStatusSelectStyle(statusSelect, originalStatus);
+                        Swal.fire({
+                            title: 'No es posible finalizar',
+                            text: 'Debe registrar una fecha de sustentación antes de finalizar.',
+                            icon: 'warning'
+                        });
+                        return;
+                    }
+                    const hoy = new Date();
+                    hoy.setHours(0, 0, 0, 0);
+                    const fechaSust = new Date(sustentacion.substring(0, 10) + 'T00:00:00');
+                    if (fechaSust > hoy) {
+                        statusSelect.value = originalStatus;
+                        applyStatusSelectStyle(statusSelect, originalStatus);
+                        Swal.fire({
+                            title: 'No es posible finalizar',
+                            text: 'La fecha de sustentación aún no ha pasado.',
+                            icon: 'warning'
+                        });
+                        return;
+                    }
+                }
+
                 const isCancel = newStatus === 'Cancelado';
 
                 Swal.fire({

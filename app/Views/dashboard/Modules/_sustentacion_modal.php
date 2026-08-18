@@ -1,7 +1,7 @@
 <!-- Modal para definir la Fecha de Sustentación -->
 <div class="modal fade" id="sustentacionModal" tabindex="-1" aria-labelledby="sustentacionModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content"> 
             <div class="modal-header">
                 <h5 class="modal-title" id="sustentacionModalLabel">
                     <i class="bi bi-calendar2-check me-2"></i>Fecha de Sustentación

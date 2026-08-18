@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informe Ejecutivo - <?= esc($teacher['name'] ?? '') ?></title>
+    <link rel="icon" href="<?= base_url('img/icons/icon-page.png') ?>" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <style>
@@ -12,7 +13,7 @@
         .report-container { max-width: 1100px; margin: 0 auto; padding: 30px; }
 
         .report-header {
-            background: linear-gradient(135deg, #1a73e8, #0d47a1);
+            background: linear-gradient(135deg, #4BAE4F, #3A913D);
             color: #fff;
             padding: 30px 40px;
             border-radius: 12px;
@@ -118,7 +119,7 @@
             .btn-print { display: none !important; }
             .report-container { padding: 0; }
             .report-header {
-                background: #1a73e8 !important;
+                background: #3A913D !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
@@ -256,11 +257,10 @@
         <p class="mb-1">Sistema de Gestion de Modalidades Academicas</p>
         <p class="mb-0">Generado el <?= esc($fecha) ?></p>
     </div>
-
 </div>
 
 <!-- BOTON IMPRIMIR -->
-<button class="btn btn-primary btn-print" onclick="window.print()">
+<button class="btn btn-success btn-print" onclick="window.print()">
     <i class="bi bi-printer me-2"></i> Imprimir / Exportar PDF
 </button>
 
