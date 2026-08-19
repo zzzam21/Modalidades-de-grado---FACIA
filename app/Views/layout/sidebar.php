@@ -34,6 +34,13 @@
             <span class="description">Modalidades</span>
         </a>
         
+        <a href="<?= base_url("alerts") ?>" class="nav-link" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Alertas" data-bs-placement="auto">
+            <span class="icon">
+                <i class="bi bi-exclamation-triangle"></i>
+            </span>
+            <span class="description">Alertas</span>
+        </a>
+
         <a href="<?= base_url("configuration") ?>" class="nav-link" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Configuración" data-bs-placement="auto">
             <span class="icon">
                 <i class="bi bi-gear"></i>

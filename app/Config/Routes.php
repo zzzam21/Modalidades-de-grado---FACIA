@@ -79,6 +79,12 @@ $routes->post('/modalities/updateSustentacion/(:num)', 'ModalitieController::upd
 $routes->get('/modalities/getFormData', 'ModalitieController::getFormData', ['filter' => 'auth']);
 
 // -----------------------------------
+// ALERT ROUTES
+// -----------------------------------
+$routes->get('/alerts', 'AlertController::alert', ['filter' => 'auth']);
+$routes->get('/alerts/getAlertas', 'AlertController::getAlertas', ['filter' => 'auth']);
+
+// -----------------------------------
 // USER ROUTES
 // -----------------------------------
 
