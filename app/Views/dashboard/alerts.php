@@ -24,7 +24,7 @@
             <div class="small-box bg-warning h-100">
                 <div class="inner">
                     <h3 id="countProximas">-</h3>
-                    <p class="mb-0">Próximas a vencer (7 días)</p>
+                    <p class="mb-0">Próximas a terminar (7 días)</p>
                 </div>
                 <div class="icon">
                     <i class="bi bi-clock-history"></i>
@@ -43,7 +43,7 @@
                 <i class="bi bi-exclamation-octagon"></i> VENCIDAS
             </h4>
         </div>
-
+<!-- kd -->
         <div class="table-responsive">
             <table class="table w-100" id="vencidasTable">
                 <thead class="table-light">
@@ -66,7 +66,7 @@
     <div id="proximasSection" class="mt-4">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3 gap-2">
             <h4 class="mb-0 text-center text-md-start fw-bold" style="color: #b58100;">
-                <i class="bi bi-clock-history"></i> PRÓXIMAS A VENCER (7 DÍAS)
+                <i class="bi bi-clock-history"></i> PRÓXIMAS A TERMINAR (7 DÍAS)
             </h4>
         </div>
 
@@ -96,7 +96,5 @@
     </div>
 
 </div>
-
-<script src="<?= base_url('js/alerts.js') ?>"></script>
 
 <?php echo $this->endSection(); ?>

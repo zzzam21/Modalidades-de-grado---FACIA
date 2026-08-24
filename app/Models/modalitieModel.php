@@ -74,7 +74,7 @@ class modalitieModel extends Model{
                 $builder->where('m.date_sustentacion IS NOT NULL');
                 $builder->where('m.date_sustentacion <', date('Y-m-d H:i:s'));
             $builder->groupEnd();
-            $builder->orWhereGroupStart();
+            $builder->orGroupStart();
                 $builder->where('m.date_sustentacion IS NULL');
                 $builder->where('m.date_end IS NOT NULL');
                 $builder->where('m.date_end <', date('Y-m-d'));
@@ -105,12 +105,12 @@ class modalitieModel extends Model{
                 $builder->where('m.date_sustentacion >=', $now);
                 $builder->where('m.date_sustentacion <=', $sevenDays);
             $builder->groupEnd();
-            $builder->orWhereGroupStart();
+            $builder->orGroupStart();
                 $builder->where('m.date_sustentacion IS NULL');
                 $builder->where('m.date_end IS NOT NULL');
                 $builder->where('m.date_end >=', $today);
                 $builder->where('m.date_end <=', $sevenDaysDate);
-            $builder->orWhereGroupEnd();
+            $builder->groupEnd();
         $builder->groupEnd();
         $builder->orderBy('m.date_sustentacion', 'ASC');
         $builder->orderBy('m.date_end', 'ASC');

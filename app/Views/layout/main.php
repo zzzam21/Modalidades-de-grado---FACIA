@@ -80,6 +80,8 @@
     <script src="<?= base_url("js/api/studentAPI.js") ?>"></script>
         <!-- teacherAPI -->
     <script src="<?= base_url("js/api/teacherAPI.js") ?>"></script>
+        <!-- alerts -->
+    <script src="<?= base_url("js/alerts.js") ?>"></script>
     
 </body>
 </html>
