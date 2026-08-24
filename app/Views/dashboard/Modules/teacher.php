@@ -8,7 +8,7 @@
         <a href="<?= base_url('/teachers') ?>" class="btn btn-light">
             <i class="bi bi-arrow-left me-2"></i> Docentes
         </a>
-        <a href="<?= base_url('/teachers/report/' . $id) ?>" class="btn btn-primary" target="_blank">
+        <a href="<?= base_url('/teachers/report/' . $id) ?>" class="btn btn-success" target="_blank">
             <i class="bi bi-file-earmark-text me-2"></i> Generar Reporte
         </a>
     </div>
@@ -46,7 +46,7 @@
                     <small class="text-muted">Como Jurado</small>
                     <h3 id="kpi_jurado" class="fw-bold mb-0">0</h3>
                 </div>
-                <i class="bi bi-person-badge fs-2 text-primary"></i>
+                <i class="bi bi-person-badge fs-2 text-info"></i>
             </div>
         </div>
     </div>

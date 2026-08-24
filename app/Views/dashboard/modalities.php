@@ -4,21 +4,20 @@
 <div id="app" data-view="modalities">
     <div class="container text-center pt-0">
 
-        <div class="row justify-content-end pt-4">
-            <div class="col-auto d-flex gap-2">
-                <button type="button" class="btn btn-sm btn-outline-primary" id="addModalityManual">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 pt-4 pb-3">
+            <h4 class="section-title mb-0">Modalidades de grado</h4>
+            <div class="col-auto d-flex gap-2 ms-auto">
+                <button type="button" class="btn btn-sm btn-outline-success" id="addModalityManual">
                     <i class="bi bi-pencil-square"></i> Agregar Manual
                 </button>
-                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addmodalitie">
+                <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#addmodalitie">
                     <i class="bi bi-plus-lg"></i> Agregar
                 </button>
             </div>
         </div>
 
-        <div class="mt-4">
-            <h4 class="text-center"><b>MODALIDADES DE GRADO</b></h4>
-            <div class="table-responsive">
-                <table class="table" id="modalityTable">
+        <div class="table-responsive text-start">
+            <table class="table w-100" id="modalityTable">
                     <thead>
                         <tr>
                             <th># Acuerdo</th>
@@ -33,7 +32,6 @@
                     </thead>
                 </table>
             </div>
-        </div>
     </div>
 </div>
 

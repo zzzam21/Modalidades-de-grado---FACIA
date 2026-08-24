@@ -14,11 +14,11 @@
                 <div class="form-text">Déjelo vacío para eliminar la fecha registrada.</div>
             </div>
             <div class="modal-footer">
-                <div class="spinner-grow spinner-grow-sm text-primary d-none" id="loadingSustentacion">
+                <div class="spinner-grow spinner-grow-sm text-success d-none" id="loadingSustentacion">
                     <span class="visually-hidden">Loading...</span>
                 </div>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="saveSustentacionBtn">
+                <button type="button" class="btn btn-success" id="saveSustentacionBtn">
                     <i class="bi bi-check-lg me-1"></i>Guardar
                 </button>
             </div>

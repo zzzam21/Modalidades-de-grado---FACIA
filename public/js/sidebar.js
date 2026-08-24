@@ -1,4 +1,4 @@
-// Toggle sidebar collapse/expand
+// Toggle sidebar collapse/expand + estado activo según URL
 document.addEventListener("DOMContentLoaded", () => {
 
     const sidebar = document.getElementById("sidebar");
@@ -27,4 +27,24 @@ document.addEventListener("DOMContentLoaded", () => {
         pageWrapper.classList.remove("with-transition");
     });
 
+    // Resaltar el enlace de navegación correspondiente a la página actual
+    const normalize = (path) => path.replace(/\/+$/, "") || "/";
+    const currentPath = normalize(window.location.pathname);
+
+    sidebar.querySelectorAll("a.nav-link[href]").forEach((link) => {
+        const href = link.getAttribute("href");
+        if (!href || href === "#") return;
+
+        try {
+            const linkPath = normalize(new URL(href, window.location.origin).pathname);
+            if (
+                currentPath === linkPath ||
+                currentPath.startsWith(linkPath + "/")
+            ) {
+                link.classList.add("active");
+            }
+        } catch (err) {
+            /* href inválido, ignorar */
+        }
+    });
 });

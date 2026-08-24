@@ -11,7 +11,7 @@ class openAIService {
 
     public function __construct() {
         $this->apiKey = getenv('GEMINI_API_KEY');
-
+    
         if (!$this->apiKey) {
             throw new \Exception('API KEY no encontrada');
         }

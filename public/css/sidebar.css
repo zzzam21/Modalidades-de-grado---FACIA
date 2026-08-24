@@ -1,20 +1,27 @@
+/* ============================================================
+   Sidebar minimalista — blanco con acentos verdes
+   ============================================================ */
+
 .sidebar {
     position: fixed;
-    top:0;
+    top: 0;
     left: 0;
     height: 100%;
-    width: 200px;
-    padding-top: 20px;
-    background:  linear-gradient(90deg,#4caf50,#3a903d);
-    z-index: 1000;   
+    width: 224px;
+    padding: 14px 12px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar, .page-wrapper {
-    transition:none;
+    transition: none;
 }
 
-.sidebar.with-transition  {
-    transition: width 0.3s ease;
+.sidebar.with-transition {
+    transition: width 0.3s ease, padding 0.3s ease;
 }
 
 .page-wrapper.with-transition {
@@ -22,37 +29,85 @@
 }
 
 .page-wrapper {
-    margin-left: 200px;
-    
+    margin-left: 224px;
     min-height: 100vh;
 }
 
+/* ---------- Bloque de marca ---------- */
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px 16px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+}
+.sidebar-brand img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+.sidebar-brand .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.sidebar-brand .brand-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-strong);
+}
+.sidebar-brand .brand-sub {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+/* ---------- Navegación ---------- */
 .sidebar .nav-link {
     display: flex;
     align-items: center;
-    gap: 20px;
-    padding: 10px 20px;
-    color: white;
+    gap: 14px;
+    padding: 10px 12px;
+    margin: 2px 0;
+    color: var(--text-muted);
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.sidebar .nav-link .icon {
+    display: inline-flex;
+    justify-content: center;
+    width: 22px;
+    font-size: 1.15rem;
+    flex-shrink: 0;
 }
 
 .sidebar .description {
-    font-size: 14px;
-    color: white;
+    font-size: 0.9rem;
+    color: inherit;
+    overflow: hidden;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #f1f5f4;
+    color: var(--text-strong);
+}
+
+.sidebar .nav-link.active {
+    background-color: var(--primary-soft);
+    color: var(--primary-hover);
+    font-weight: 600;
 }
 
 .sidebar-header {
     text-align: center;
-}
-
-.sidebar .nav-link:hover {
-    background-color: #d9a602;
-    border-radius: 20px 0px 20px 0px;
-    border-color: white;
-}
-
-.sidebar .sub-menu {
-    background-color: #3a903d;
-    padding-left: 3%;
 }
 
 .no-display {
@@ -70,17 +125,24 @@
 
 @media (max-width: 480px) {
     .sidebar {
-        width: 60px;
+        width: 64px;
+        padding: 14px 8px;
     }
     .page-wrapper {
-        margin-left: 60px;
-        width: calc(100% - 60px);
+        margin-left: 64px;
+        width: calc(100% - 64px);
     }
-    .sidebar .description {
+    .sidebar .description,
+    .sidebar-brand .brand-text {
         display: none;
     }
-    .sidebar .nav-link {
+    .sidebar .nav-link,
+    .sidebar-brand {
         justify-content: center;
+    }
+    .sidebar-brand {
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .main-content {
@@ -91,34 +153,30 @@
     }
 }
 
-/* Para Menu desplegable */
-/* Sidebar colapsado manualmente */
+/* ---------- Sidebar colapsado manualmente ---------- */
 .sidebar.collapsed {
-    width: 60px !important;
+    width: 64px !important;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
-/* Cuando sidebar está colapsado, ajustar page-wrapper */
 .sidebar.collapsed + .page-wrapper {
-    margin-left: 60px;
+    margin-left: 64px;
 }
 
-/* Ocultar texto cuando el sidebar está colapsado */
-.sidebar.collapsed .description {
+.sidebar.collapsed .description,
+.sidebar.collapsed .brand-text {
     display: none !important;
 }
 
-/* Asegurar que el ícono quede centrado */
-.sidebar.collapsed .nav-link {
-    justify-content: center !important;
-    gap: 0 !important;
-    padding: 10px 0; 
-}
-
-/* Centrar iconos cuando colapsa */
-.sidebar.collapsed .nav-link {
+.sidebar.collapsed .nav-link,
+.sidebar.collapsed .sidebar-brand {
     justify-content: center;
     gap: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
-.inner {
-    text-align: left;
+
+.sidebar.collapsed .sidebar-brand {
+    border-bottom-color: transparent;
 }

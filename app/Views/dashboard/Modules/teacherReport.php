@@ -8,12 +8,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <style>
-        body { background: #f4f6f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #f7faf8; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
         .report-container { max-width: 1100px; margin: 0 auto; padding: 30px; }
 
         .report-header {
-            background: linear-gradient(135deg, #4BAE4F, #3A913D);
+            background: linear-gradient(135deg, #16a34a, #14532d);
             color: #fff;
             padding: 30px 40px;
             border-radius: 12px;
@@ -41,32 +41,32 @@
             border-radius: 10px;
             padding: 20px;
             text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            box-shadow: 0 2px 8px rgba(15,23,42,0.06);
             border-top: 3px solid #dee2e6;
         }
-        .kpi-card.asesor    { border-top-color: #28a745; }
-        .kpi-card.coasesor  { border-top-color: #ffc107; }
-        .kpi-card.jurado    { border-top-color: #0d6efd; }
-        .kpi-card.proceso   { border-top-color: #fd7e14; }
-        .kpi-card.finalizadas { border-top-color: #20c997; }
-        .kpi-card.total     { border-top-color: #6f42c1; }
-        .kpi-card .kpi-value { font-size: 2rem; font-weight: 700; color: #333; }
-        .kpi-card .kpi-label { font-size: 0.8rem; color: #6c757d; text-transform: uppercase; letter-spacing: 0.5px; }
+        .kpi-card.asesor      { border-top-color: #16a34a; }
+        .kpi-card.coasesor    { border-top-color: #f59e0b; }
+        .kpi-card.jurado      { border-top-color: #0ea5e9; }
+        .kpi-card.proceso     { border-top-color: #f97316; }
+        .kpi-card.finalizadas { border-top-color: #14b8a6; }
+        .kpi-card.total       { border-top-color: #14532d; }
+        .kpi-card .kpi-value { font-size: 2rem; font-weight: 700; color: #1e293b; }
+        .kpi-card .kpi-label { font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
 
         .section-title {
             font-size: 1.15rem;
             font-weight: 700;
-            color: #333;
+            color: #1e293b;
             margin-bottom: 16px;
             padding-bottom: 8px;
-            border-bottom: 2px solid #e9ecef;
+            border-bottom: 2px solid #e6eaec;
         }
 
-        .table-report { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .table-report thead { background: #1a73e8; color: #fff; }
+        .table-report { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(15,23,42,0.06); }
+        .table-report thead { background: #16a34a; color: #fff; }
         .table-report thead th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; padding: 12px 14px; font-weight: 600; border: none; }
-        .table-report tbody td { padding: 11px 14px; font-size: 0.85rem; vertical-align: middle; border-color: #f0f0f0; }
-        .table-report tbody tr:hover { background: #f8f9ff; }
+        .table-report tbody td { padding: 11px 14px; font-size: 0.85rem; vertical-align: middle; border-color: #f0f2f1; }
+        .table-report tbody tr:hover { background: #f0fdf4; }
 
         .badge-status {
             display: inline-block;
@@ -75,11 +75,11 @@
             font-size: 0.75rem;
             font-weight: 600;
         }
-        .badge-aprobada      { background: #d4edda; color: #155724; }
-        .badge-en-curso      { background: #fff3cd; color: #856404; }
-        .badge-finalizada    { background: #d1ecf1; color: #0c5460; }
-        .badge-cancelado     { background: #f8d7da; color: #721c24; }
-        .badge-default       { background: #e9ecef; color: #495057; }
+        .badge-aprobada      { background: #dcfce7; color: #166534; }
+        .badge-en-curso      { background: #fef3c7; color: #92400e; }
+        .badge-finalizada    { background: #e0f2fe; color: #075985; }
+        .badge-cancelado     { background: #fee2e2; color: #991b1b; }
+        .badge-default       { background: #f1f5f9; color: #475569; }
 
         .badge-role {
             display: inline-block;
@@ -88,11 +88,11 @@
             font-size: 0.75rem;
             font-weight: 600;
         }
-        .role-asesor    { background: #d4edda; color: #155724; }
-        .role-coasesor  { background: #fff3cd; color: #856404; }
-        .role-jurado    { background: #cce5ff; color: #004085; }
+        .role-asesor    { background: #dcfce7; color: #166534; }
+        .role-coasesor  { background: #fef3c7; color: #92400e; }
+        .role-jurado    { background: #dbeafe; color: #1e40af; }
 
-        .no-data { color: #adb5bd; font-style: italic; }
+        .no-data { color: #94a3b8; font-style: italic; }
 
         .report-footer {
             text-align: center;
@@ -100,7 +100,7 @@
             padding-top: 20px;
             border-top: 1px solid #dee2e6;
             font-size: 0.8rem;
-            color: #6c757d;
+            color: #64748b;
         }
 
         .btn-print {
@@ -108,10 +108,14 @@
             bottom: 30px;
             right: 30px;
             z-index: 1000;
+            --bs-btn-bg: #16a34a;
+            --bs-btn-border-color: #16a34a;
+            --bs-btn-hover-bg: #15803d;
+            --bs-btn-hover-border-color: #15803d;
             border-radius: 50px;
             padding: 12px 28px;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(20,83,45,0.25);
         }
 
         @media print {
@@ -119,12 +123,12 @@
             .btn-print { display: none !important; }
             .report-container { padding: 0; }
             .report-header {
-                background: #3A913D !important;
+                background: #15803d !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
             .table-report thead {
-                background: #1a73e8 !important;
+                background: #16a34a !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }

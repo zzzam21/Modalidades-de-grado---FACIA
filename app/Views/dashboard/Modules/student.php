@@ -18,7 +18,7 @@
         </div>
 
         <div class="p-2">
-            <i class="bi bi-mortarboard fs-1 text-primary"></i>
+            <i class="bi bi-mortarboard fs-1 text-success"></i>
         </div>
     </div>
 
@@ -67,7 +67,7 @@
 
 
             <div class="text-end">
-                <a id="btn_ver_modalidad" href="./" class="btn btn-primary">
+                <a id="btn_ver_modalidad" href="./" class="btn btn-success">
                     <i class="bi bi-eye"></i> Ver detalle completo
                 </a>
             </div>

@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 icon: 'error',
                 title: 'Error',
                 text: 'No se pudieron cargar las alertas.',
-                confirmButtonColor: '#dc3545'
+                confirmButtonColor: '#dc2626'
             });
         });
 

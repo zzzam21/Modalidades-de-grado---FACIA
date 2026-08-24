@@ -88,7 +88,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <button type="button" class="btn btn-sm btn-outline-primary" id="addStudentRow">
+                                <button type="button" class="btn btn-sm btn-outline-success" id="addStudentRow">
                                     <i class="bi bi-plus-lg"></i> Agregar Estudiante
                                 </button>
                             </div>
@@ -107,21 +107,21 @@
                                     <div class="col-md-4">
                                         <label class="fw-semibold mb-2">Asesor <small class="text-muted">(máx. 1)</small></label>
                                         <div id="v_asesores_container"></div>
-                                        <button type="button" class="btn btn-sm btn-outline-primary mt-1" id="addAsesorBtn">
+                                        <button type="button" class="btn btn-sm btn-outline-success mt-1" id="addAsesorBtn">
                                             <i class="bi bi-plus-lg"></i>
                                         </button>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="fw-semibold mb-2">Coasesor <small class="text-muted">(máx. 1)</small></label>
                                         <div id="v_coasesores_container"></div>
-                                        <button type="button" class="btn btn-sm btn-outline-primary mt-1" id="addCoasesorBtn">
+                                        <button type="button" class="btn btn-sm btn-outline-success mt-1" id="addCoasesorBtn">
                                             <i class="bi bi-plus-lg"></i>
                                         </button>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="fw-semibold mb-2">Jurados <small class="text-muted">(máx. 2)</small></label>
                                         <div id="v_jurados_container"></div>
-                                        <button type="button" class="btn btn-sm btn-outline-primary mt-1" id="addJuradoBtn">
+                                        <button type="button" class="btn btn-sm btn-outline-success mt-1" id="addJuradoBtn">
                                             <i class="bi bi-plus-lg"></i>
                                         </button>
                                     </div>

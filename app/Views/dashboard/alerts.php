@@ -4,43 +4,35 @@
 <div id="app" data-view="alerts">
 
     <!-- CARDS RESUMEN -->
-    <div class="row justify-content-center g-3 pt-3">
+    <div class="row justify-content-center g-3 pt-2">
         <div class="col-12 col-sm-6 col-md-4">
-            <div class="small-box bg-danger h-100">
-                <div class="inner">
-                    <h3 id="countVencidas">-</h3>
-                    <p class="mb-0">Vencidas</p>
-                </div>
-                <div class="icon">
-                    <i class="bi bi-exclamation-octagon"></i>
-                </div>
-                <a href="#vencidasSection" class="small-box-footer">
-                    Ver detalle <i class="bi bi-arrow-right-circle-fill"></i>
-                </a>
-            </div>
+            <a href="#vencidasSection" class="stat-card danger">
+                <span class="stat-icon"><i class="bi bi-exclamation-octagon"></i></span>
+                <span class="stat-body">
+                    <span class="stat-value" id="countVencidas">-</span>
+                    <span class="stat-label">Vencidas</span>
+                </span>
+                <i class="bi bi-chevron-right stat-arrow"></i>
+            </a>
         </div>
 
         <div class="col-12 col-sm-6 col-md-4">
-            <div class="small-box bg-warning h-100">
-                <div class="inner">
-                    <h3 id="countProximas">-</h3>
-                    <p class="mb-0">Próximas a terminar (7 días)</p>
-                </div>
-                <div class="icon">
-                    <i class="bi bi-clock-history"></i>
-                </div>
-                <a href="#proximasSection" class="small-box-footer">
-                    Ver detalle <i class="bi bi-arrow-right-circle-fill"></i>
-                </a>
-            </div>
+            <a href="#proximasSection" class="stat-card warning">
+                <span class="stat-icon"><i class="bi bi-clock-history"></i></span>
+                <span class="stat-body">
+                    <span class="stat-value" id="countProximas">-</span>
+                    <span class="stat-label">Próximas a terminar (7 días)</span>
+                </span>
+                <i class="bi bi-chevron-right stat-arrow"></i>
+            </a>
         </div>
     </div>
 
     <!-- SECCION: VENCIDAS -->
-    <div id="vencidasSection" class="mt-4">
+    <div id="vencidasSection" class="mt-4 pt-2">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3 gap-2">
-            <h4 class="mb-0 text-center text-md-start fw-bold text-danger">
-                <i class="bi bi-exclamation-octagon"></i> VENCIDAS
+            <h4 class="section-title danger mb-0 text-center text-md-start">
+                <i class="bi bi-exclamation-octagon me-1"></i> Vencidas
             </h4>
         </div>
 <!-- kd -->
@@ -65,8 +57,8 @@
     <!-- SECCION: PRÓXIMAS A VENCER -->
     <div id="proximasSection" class="mt-4">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3 gap-2">
-            <h4 class="mb-0 text-center text-md-start fw-bold" style="color: #b58100;">
-                <i class="bi bi-clock-history"></i> PRÓXIMAS A TERMINAR (7 DÍAS)
+            <h4 class="section-title warning mb-0 text-center text-md-start">
+                <i class="bi bi-clock-history me-1"></i> Próximas a terminar (7 días)
             </h4>
         </div>
 

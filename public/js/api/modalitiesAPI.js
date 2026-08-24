@@ -806,7 +806,7 @@ async function getModality(id) {
                     showCancelButton: true,
                     confirmButtonText: isCancel ? 'Sí, cancelar' : 'Sí, cambiar',
                     cancelButtonText: 'Cancelar',
-                    confirmButtonColor: isCancel ? '#dc3545' : undefined
+                    confirmButtonColor: isCancel ? '#dc2626' : undefined
                 }).then(async (res) => {
                     if (!res.isConfirmed) {
                         statusSelect.value = originalStatus;

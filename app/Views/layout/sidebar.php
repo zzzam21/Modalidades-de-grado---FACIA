@@ -1,4 +1,11 @@
 <div class="sidebar" id="sidebar">
+    <a href="<?= base_url("dashboard") ?>" class="sidebar-brand">
+        <img src="<?= base_url("img/sidebar/faciaLogo.png") ?>" alt="FACIA">
+        <span class="brand-text">
+            <span class="brand-name">Modalidades</span>
+            <span class="brand-sub">Facultad de Ciencias Agrícolas</span>
+        </span>
+    </a>
     <nav class="nav flex-column">
         <a href="#" class="nav-link" id="toggleSidebar">
             <span class="icon">
