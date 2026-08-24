@@ -3,7 +3,7 @@
         <img src="<?= base_url("img/sidebar/faciaLogo.png") ?>" alt="FACIA">
         <span class="brand-text">
             <span class="brand-name">Modalidades</span>
-            <span class="brand-sub">Facultad de Ciencias Agrícolas</span>
+            <span class="brand-sub">FACIA</span>
         </span>
     </a>
     <nav class="nav flex-column">

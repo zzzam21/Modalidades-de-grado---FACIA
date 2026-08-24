@@ -32,7 +32,7 @@
     <div id="vencidasSection" class="mt-4 pt-2">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3 gap-2">
             <h4 class="section-title danger mb-0 text-center text-md-start">
-                <i class="bi bi-exclamation-octagon me-1"></i> Vencidas
+                <i class="bi bi-exclamation-octagon me-1" style="color:#dc2626"></i> Vencidas
             </h4>
         </div>
 <!-- kd -->
@@ -58,7 +58,7 @@
     <div id="proximasSection" class="mt-4">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3 gap-2">
             <h4 class="section-title warning mb-0 text-center text-md-start">
-                <i class="bi bi-clock-history me-1"></i> Próximas a terminar (7 días)
+                <i class="bi bi-clock-history me-1" style="color:#ffc107"></i> Próximas a terminar (7 días)
             </h4>
         </div>
 

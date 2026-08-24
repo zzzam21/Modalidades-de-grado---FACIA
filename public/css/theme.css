@@ -204,27 +204,51 @@ hr { border-color: var(--border); opacity: 1; }
 .modal-header .modal-title { font-weight: 600; }
 
 /* ---------- Acordeones ---------- */
+.accordion {
+    --bs-accordion-bg: var(--surface);
+}
+
+.accordion-item,
+.accordion-button,
+.accordion-collapse,
+.accordion-body {
+    background-color: var(--surface);
+}
+
 .accordion-item { border-color: var(--border); }
 .accordion-button:focus {
     box-shadow: none;
     border-color: transparent;
 }
 .accordion-button:not(.collapsed) {
-    background: var(--primary-soft);
+    background: var(--surface);
     color: var(--primary-dark);
     box-shadow: inset 0 -1px 0 var(--border);
 }
 .accordion-button:not(.collapsed)::after { filter: hue-rotate(90deg); }
 
 /* ---------- Tablas / DataTables ---------- */
-.table { --bs-table-hover-bg: var(--primary-softer); }
+.table {
+    --bs-table-bg: var(--surface);
+    --bs-table-hover-bg: var(--primary-softer);
+}
+
+.table-light,
+.table-light > th,
+.table-light > td,
+.table-light th,
+.table-light td {
+    --bs-table-bg: var(--surface);
+    background-color: var(--surface) !important;
+}
+
 
 table.dataTable thead th {
     font-size: 0.72rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.07em;
-    color: var(--text-muted);
+    color: var(--text);
     white-space: nowrap;
     border-bottom: 1px solid var(--border) !important;
 }
@@ -232,24 +256,44 @@ table.dataTable thead th {
 table.dataTable tbody td { vertical-align: middle; }
 table.dataTable.no-footer { border-bottom: none; }
 
-.dataTables_wrapper {
+.dt-container {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 1.15rem 1.3rem;
     box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+/* Fondo blanco y esquinas recortadas para la tabla */
+table.dataTable {
+    background: var(--surface);
+    --bs-table-bg: var(--surface);
+    border-collapse: collapse !important;
+}
+
+table.dataTable thead,
+table.dataTable tbody,
+table.dataTable tr,
+table.dataTable th,
+table.dataTable td {
+    background-color: var(--surface);
+}
+
+table.dataTable tbody tr:hover > * {
+    background-color: var(--primary-softer);
 }
 
 /* Cuando la tabla ya vive dentro de un card, no duplicar el contenedor */
-.card .dataTables_wrapper {
+.card .dt-container {
     background: transparent;
     border: none;
     box-shadow: none;
     padding: 0;
 }
 
-.dataTables_wrapper .dataTables_filter input,
-.dataTables_wrapper .dataTables_length select {
+.dt-container .dt-search input,
+.dt-container .dt-length select {
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 6px 12px;
@@ -259,15 +303,15 @@ table.dataTable.no-footer { border-bottom: none; }
     background: var(--surface);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.dataTables_wrapper .dataTables_filter input:focus,
-.dataTables_wrapper .dataTables_length select:focus {
+.dt-container .dt-search input:focus,
+.dt-container .dt-length select:focus {
     border-color: rgba(22, 163, 74, 0.55);
     box-shadow: 0 0 0 0.2rem rgba(22, 163, 74, 0.12);
 }
 
-.dataTables_wrapper .dataTables_info,
-.dataTables_wrapper .dataTables_filter label,
-.dataTables_wrapper .dataTables_length label {
+.dt-container .dt-info,
+.dt-container .dt-search label,
+.dt-container .dt-length label {
     color: var(--text-muted);
     font-size: 0.82rem;
 }
