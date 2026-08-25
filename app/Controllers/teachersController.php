@@ -38,6 +38,45 @@ class teachersController extends BaseController {
         return $this->response->setJSON($data);
     }
 
+    public function updateTeacher($id): ResponseInterface {
+        $userId = session()->get('user_id');
+
+        if (!$userId) {
+            return $this->response->setStatusCode(401)->setJSON([
+                'status' => 'error',
+                'message' => 'No autenticado'
+            ]);
+        }
+
+        $data = $this->request->getJSON();
+
+        if (!$data || empty($data->name)) {
+            return $this->response->setStatusCode(400)->setJSON([
+                'status' => 'error',
+                'message' => 'El nombre es requerido'
+            ]);
+        }
+
+        $teachersModel = new \App\Models\teachersModel();
+        $teacher = $teachersModel->getTeacher($id);
+
+        if (!$teacher) {
+            return $this->response->setStatusCode(404)->setJSON([
+                'status' => 'error',
+                'message' => 'Docente no encontrado'
+            ]);
+        }
+
+        $teachersModel->update($id, [
+            'name' => $data->name
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'message' => 'Docente actualizado correctamente'
+        ]);
+    }
+
     public function report($id): string {
         $teachersModel = new \App\Models\teachersModel();
 

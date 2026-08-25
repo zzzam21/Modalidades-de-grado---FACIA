@@ -74,6 +74,10 @@ class studentModel extends Model{
         }
     }
 
+    public function updateStudent($id, $data){
+        return $this->update($id, $data);
+    }
+
     public function deleteStudent($id){
         $this->delete($id);
     }

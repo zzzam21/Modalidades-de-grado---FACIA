@@ -646,6 +646,38 @@ function refreshSustentacionControls(status, dateValue) {
     document.getElementById("setSustentacionBtn").classList.toggle("d-none", !SUSTENTACION_STATES.includes(status));
 }
 
+function renderDiasRestantes(status, dateEnd) {
+    const container = document.getElementById('det_diasRestantes_container');
+    const badgeEl = document.getElementById('det_diasRestantes');
+
+    if ((status === 'aprobada' || status === 'En curso') && dateEnd) {
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
+        const fin = new Date(dateEnd + 'T00:00:00');
+        const diff = Math.ceil((fin - hoy) / (1000 * 60 * 60 * 24));
+
+        let badgeClass, text;
+        if (diff < 0) {
+            badgeClass = 'badge-cancelado';
+            text = 'Vencido';
+        } else if (diff === 0) {
+            badgeClass = 'badge-cancelado';
+            text = 'Vence hoy';
+        } else if (diff <= 30) {
+            badgeClass = 'badge-en-curso';
+            text = `${diff} días restantes`;
+        } else {
+            badgeClass = 'badge-aprobado';
+            text = `${diff} días restantes`;
+        }
+
+        badgeEl.innerHTML = `<span class="badge-custom ${badgeClass} p-2 fw-semibold">${text}</span>`;
+        container.classList.remove('d-none');
+    } else {
+        container.classList.add('d-none');
+    }
+}
+
 function openSustentacionModal() {
     const current = document.getElementById("det_sustentacion").dataset.value || "";
     document.getElementById("v_fecha_sustentacion").value = toDatetimeLocal(current);
@@ -724,6 +756,8 @@ async function getModality(id) {
             document.getElementById('det_inicio').innerText = mod.date_approved;
             document.getElementById('det_fin').innerText = mod.date_end;
             document.getElementById('det_duracion').innerText = mod.duration;
+
+            renderDiasRestantes(mod.status, mod.date_end);
 
             currentModalityStatus = mod.status;
             refreshSustentacionControls(mod.status, mod.date_sustentacion);
@@ -831,6 +865,7 @@ async function getModality(id) {
                         currentModalityStatus = newStatus;
                         refreshSustentacionControls(newStatus, document.getElementById("det_sustentacion").dataset.value || "");
                         toggleEditButton(newStatus);
+                        renderDiasRestantes(newStatus, mod.date_end);
                     } catch (e) {
                         statusSelect.value = originalStatus;
                         Swal.fire({

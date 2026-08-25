@@ -158,6 +158,14 @@ class teachersModel extends Model{
                     ->findAll();
     }
 
+    public function updateTeacher($id, $data){
+        return $this->update($id, $data);
+    }
+
+    public function deleteTeacher($id){
+        return $this->delete($id);
+    }
+
     public function getReportDataByTeacher($id) {
         $userId = session()->get('user_id');
         return $this->select('

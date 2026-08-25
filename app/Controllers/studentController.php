@@ -33,4 +33,52 @@ class studentController extends BaseController {
             'modality' => $studentModel->getModalityByStudent($id)
         ]);
     }
+
+    public function updateStudent($id): ResponseInterface{
+        $userId = session()->get('user_id');
+
+        if (!$userId) {
+            return $this->response->setStatusCode(401)->setJSON([
+                'status' => 'error',
+                'message' => 'No autenticado'
+            ]);
+        }
+
+        $data = $this->request->getJSON();
+
+        if (!$data || empty($data->name_student) || empty($data->code)) {
+            return $this->response->setStatusCode(400)->setJSON([
+                'status' => 'error',
+                'message' => 'Nombre y código son requeridos'
+            ]);
+        }
+
+        $studentModel = new \App\Models\studentModel();
+        $student = $studentModel->getStudentById($id);
+
+        if (!$student) {
+            return $this->response->setStatusCode(404)->setJSON([
+                'status' => 'error',
+                'message' => 'Estudiante no encontrado'
+            ]);
+        }
+
+        $existing = $studentModel->findByCode($data->code);
+        if ($existing && $existing['student_ID'] != $id) {
+            return $this->response->setStatusCode(400)->setJSON([
+                'status' => 'error',
+                'message' => 'Ya existe otro estudiante con ese código'
+            ]);
+        }
+
+        $studentModel->update($id, [
+            'name_student' => $data->name_student,
+            'code' => $data->code
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'message' => 'Estudiante actualizado correctamente'
+        ]);
+    }
 }

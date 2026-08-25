@@ -31,6 +31,8 @@ $routes->get('/students/student/(:num)','StudentController::student/$1',['filter
 
 $routes->get('/students/getstudent/(:num)','StudentController::getStudent/$1',['filter' => 'auth']);
 
+$routes->put('/students/updateStudent/(:num)','studentController::updateStudent/$1',['filter' => 'auth']);
+
 // -----------------------------------
 // TEACHERS ROUTES
 // -----------------------------------
@@ -45,6 +47,8 @@ $routes->get('/teachers/getteacher/(:num)','TeachersController::getTeacher/$1',[
 $routes->get('/teachers/getInfoModalByTeacher/(:num)','TeachersController::getInfoModalityByTeacher/$1',['filter' => 'auth']);
 
 $routes->get('/teachers/report/(:num)','TeachersController::report/$1',['filter' => 'auth']);
+
+$routes->put('/teachers/updateTeacher/(:num)','teachersController::updateTeacher/$1',['filter' => 'auth']);
 
 // $routes->post('/teachers/add','TeachersController::addTeacher',['filter' => 'auth']);
 

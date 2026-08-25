@@ -55,6 +55,11 @@
                     </div>
                 </div>
 
+                <div class="col-sm-6 col-md-3 d-none" id="det_diasRestantes_container">
+                    <label class="text-muted small d-block mb-1">Días Restantes</label>
+                    <div id="det_diasRestantes"></div>
+                </div>
+
                 <div class="col-sm-6 col-md-3">
                     <label class="text-muted small d-block mb-1">Fecha de Sustentación</label>
                     <div class="d-flex align-items-center">

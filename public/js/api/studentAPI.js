@@ -9,10 +9,57 @@ document.addEventListener("DOMContentLoaded", () => {
                     loadStudentData(studentId.value);
                 }
             break;
+        case "students":
+            document.getElementById("editStudentModal").addEventListener("show.bs.modal", (e) => {
+                const btn = e.relatedTarget;
+                document.getElementById("editStudentId").value = btn.dataset.id;
+                document.getElementById("editStudentName").value = btn.dataset.name;
+                document.getElementById("editStudentCode").value = btn.dataset.code;
+            });
+
+            document.getElementById("saveStudent").addEventListener("click", saveStudent);
+            break;
         default:
             break;
     }
 })
+
+async function saveStudent() {
+    const id = document.getElementById("editStudentId").value;
+    const nameStudent = document.getElementById("editStudentName").value;
+    const code = document.getElementById("editStudentCode").value;
+
+    const response = await fetch(`./students/updateStudent/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name_student: nameStudent,
+            code: code
+        })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        Swal.fire({
+            title: data.message,
+            icon: 'error',
+            draggable: true
+        });
+        return;
+    }
+
+    $('#editStudentModal').modal("hide");
+    Swal.fire({
+        title: data.message,
+        icon: 'success',
+        draggable: true
+    });
+
+    $('#studentTables').DataTable().ajax.reload();
+}
 
 
 async function loadStudentData(id) {
