@@ -25,7 +25,9 @@ class teachersModel extends Model{
             return null; // O redirigir a la página de inicio de sesión
         }
         $userId = session()->get('user_id');
-        return $this->join('modalitie_teacher as mt', 'teachers.teacher_ID = mt.teacher_ID')
+        return $this->distinct()
+                    ->select('teachers.teacher_ID')
+                    ->join('modalitie_teacher as mt', 'teachers.teacher_ID = mt.teacher_ID')
                     ->join('modalities m', 'm.modality_ID = mt.modality_ID')
                     ->join('users_program up', 'm.program_ID = up.program_ID')
                     ->where('up.user_ID', $userId)

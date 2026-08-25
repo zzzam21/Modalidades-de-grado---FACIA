@@ -32,7 +32,7 @@ No linter, typechecker, or codegen configured.
 - **Views** (`app/Views/`) — `dashboard/`, `dashboard/Modules/`, `auth/`, `layout/`, `errors/`
 - **`app/Libraries/openAIService.php`** — calls **Google Gemini** (`gemini-2.5-flash`), **not** OpenAI despite the name. Expects `GEMINI_API_KEY` in `.env`.
 - **`app/Filters/AuthFilter.php`** — session-based auth guard (`logged_in` session key). Capital `A` required for PSR-4 (Linux case-sensitive).
-- **Routes** (`app/Config/Routes.php`) — all internal routes use `['filter' => 'auth']`; only `/auth/login` (GET+POST) is public. **Duplicate route**: `/configuration/updatePassword` defined twice on lines 81 and 85.
+- **Routes** (`app/Config/Routes.php`) — all internal routes use `['filter' => 'auth']`; only `/auth/login` (GET+POST) is public. **Duplicate route**: `/configuration/updatePassword` defined twice (lines 101 and 105).
 
 ## PDF import flow
 

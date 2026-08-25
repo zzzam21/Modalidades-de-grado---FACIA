@@ -31,9 +31,12 @@ class studentModel extends Model{
         $userId = session()->get('user_id');
         
         return $this->join('users_program', 'users_program.program_ID = students.program_ID')
-                    ->join('programs ', 'programs.program_ID = users_program.program_ID')
+                    ->join('modalitie_student', 'modalitie_student.student_ID = students.student_ID')
+                    ->join('modalities', 'modalities.modality_ID = modalitie_student.modality_ID')
+                    ->join('programs', 'programs.program_ID = users_program.program_ID')
                     ->join('users', 'users.id = users_program.user_ID')
                     ->where('users.id', $userId)
+                    ->whereNotIn('modalities.status', ['Cancelado', 'Finalizado'])
                     ->countAllResults();
     }
 
