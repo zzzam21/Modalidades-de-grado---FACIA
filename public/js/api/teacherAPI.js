@@ -7,6 +7,15 @@ document.addEventListener("DOMContentLoaded", () => {
             const teacherId = document.getElementById("teacherId");
             getTeacher(teacherId.value);
             break;
+        case "teachers":
+            document.getElementById("editTeacherModal").addEventListener("show.bs.modal", (e) => {
+                const btn = e.relatedTarget;
+                document.getElementById("editTeacherId").value = btn.dataset.id;
+                document.getElementById("editTeacherName").value = btn.dataset.name;
+            });
+
+            document.getElementById("saveTeacher").addEventListener("click", saveTeacher);
+            break;
         default:
             break;
     }
@@ -32,4 +41,39 @@ async function getTeacher(id) {
 
     document.getElementById("nombre-docente").innerHTML = data.teacher.name;
     
+}
+
+async function saveTeacher() {
+    const id = document.getElementById("editTeacherId").value;
+    const name = document.getElementById("editTeacherName").value;
+
+    const response = await fetch(`./teachers/updateTeacher/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: name
+        })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        Swal.fire({
+            title: data.message,
+            icon: 'error',
+            draggable: true
+        });
+        return;
+    }
+
+    $('#editTeacherModal').modal("hide");
+    Swal.fire({
+        title: data.message,
+        icon: 'success',
+        draggable: true
+    });
+
+    $('#teachersTables').DataTable().ajax.reload();
 }

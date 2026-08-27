@@ -31,6 +31,8 @@ $routes->get('/students/student/(:num)','StudentController::student/$1',['filter
 
 $routes->get('/students/getstudent/(:num)','StudentController::getStudent/$1',['filter' => 'auth']);
 
+$routes->put('/students/updateStudent/(:num)','studentController::updateStudent/$1',['filter' => 'auth']);
+
 // -----------------------------------
 // TEACHERS ROUTES
 // -----------------------------------
@@ -43,6 +45,10 @@ $routes->get('/teachers/teacher/(:num)','TeachersController::teacher/$1',['filte
 $routes->get('/teachers/getteacher/(:num)','TeachersController::getTeacher/$1',['filter' => 'auth']);
 
 $routes->get('/teachers/getInfoModalByTeacher/(:num)','TeachersController::getInfoModalityByTeacher/$1',['filter' => 'auth']);
+
+$routes->get('/teachers/report/(:num)','TeachersController::report/$1',['filter' => 'auth']);
+
+$routes->put('/teachers/updateTeacher/(:num)','teachersController::updateTeacher/$1',['filter' => 'auth']);
 
 // $routes->post('/teachers/add','TeachersController::addTeacher',['filter' => 'auth']);
 
@@ -75,6 +81,12 @@ $routes->post('/modalities/updateSustentacion/(:num)', 'ModalitieController::upd
 
     // Obtener datos para formularios (tipos, programas)
 $routes->get('/modalities/getFormData', 'ModalitieController::getFormData', ['filter' => 'auth']);
+
+// -----------------------------------
+// ALERT ROUTES
+// -----------------------------------
+$routes->get('/alerts', 'AlertController::alert', ['filter' => 'auth']);
+$routes->get('/alerts/getAlertas', 'AlertController::getAlertas', ['filter' => 'auth']);
 
 // -----------------------------------
 // USER ROUTES

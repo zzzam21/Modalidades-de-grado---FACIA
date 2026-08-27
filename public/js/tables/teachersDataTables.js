@@ -13,12 +13,20 @@ $(document).ready(function ()
             {data: 'name'},
             {
                 data: 'teacher_ID',
-                render: function(data) {
+                render: function(data, type, row) {
                     return `
                         <a href="./teachers/teacher/${data}"
                             class="btn btn-sm btn-success">
                             <i class="bi bi-eye"></i>
                         </a>
+                        <button type="button"
+                                class="btn btn-sm btn-warning btn-edit-teacher"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editTeacherModal"
+                                data-id="${data}"
+                                data-name="${row.name}">
+                            <i class="bi bi-pencil"></i>
+                        </button>
                     `
                 }
             }

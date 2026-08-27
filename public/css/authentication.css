@@ -1,5 +1,67 @@
+/* ============================================================
+   Página de login — minimalista verde esmeralda
+   (requiere theme.css cargado por layout/auth.php)
+   ============================================================ */
 
-h4.card-title {
-    font-weight: bold;
-    color: #156c43ff;
+body {
+    min-height: 100vh;
+    background: linear-gradient(165deg, #f4f8f5 0%, #eaf3ec 55%, #e2efe6 100%);
+}
+
+.login-card {
+    width: min(400px, 92vw);
+    margin: 0 auto;
+    padding: 44px 38px 40px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    box-shadow: 0 24px 60px rgba(20, 83, 45, 0.09);
+    text-align: center;
+}
+
+.login-logo {
+    width: 64px;
+    height: auto;
+    margin-bottom: 18px;
+}
+
+.login-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--text-strong);
+    margin-bottom: 4px;
+}
+
+.login-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+}
+
+.login-input {
+    border-radius: 12px !important;
+}
+.login-input:focus {
+    border-color: rgba(22, 163, 74, 0.55);
+    box-shadow: 0 0 0 0.2rem rgba(22, 163, 74, 0.12);
+}
+
+.login-alert {
+    border-radius: 12px;
+    font-size: 0.85rem;
+    text-align: left;
+}
+
+.login-btn {
+    padding: 10px 16px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-top: 6px;
+}
+
+.login-footnote {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 22px;
 }

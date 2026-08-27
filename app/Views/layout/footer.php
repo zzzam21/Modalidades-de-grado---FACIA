@@ -1,15 +1,13 @@
-<footer class="bg-light border-top py-3 mt-4">
-    <div class="container-fluid">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center text-center text-md-start gap-2">
-  
-            <p class="mb-0 small text-muted">
-                &copy; <?= date('Y'); ?> Modalidades de grado — Todos los derechos reservados
-            </p>
+<footer class="app-footer">
+    <div class="container-fluid d-flex flex-column flex-md-row justify-content-between align-items-center text-center text-md-start gap-1">
 
-            <p class="mb-0 small text-muted">
-                Facultad de Ciencias Agricolas
-            </p>
+        <p class="mb-0">
+            &copy; <?= date('Y'); ?> Modalidades de grado — Todos los derechos reservados
+        </p>
 
-        </div>
+        <p class="mb-0">
+            Facultad de Ciencias Agricolas
+        </p>
+
     </div>
 </footer>

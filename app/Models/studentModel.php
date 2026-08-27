@@ -31,9 +31,12 @@ class studentModel extends Model{
         $userId = session()->get('user_id');
         
         return $this->join('users_program', 'users_program.program_ID = students.program_ID')
-                    ->join('programs ', 'programs.program_ID = users_program.program_ID')
+                    ->join('modalitie_student', 'modalitie_student.student_ID = students.student_ID')
+                    ->join('modalities', 'modalities.modality_ID = modalitie_student.modality_ID')
+                    ->join('programs', 'programs.program_ID = users_program.program_ID')
                     ->join('users', 'users.id = users_program.user_ID')
                     ->where('users.id', $userId)
+                    ->whereNotIn('modalities.status', ['Cancelado', 'Finalizado'])
                     ->countAllResults();
     }
 
@@ -46,7 +49,7 @@ class studentModel extends Model{
         $user_programModel = new user_programModel();
         $program = $user_programModel->userProgram($userId);
         
-        $data = $this->select('students.*, tm.type_name as type_modalitie, p.program_name, p.sede')
+        $data = $this->select('students.*, tm.type_name as type_modalitie, p.program_name, p.sede, m.status')
                      ->join('modalitie_student mo', 'mo.student_ID = students.student_ID')
                      ->join('modalities m', 'm.modality_ID = mo.modality_ID')
                      ->join('type_modalities tm', 'm.id_type_mod = tm.id_type_mod', 'left')
@@ -72,6 +75,10 @@ class studentModel extends Model{
                         ->join('teachers t', 'mt.teacher_ID = t.teacher_ID')
                         ->where('students.student_ID', $id)->findAll();
         }
+    }
+
+    public function updateStudent($id, $data){
+        return $this->update($id, $data);
     }
 
     public function deleteStudent($id){

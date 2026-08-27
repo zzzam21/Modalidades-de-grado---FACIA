@@ -14,7 +14,6 @@ class Auth extends BaseController
     public function loginPost(){
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
-        
 
         $userModel = new UserModel();
         $user = $userModel->where('email', $email)->first();
@@ -40,5 +39,4 @@ class Auth extends BaseController
         session()->destroy();
         return redirect()->to('/auth/login');
     }
-
 }

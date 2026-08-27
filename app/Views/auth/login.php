@@ -3,45 +3,34 @@
 
 <link rel="stylesheet" href="<?= base_url('css/authentication.css') ?>">
 
+<div class="login-card">
+    <img class="login-logo" src="<?php echo base_url("img/login/logoUser.webp") ?>" alt="Logo">
 
-<div class="card text-center mx-auto d-flex justify-content-center align-items-center" style="width: 20rem;">
-    <div class="" style="width: 18rem;">
-        <div class="text-center">
-            <h4 class="card-title mt-3">LOGIN</h4>
-            <img style="width: 27%;" src="<?php echo base_url("img/login/logoUser.webp")?>" alt="Logo Usuario">
-        </div>  
-        <div class="card-body">
-            <form method="POST" action="<?= base_url("auth/login") ?>">
-            
-                <div class="input-group mb-3">
-                    <span class="input-group-text"> <img style="width: 70%;" src=<?php echo base_url("img/login/usuario_input.webp") ?>></span>
-                    <div class="form-floating">
-                        <input class="form-control" id="email" name="email" placeholder="user@gmail.com" type="text" required></input>
-                        <label for="email" >Email</label>
-                    </div>
-                </div>
-                
-                <div class="input-group mb-3">
-                    <span class="input-group-text"><img style="width: 70%;" src=<?php echo base_url("img/login/contraseña_input.webp") ?>></span>
-                    <div class="form-floating">
-                        <input class="form-control" id="password" name="password" placeholder="*********" type="password" required></input>
-                        <label for="password" >Contraseña</label>
-                    </div>
-                </div>
-                <?php if(session()->getFlashdata('error')): ?>
-                    <div class="alert alert-danger" role="alert">
-                        <?= session()->getFlashdata('error') ?>
-                    </div>
-                <?php endif; ?>
-                <div>
-                    <button class="btn btn-success rounded-pill" style="width: 100%;" type="submit">Login</button>
-                </div>
-            </form>
-        </div>      
-        
-    </div>
+    <h1 class="login-title">Bienvenido</h1>
+    <p class="login-subtitle">Inicia sesión para continuar</p>
+
+    <form method="POST" action="<?= base_url("auth/login") ?>">
+
+        <div class="form-floating mb-3">
+            <input class="form-control login-input" id="email" name="email" placeholder="user@gmail.com" type="text" required>
+            <label for="email">Email</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input class="form-control login-input" id="password" name="password" placeholder="*********" type="password" required>
+            <label for="password">Contraseña</label>
+        </div>
+
+        <?php if(session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger login-alert" role="alert">
+                <?= session()->getFlashdata('error') ?>
+            </div>
+        <?php endif; ?>
+
+        <button class="btn btn-success w-100 login-btn" type="submit">Iniciar sesión</button>
+    </form>
 </div>
 
-
+<p class="login-footnote">Facultad de Ciencias Agricolas</p>
 
 <?php echo $this->endSection(); ?>

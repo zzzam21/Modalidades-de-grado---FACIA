@@ -55,12 +55,17 @@
                     </div>
                 </div>
 
+                <div class="col-sm-6 col-md-3 d-none" id="det_diasRestantes_container">
+                    <label class="text-muted small d-block mb-1">Días Restantes</label>
+                    <div id="det_diasRestantes"></div>
+                </div>
+
                 <div class="col-sm-6 col-md-3">
                     <label class="text-muted small d-block mb-1">Fecha de Sustentación</label>
                     <div class="d-flex align-items-center">
                         <i class="bi bi-calendar2-check me-2 text-secondary"></i>
                         <p id="det_sustentacion" class="mb-0 fw-medium">--</p>
-                        <button type="button" class="btn btn-sm btn-outline-primary ms-2 d-none" id="setSustentacionBtn" title="Definir fecha y hora de sustentación">
+                        <button type="button" class="btn btn-sm btn-outline-success ms-2 d-none" id="setSustentacionBtn" title="Definir fecha y hora de sustentación">
                             <i class="bi bi-calendar-plus"></i>
                         </button>
                     </div>
@@ -168,7 +173,7 @@
     </div>
 
     <div class="d-grip gap-2 d-md-flex justify-content-end ">
-        <button type="button" class="btn btn-primary" id="editModalityBtn">
+        <button type="button" class="btn btn-success" id="editModalityBtn">
             <i class="bi bi-pencil me-2"></i> Editar
         </button>
         <a class="btn btn-danger" id="deleteModality" onclick="deleteModality(<?= $id ?? null ?>)">

@@ -273,6 +273,32 @@ class modalitieController extends BaseController {
         }
 
         $db = \Config\Database::connect();
+
+        if ($status === 'Finalizado') {
+            $modality = $db->table('modalities')
+                           ->select('date_sustentacion')
+                           ->where('modality_ID', $id)
+                           ->get()
+                           ->getRow();
+
+            if (empty($modality->date_sustentacion)) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'success' => false,
+                    'message' => 'Debe registrar una fecha de sustentación antes de finalizar.'
+                ]);
+            }
+
+            $fechaSustentacion = new \DateTime($modality->date_sustentacion);
+            $hoy = new \DateTime();
+            $hoy->setTime(0, 0, 0);
+
+            if ($fechaSustentacion > $hoy) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'success' => false,
+                    'message' => 'La fecha de sustentación aún no ha pasado. No es posible finalizar.'
+                ]);
+            }
+        }
         $authorized = $db->table('modalities m')
                     ->join('users_program up', 'm.program_ID = up.program_ID')
                     ->where('m.modality_ID', $id)
@@ -380,6 +406,17 @@ class modalitieController extends BaseController {
             return $this->response->setStatusCode(403)->setJSON([
                 'success' => false,
                 'message' => 'No tiene permiso para editar esta modalidad.'
+            ]);
+        }
+
+        $currentStatus = $db->table('modalities')
+                        ->where('modality_ID', $id)
+                        ->get()->getRow()->status;
+
+        if ($currentStatus === 'Cancelado') {
+            return $this->response->setStatusCode(403)->setJSON([
+                'success' => false,
+                'message' => 'No se pueden modificar modalidades canceladas.'
             ]);
         }
 

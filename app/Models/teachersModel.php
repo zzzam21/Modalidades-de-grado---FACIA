@@ -25,7 +25,9 @@ class teachersModel extends Model{
             return null; // O redirigir a la página de inicio de sesión
         }
         $userId = session()->get('user_id');
-        return $this->join('modalitie_teacher as mt', 'teachers.teacher_ID = mt.teacher_ID')
+        return $this->distinct()
+                    ->select('teachers.teacher_ID')
+                    ->join('modalitie_teacher as mt', 'teachers.teacher_ID = mt.teacher_ID')
                     ->join('modalities m', 'm.modality_ID = mt.modality_ID')
                     ->join('users_program up', 'm.program_ID = up.program_ID')
                     ->where('up.user_ID', $userId)
@@ -156,5 +158,35 @@ class teachersModel extends Model{
                     ->where('teachers.teacher_ID', $id)
                     ->where('up.user_ID', $userId)
                     ->findAll();
+    }
+
+    public function updateTeacher($id, $data){
+        return $this->update($id, $data);
+    }
+
+    public function deleteTeacher($id){
+        return $this->delete($id);
+    }
+
+    public function getReportDataByTeacher($id) {
+        $userId = session()->get('user_id');
+        return $this->select('
+                m.modality_ID, m.name_modalitie, m.status, m.goal,
+                m.date_approved, m.date_end, m.date_sustentacion, m.duration,
+                mt.role,
+                tm.type_name as type_modalitie,
+                GROUP_CONCAT(DISTINCT s.name_student SEPARATOR ", ") as students,
+                GROUP_CONCAT(DISTINCT s.code SEPARATOR ", ") as student_codes
+            ')
+            ->join('modalitie_teacher mt', 'teachers.teacher_ID = mt.teacher_ID')
+            ->join('modalities m', 'm.modality_ID = mt.modality_ID')
+            ->join('type_modalities tm', 'm.id_type_mod = tm.id_type_mod', 'left')
+            ->join('modalitie_student ms', 'ms.modality_ID = m.modality_ID')
+            ->join('students s', 's.student_ID = ms.student_ID', 'left')
+            ->join('users_program up', 'm.program_ID = up.program_ID')
+            ->where('teachers.teacher_ID', $id)
+            ->where('up.user_ID', $userId)
+            ->groupBy('m.modality_ID, mt.role')
+            ->findAll();
     }
 }

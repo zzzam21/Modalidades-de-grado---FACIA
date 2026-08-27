@@ -1,4 +1,11 @@
 <div class="sidebar" id="sidebar">
+    <a href="<?= base_url("dashboard") ?>" class="sidebar-brand">
+        <img src="<?= base_url("img/sidebar/faciaLogo.png") ?>" alt="FACIA">
+        <span class="brand-text">
+            <span class="brand-name">Modalidades</span>
+            <span class="brand-sub">FACIA</span>
+        </span>
+    </a>
     <nav class="nav flex-column">
         <a href="#" class="nav-link" id="toggleSidebar">
             <span class="icon">
@@ -34,6 +41,13 @@
             <span class="description">Modalidades</span>
         </a>
         
+        <a href="<?= base_url("alerts") ?>" class="nav-link" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Alertas" data-bs-placement="auto">
+            <span class="icon">
+                <i class="bi bi-exclamation-triangle"></i>
+            </span>
+            <span class="description">Alertas</span>
+        </a>
+
         <a href="<?= base_url("configuration") ?>" class="nav-link" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Configuración" data-bs-placement="auto">
             <span class="icon">
                 <i class="bi bi-gear"></i>

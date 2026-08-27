@@ -1,51 +1,32 @@
 <?php echo $this->extend('layout/main'); ?>
 <?php echo $this->section('content'); ?>
 
-<div id="app" data-view="configuration">
+<div class="row justify-content-center pt-4" id="app" data-view="configuration">
+    <div class="col-12 col-sm-10 col-md-7 col-lg-5">
 
-    <div class="text-center mx-auto justify-content-center align-items-center pt-5" style="width:fit-content">
-        <h4>Usuario</h4>
-        <img class="pb-3" src="<?= base_url("img/header/icono-usuario.webp") ?>" alt="Usuario" width="30%;">
-        <div class="row g-3">
-            
-            <div class="col-auto">
-                <p style="font-size: 17px;"><b>Nombre:</b></p>
+        <div class="card">
+            <div class="card-body p-4 text-center">
+                <img src="<?= base_url("img/header/icono-usuario.webp") ?>" alt="Usuario" class="profile-avatar">
+                <h4 id="currentUserName" class="fw-bold mt-3 mb-1"><?= esc(session()->get('user_name')); ?></h4>
+                <p id="currentUserEmail" class="text-muted mb-0"><?= session('user_email')?></p>
             </div>
 
-            <div class="col-auto">
-                <p id="currentUserName">
-                    <?= esc(session()->get('user_name')); ?>
-                </p>
-            </div>
-
-            <div class="col-auto ms-auto">
-                <button type="button" class="btn btn-sm btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-                data-bs-toggle="modal" data-bs-target="#userNameModal">
-                    <span class="icon">
-                        <i class="bi bi-pencil"></i>
-                    </span>
+            <div class="profile-actions">
+                <button type="button" class="profile-action" data-bs-toggle="modal" data-bs-target="#userNameModal">
+                    <span><i class="bi bi-person me-2"></i>Actualizar nombre</span>
+                    <i class="bi bi-chevron-right"></i>
                 </button>
-            </div>
-
-        </div>
-
-        <div class="row g-3">
-            <div class="col-auto">
-                <p style="font-size: 17px;"><b>Correo:</b></p>
-            </div>
-            <div class="col-auto">
-                <p id="currentUserEmail">
-                    <?= session('user_email')?>
-                </p>
-            </div>
-            <div class="col-auto ms-auto">
-                <button type="button"  class="btn btn-sm btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-                data-bs-toggle="modal" data-bs-target="#userEmailModal">
-                    <i class="bi bi-pencil"></i>
+                <button type="button" class="profile-action" data-bs-toggle="modal" data-bs-target="#userEmailModal">
+                    <span><i class="bi bi-envelope me-2"></i>Actualizar correo</span>
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+                <button type="button" class="profile-action" data-bs-toggle="modal" data-bs-target="#passwordModal">
+                    <span><i class="bi bi-shield-lock me-2"></i>Cambiar contraseña</span>
+                    <i class="bi bi-chevron-right"></i>
                 </button>
             </div>
         </div>
-        <a href="" data-bs-toggle="modal" data-bs-target="#passwordModal">Cambiar contraseña</a>
+
     </div>
 </div>
 
@@ -66,8 +47,9 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button id="saveUser" class="btn btn-success">
-                    <i class="bi bi-floppy"></i>
+                    <i class="bi bi-check-lg me-1"></i>Guardar
                 </button>
             </div>
         </div>
@@ -91,8 +73,9 @@
             </div>
 
             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button id="saveEmail" class="btn btn-success">
-                    <i class="bi bi-floppy"></i>
+                    <i class="bi bi-check-lg me-1"></i>Guardar
                 </button>
             </div>
         </div>
@@ -119,13 +102,14 @@
                 </div>
                 <div class="mb-3">
                     <label for="passwordConfirmEmail" class="form-label">Confirmar Contraseña</label>
-                    <input type="password" class="form-control" id="passwordConfirmEmail" placeholder="********" autocomplete="new-password">    
+                    <input type="password" class="form-control" id="passwordConfirmEmail" placeholder="********" autocomplete="new-password">
                 </div>
             </div>
-            
+
             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button id="savePassword" class="btn btn-success">
-                    <i class="bi bi-floppy"></i>
+                    <i class="bi bi-check-lg me-1"></i>Guardar
                 </button>
             </div>
 

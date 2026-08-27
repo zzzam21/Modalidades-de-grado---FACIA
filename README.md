@@ -133,5 +133,5 @@ Las funcionalidades principales se encuentran implementadas y en proceso de opti
 ## Autor
 
 Jonás Samuel Salazar Torres  
-Estudiante de Ingeniería de Sistemas – Noveno semestre  
+Estudiante de Ingeniería de Sistemas – Decimo semestre  
 GitHub: https://github.com/zzzam21
