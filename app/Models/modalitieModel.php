@@ -40,6 +40,7 @@ class modalitieModel extends Model{
                     ->join('programs ', 'programs.program_ID = users_program.program_ID')
                     ->join('users', 'users.id = users_program.user_ID')
                     ->where('users.id', $userId)
+                    ->whereNotIn('modalities.status', ['Finalizado', 'Cancelado'])
                     ->countAllResults();
     }
 
