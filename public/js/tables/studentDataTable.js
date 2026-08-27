@@ -14,6 +14,24 @@ $(document).ready(function ()
             {data: 'program_name'},
             {data: 'sede'},
             {data: 'type_modalitie'},
+            {data: 'status',
+                render: function(data, type) {
+                    if (type === 'display') {
+                        const statusClases = {
+                            'aprobada': 'badge-aprobado',
+                            'En curso': 'badge-en-curso',
+                            'Cancelado': 'badge-cancelado',
+                            'Finalizado': 'badge-finalizado'
+                        };
+
+                        const claseCss = statusClases[data] || 'badge-default';
+
+                        return `<span class="badge-custom ${claseCss}">${data}</span>`;
+                    }
+                    return data;
+                },
+                className: 'string'
+            },
             {
                 data: 'student_ID',
                 oderable: false,

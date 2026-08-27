@@ -14,6 +14,7 @@
                     <th>Programa</th>
                     <th>Sede</th>
                     <th>Modalidad</th>
+                    <th>Estado</th>
                     <th></th>
                 </tr>
             </thead>

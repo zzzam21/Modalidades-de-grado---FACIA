@@ -57,9 +57,18 @@ $(document).ready(function () {
             },
 
             { data: "date_approved" },
-            { data: "duration" },
             { data: "date_end" },
-
+            { data: "duration", render: function(data, type, row) {
+                if (type === 'display') {
+                    const remmaining_days = row.date_end ? Math.ceil((new Date(row.date_end) - new Date()) / (1000 * 60 * 60 * 24)) : null;
+                    if (remmaining_days !== null && remmaining_days < 0) {
+                        return ` Finalizó hace ${Math.abs(remmaining_days)} días`;
+                    }
+                    return ` Faltan ${remmaining_days} días`;
+                }   
+                return data;
+            } },
+            
             {
                 data: "modality_ID",
                 orderable: false,

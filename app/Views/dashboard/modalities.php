@@ -25,8 +25,8 @@
                             <th>Modalidad</th>
                             <th>Estado</th>
                             <th>Fecha Inicio</th>
-                            <th>Duración</th>
                             <th>Final Estimado</th>
+                            <th>Días restantes</th>
                             <th></th>
                         </tr>
                     </thead>

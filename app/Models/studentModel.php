@@ -49,7 +49,7 @@ class studentModel extends Model{
         $user_programModel = new user_programModel();
         $program = $user_programModel->userProgram($userId);
         
-        $data = $this->select('students.*, tm.type_name as type_modalitie, p.program_name, p.sede')
+        $data = $this->select('students.*, tm.type_name as type_modalitie, p.program_name, p.sede, m.status')
                      ->join('modalitie_student mo', 'mo.student_ID = students.student_ID')
                      ->join('modalities m', 'm.modality_ID = mo.modality_ID')
                      ->join('type_modalities tm', 'm.id_type_mod = tm.id_type_mod', 'left')
