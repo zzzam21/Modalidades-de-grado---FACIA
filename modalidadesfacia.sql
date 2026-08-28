@@ -173,7 +173,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `passwordu`, `rol`) VALUES
 (1, 'Samuel Salazar', 'jonas01311@gmail.com', '$2y$10$ANusvz.NWbf4HO5Az.lgFuPkciAqvcSXTkQ8KVLQ5l/DfvblhFk/O', 'Administrador'),
-(2, 'Pruebas', 'pruebas@gmail.com', '$2y$10$Tr3kHFN5DgUm5apcdRUrTuvXVRu/F5i6sDrLsqO7NrLyRpzEGaVu.', 'Administrador');
+(2, 'Agronomía', 'agronomia@udenar.edu.co', '$2y$10$Tr3kHFN5DgUm5apcdRUrTuvXVRu/F5i6sDrLsqO7NrLyRpzEGaVu.', 'Administrador');
 
 -- --------------------------------------------------------
 
