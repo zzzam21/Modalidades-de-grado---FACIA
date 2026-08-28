@@ -687,16 +687,6 @@ function openSustentacionModal() {
 async function saveSustentacion() {
     const modalityId = document.getElementById("modalityId").value;
     const date = document.getElementById("v_fecha_sustentacion").value;
-    const todayDate = new Date().toISOString().split("T")[0];
-    if (date && date.split("T")[0] < todayDate) {
-        Swal.fire({
-            title: 'Fecha inválida',
-            text: 'La fecha de sustentación no puede ser anterior a la fecha actual.',
-            icon: 'warning'
-        });
-        return;
-    }
-
     const btn = document.getElementById("saveSustentacionBtn");
     const spinner = document.getElementById("loadingSustentacion");
     btn.disabled = true;

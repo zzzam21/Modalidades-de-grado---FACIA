@@ -62,9 +62,16 @@ $(document).ready(function () {
                 if (type === 'display') {
                     const remmaining_days = row.date_end ? Math.ceil((new Date(row.date_end) - new Date()) / (1000 * 60 * 60 * 24)) : null;
                     if (remmaining_days !== null && remmaining_days < 0) {
-                        return `<span class="text-danger">Finalizó hace ${Math.abs(remmaining_days)} días</span>`;
+                        const text = `Finalizó hace ${Math.abs(remmaining_days)} días`;
+                        if (row.status === 'Finalizado') {
+                            return `<span class="badge-custom badge-finalizado">${text}</span>`;
+                        }
+                        if (row.status === 'En curso' || row.status === 'aprobada') {
+                            return `<span class="badge-custom badge-cancelado">${text}</span>`;
+                        }
+                        return `<span class="text-danger">${text}</span>`;
                     }
-                    return `Faltan ${remmaining_days} días`;
+                    return `<span class="badge-custom badge-en-curso">Faltan ${remmaining_days} días</span>`;
                 }   
                 return data;
             } },
