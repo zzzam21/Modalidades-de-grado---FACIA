@@ -7,7 +7,7 @@
     <img class="login-logo" src="<?php echo base_url("img/login/logoUser.webp") ?>" alt="Logo">
 
     <h1 class="login-title">Bienvenido</h1>
-    <p class="login-subtitle">Inicia sesión para continuar</p>
+    <p class="login-subtitle">Modalidades de grado<br>Inicie sesión para continuar</p>
 
     <form method="POST" action="<?= base_url("auth/login") ?>">
 
