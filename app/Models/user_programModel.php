@@ -19,6 +19,13 @@ class user_programModel extends Model{
                     ->first();
     }
 
+    public function getProgramsByUser($userId) {
+        return $this->select('programs.program_ID, programs.program_name, programs.sede')
+                    ->join('programs', 'users_program.program_ID = programs.program_ID')
+                    ->where('users_program.user_ID', $userId)
+                    ->findAll();
+    }
+
     public function getModalities(){
         if (!session()->has('user_id')) {
             return [];

@@ -47,14 +47,21 @@ class studentModel extends Model{
         $userId = session()->get('user_id');
 
         $user_programModel = new user_programModel();
-        $program = $user_programModel->userProgram($userId);
-        
+        $programs = $user_programModel->getProgramsByUser($userId);
+
+        if (empty($programs)) {
+            return [];
+        }
+
+        $programIds = array_column($programs, 'program_ID');
+
         $data = $this->select('students.*, tm.type_name as type_modalitie, p.program_name, p.sede, m.status')
                      ->join('modalitie_student mo', 'mo.student_ID = students.student_ID')
                      ->join('modalities m', 'm.modality_ID = mo.modality_ID')
                      ->join('type_modalities tm', 'm.id_type_mod = tm.id_type_mod', 'left')
                      ->join('programs p', 'students.program_ID = p.program_ID')
-                     ->where('students.program_ID', $program['program_ID'])->findAll();
+                     ->whereIn('students.program_ID', $programIds)
+                     ->findAll();
         return $data;
     }
 

@@ -4,6 +4,8 @@ $(document).ready(function () {
     $('#modalityTable').DataTable({
         ...dataTableConfig,
         autoWidth: false,
+        scrollX: true,
+        scrollCollapse: true,
         columnDefs: [
             {
                 targets: 1,
